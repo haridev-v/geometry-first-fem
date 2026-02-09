@@ -5,8 +5,7 @@
 **Thesis statement:**  
 The Finite Element Method is interpreted here as the projection of continuous physical operators onto finite-dimensional function spaces, revealing discretization as a geometric approximation process.
 
-![Geometry-first FEM diagram](figures/geometry_first_fem_diagram.png)
-Geometry-first view of FEM as projection of operators onto finite-dimensional function spaces.
+<img src=".figures/geometry_first_fem_diagram.png" width="300" alt="Geometry-first view of FEM as projection of operators onto finite-dimensional function spaces." />
 
 ---
 
