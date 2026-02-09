@@ -208,11 +208,13 @@ where $\{\phi_i\}$ are basis functions and $\{c_i\}$ are coefficients (coordinat
 If $f,g$ are functions on $\Omega$:
 
 - Addition:
+
 $$
 (f+g)(x)=f(x)+g(x)
 $$
 
 - Scalar multiplication:
+
 $$
 (\alpha f)(x)=\alpha f(x)
 $$
