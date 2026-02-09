@@ -32,6 +32,7 @@ These notes are motivated by practical experience with large-scale thermo-mechan
 
 **Haridev Vaikundamoorthy**  
 Computational Mechanics · Numerical Methods · Scientific Computing
+
 ---
 
 ## Motivation
