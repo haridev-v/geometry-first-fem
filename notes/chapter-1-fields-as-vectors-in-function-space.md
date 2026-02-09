@@ -4,7 +4,7 @@ We briefly revisit vector spaces, norms, and inner products only to fix the geom
 
 ---
 
-## 1.2 Vector spaces (revisited)
+## 1.1 Vector spaces (revisited)
 
 In finite-dimensional algebra, a vector is an element of a vector space $\mathbb{R}^n$ equipped with:
 
@@ -26,7 +26,7 @@ A set $V$ is called a **vector space** if it supports:
 
 ---
 
-## 1.2.1 Norms
+## 1.1.1 Norms
 
 A **norm** is a map
 
@@ -38,7 +38,7 @@ that assigns a non-negative “length” to vectors.
 
 ---
 
-### 1.2.2 Norm axioms
+### 1.1.2 Norm axioms
 
 A norm satisfies:
 
@@ -66,7 +66,7 @@ $$
 
 ---
 
-### 1.2.3 Examples of norms (finite-dimensional)
+### 1.1.3 Examples of norms (finite-dimensional)
 
 For $x=(x_1,\dots,x_n)$:
 
@@ -90,7 +90,7 @@ $$
 
 ---
 
-## 1.2.4 Inner products
+## 1.1.4 Inner products
 
 An **inner product** is a map
 
@@ -100,7 +100,7 @@ $$
 
 ---
 
-### 1.2.5 Inner product axioms
+### 1.1.5 Inner product axioms
 
 For all $u,v,w \in V$ and scalars $\alpha$:
 
@@ -125,7 +125,7 @@ $$
 
 ---
 
-### 1.2.6 Inner-product induced norm
+### 1.1.6 Inner-product induced norm
 
 The inner product induces a norm:
 
@@ -137,7 +137,7 @@ This answers “how big is $v$?” in the geometry defined by $\langle\cdot,\cdo
 
 ---
 
-## 1.3 Matrices as maps on vectors
+## 1.2 Matrices as maps on vectors
 
 A matrix represents a linear map between vector spaces:
 
@@ -176,7 +176,7 @@ This is the meaning of “$Ax$”: applying a linear map defined by how it trans
 
 ---
 
-## 1.4 Function spaces as infinite-dimensional vector spaces
+## 1.3 Function spaces as infinite-dimensional vector spaces
 
 A finite-dimensional vector may be viewed as a list of components.
 
@@ -184,7 +184,7 @@ A **function** can be thought of as a vector with infinitely many degrees of fre
 
 ---
 
-### 1.4.1 Basis functions and coordinates
+### 1.3.1 Basis functions and coordinates
 
 Any vector can be written as a linear combination of basis vectors:
 
@@ -236,7 +236,7 @@ $$
 
 ---
 
-## 1.5 Operators as “matrices” on function spaces
+## 1.4 Operators as “matrices” on function spaces
 
 In finite dimensions, $y=Ax$ expresses a linear map.
 
@@ -250,7 +250,7 @@ where $\mathcal{L}$ is a (linear) operator acting on functions.
 
 ---
 
-## 1.6 FEM as subspace approximation
+## 1.5 FEM as subspace approximation
 
 The finite element method replaces an infinite-dimensional space $V$ with a finite-dimensional subspace $V_h\subset V$.
 
@@ -268,7 +268,7 @@ Key interpretation:
 
 ---
 
-## 1.7 Summary (bridge to projections)
+## 1.6 Summary (bridge to projections)
 
 - A function is a vector in an infinite-dimensional vector space.
 - A basis gives coordinates; norms and inner products give geometry.
