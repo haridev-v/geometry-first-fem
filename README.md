@@ -27,8 +27,6 @@ This perspective aims to clarify:
 
 These notes are motivated by practical experience with large-scale thermo-mechanical and transport simulations.
 
-<img src="figures/geometry_first_fem_diagram.png" width="300" alt="Geometry-first view of FEM as projection of operators onto finite-dimensional function spaces." />
-
 ---
 ## Author
 
