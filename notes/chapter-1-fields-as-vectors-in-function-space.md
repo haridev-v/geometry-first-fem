@@ -122,7 +122,6 @@ $$
 \langle v,v\rangle \ge 0,\quad \text{and }\ \langle v,v\rangle=0 \iff v=0.
 $$
 
-(A vector has positive “self-alignment”.)
 
 ---
 
@@ -151,7 +150,7 @@ Key rules for a linear map $M$:
 - Scaling: $M(\alpha v)=\alpha M(v)$
 - Addition: $M(u+v)=M(u)+M(v)$
 
-If you know what the map does to basis vectors, you know what it does to every vector.
+If we know what the map does to basis vectors, we know what it does to every vector.
 
 Example in $\mathbb{R}^2$:
 
