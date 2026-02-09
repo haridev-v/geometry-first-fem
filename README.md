@@ -2,10 +2,16 @@
 
 **A conceptual reconstruction of the Finite Element Method from geometric and operator-projection principles.**
 
+**Thesis statement:**  
+The Finite Element Method is interpreted here as the projection of continuous physical operators onto finite-dimensional function spaces, revealing discretization as a geometric approximation process.
+
+![Geometry-first FEM diagram](figures/geometry_first_fem_diagram.png)
+Geometry-first view of FEM as projection of operators onto finite-dimensional function spaces.
+
 ---
 
 ## Overview
-
+Discretization is the selection of a geometric representation within which physical operators are projected.
 These notes develop a geometry-first interpretation of the Finite Element Method (FEM), viewing discretization as the projection of continuous operators onto finite-dimensional function spaces.
 
 The objective is to present FEM not as a sequence of procedural steps (weak form → shape functions → assembly), but as a structured approximation framework rooted in:
@@ -22,6 +28,13 @@ This perspective aims to clarify:
 - The relationship between basis functions, operators, and physical models
 - How numerical stability and conditioning emerge from geometric structure
 
+These notes are motivated by practical experience with large-scale thermo-mechanical and transport simulations.
+
+---
+## Author
+
+**Haridev Vaikundamoorthy**  
+Computational Mechanics · Numerical Methods · Scientific Computing
 ---
 
 ## Motivation
@@ -111,13 +124,6 @@ The current version represents an ongoing effort to:
 - Provide a coherent narrative linking geometry, operators, and discretization
 
 Feedback and discussion are welcome.
-
----
-
-## Author
-
-**Haridev Vaikundamoorthy**  
-Computational Mechanics | Numerical Methods | Scientific Computing
 
 ---
 
