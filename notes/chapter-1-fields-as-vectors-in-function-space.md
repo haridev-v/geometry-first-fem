@@ -209,12 +209,12 @@ If $f,g$ are functions on $\Omega$:
 
 - Addition:
 $$
-(f+g)(x)=f(x)+g(x).
+(f+g)(x)=f(x)+g(x)
 $$
 
 - Scalar multiplication:
 $$
-(\alpha f)(x)=\alpha f(x).
+(\alpha f)(x)=\alpha f(x)
 $$
 
 ---
