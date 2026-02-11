@@ -9,6 +9,7 @@ We briefly revisit vector spaces, norms, and inner products only to fix the geom
 In finite-dimensional algebra, a vector in $\mathbb{R}^n$ is written in **column form**
 
 $$
+\bm{v} =
 \left[
 \begin{array}{c}
 v_1 \\
@@ -18,6 +19,7 @@ v_n
 \end{array}
 \right]
 $$
+
 
 This representation makes two things explicit:
 
@@ -198,23 +200,30 @@ This is the meaning of “$Ax$”: applying a linear map defined by how it trans
 A vector in $\mathbb{R}^n$ has finitely many components:
 $$
 \bm{v} =
-\begin{bmatrix}
+\left[
+\begin{array}{c}
 v_1 \\
 v_2 \\
 \vdots \\
 v_n
-\end{bmatrix}
+\end{array}
+\right]
 $$
+
 
 A function can be thought of as a vector whose components are indexed by space:
 $$
-f \;\sim\;
+f =
 \left[
-\begin{matrix}
-f(x_1) \\ f(x_2) \\ f(x_3) \\ \vdots
-\end{matrix}
+\begin{array}{c}
+f(x_1) \\
+f(x_2) \\
+f(x_3) \\
+\vdots
+\end{array}
 \right]
 $$
+
 
 As the spatial resolution increases, the number of components increases without bound.  
 Thus, function spaces are *infinite-dimensional vector spaces*.
