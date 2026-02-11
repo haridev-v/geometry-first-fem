@@ -24,9 +24,9 @@ back_to_top_text: "Back to top"
 nav_external_links_new_tab: true
 nav_external_links: false
 nav_sort: case_sensitive
-nav_enabled: true
 nav_show_all: true
-nav_show_depth: 3
+nav_show_depth: 4
+nav_enabled: true
 nav_next_prev: true
 
 color_scheme: ink
