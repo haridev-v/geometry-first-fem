@@ -573,6 +573,37 @@ blockquote {
     margin-left: 0 !important;
   }
 }
+/* ============================
+   MOBILE: move hamburger to the right of the sidebar divider
+   ============================ */
+@media (max-width: 50rem) {
+
+  /* Make the header a positioning context */
+  .side-bar .site-header {
+    position: relative !important;
+  }
+
+  /* This is the hamburger button on JTD */
+  .side-bar .site-header .site-button {
+    position: absolute !important;
+
+    /* push it across the sidebar boundary */
+    left: calc(100% + 14px) !important;
+
+    /* vertical alignment */
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+
+    z-index: 3000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure it stays clickable above everything */
+  .side-bar, .main-header, .main-content-wrap {
+    overflow: visible !important;
+  }
+}
 
 
 
