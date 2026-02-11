@@ -9,3 +9,6 @@ baseurl: "/geometry-first-fem"
 markdown: kramdown
 kramdown:
   math_engine: mathjax
+
+plugins:
+  - jekyll-include-cache
