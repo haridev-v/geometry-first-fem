@@ -209,7 +209,7 @@ v_n
 \end{bmatrix}
 $$
 
-A function can be thought of as a vector whose components are indexed by space:
+A function can be thought of as a vector with infinite dimensions whose components are indexed by space:
 
 $$
 \mathbf{f} =
