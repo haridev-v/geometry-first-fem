@@ -210,6 +210,15 @@ hr {
 .nav-list .nav-list-item > .nav-list {
   display: block !important;
 }
+/* Force full sidebar expansion */
+.nav-list-expander {
+  display: none !important;
+}
+
+.nav-list .nav-list-item > .nav-list {
+  display: block !important;
+}
+
 
 
 
