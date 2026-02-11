@@ -378,6 +378,76 @@ hr {
   color: #111;
   opacity: 0.85;
 }
+/* =========================
+   Mobile / small screens
+   ========================= */
+@media (max-width: 66.5rem) {
+
+  /* Let Just-the-Docs handle the mobile drawer */
+  .side-bar{
+    width: auto !important;
+    padding-top: 0.75rem !important;
+  }
+
+  /* Your "paper card" becomes full-bleed on mobile */
+  .main-content-wrap{
+    max-width: none !important;
+    padding: 1.25rem 1.1rem !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+
+  /* Slightly smaller reading text */
+  .main-content{
+    font-size: 16.5px !important;
+    line-height: 1.65 !important;
+    padding-top: 1rem !important;
+  }
+
+  h1{ font-size: 1.7rem !important; }
+  h2{ font-size: 1.25rem !important; }
+  h3{ font-size: 1.05rem !important; }
+
+  /* Don’t force nav always expanded on mobile */
+  .nav-list-expander{
+    display: inline-flex !important;
+  }
+  .nav-list .nav-list-item > .nav-list{
+    display: none !important;
+  }
+  .nav-list-item.active > .nav-list{
+    display: block !important;
+  }
+
+  /* Prevent header/logo overlap issues */
+  .side-bar .site-header{
+    padding: 0.75rem 0.75rem 0.5rem 0.75rem !important;
+  }
+  .side-bar .site-logo{
+    width: 200px !important;
+    height: 90px !important;
+    margin: 0.5rem auto 0.5rem auto !important;
+  }
+
+  /* Code blocks: horizontal scroll instead of breaking layout */
+  pre{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  code{
+    word-break: normal !important;
+    white-space: pre !important;
+  }
+
+  /* Math: allow long equations to scroll on mobile */
+  mjx-container{
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+}
 
 
 
