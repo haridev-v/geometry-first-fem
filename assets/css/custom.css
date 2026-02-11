@@ -1,9 +1,21 @@
-/* ---- Typography (monograph feel) ---- */
+/* ============================================================
+   Geometry-First FEM — “Monograph” CSS (Just-the-Docs)
+   Clean, non-conflicting, desktop-expanded Notes, mobile-friendly
+   ============================================================ */
+
+/* ---- Typography ---- */
 @import url("https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 
-/* Keep UI sans, content serif */
-.side-bar, .site-header, .nav-list, .search, .breadcrumb-nav {
+/* ---- Base typography split: UI sans, content serif ---- */
+.side-bar,
+.site-header,
+.site-nav,
+.nav-list,
+.search,
+.breadcrumb-nav,
+.aux-nav,
+.main-header {
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
@@ -14,16 +26,48 @@
   letter-spacing: 0.1px;
 }
 
-/* Wider reading column */
-.main-content-wrap {
-  max-width: 980px;
+/* ============================================================
+   Layout: sidebar + paper-like content panel
+   ============================================================ */
+
+.side-bar {
+  width: 270px;
+  background: #f4f5f7;
+  border-right: 1px solid #dcdfe6;
+  padding-top: 0.8rem;
 }
 
-/* Headings: book-ish */
+@media (min-width: 66.5rem) {
+  .main {
+    margin-left: 270px;
+  }
+}
+
+/* “Paper” content panel */
+.main-content-wrap {
+  max-width: 820px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* Slightly soften default separators */
+hr {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  margin: 2rem 0;
+}
+
+/* ============================================================
+   Headings: book-ish
+   ============================================================ */
+
 h1, h2, h3 {
   font-family: "STIX Two Text", Georgia, serif;
   font-weight: 600;
 }
+
 h1 {
   font-size: 2.1rem;
   margin-bottom: 1.2rem;
@@ -33,30 +77,32 @@ h2 {
   margin-top: 2.2rem;
   padding-top: 0.6rem;
   border-top: 1px solid #e2e4ea;
+  font-size: 1.55rem;
 }
 
-h3 { font-size: 1.2rem;  margin-top: 1.6rem; }
-
-hr {
-  border: 0;
-  border-top: 1px solid rgba(0,0,0,0.12);
-  margin: 2rem 0;
+h3 {
+  font-size: 1.2rem;
+  margin-top: 1.6rem;
 }
 
-/* Links: slightly less “electric blue” */
-a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
+/* Links: calmer */
+a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
 
-/* Lists: more breathing room */
-.main-content ul, .main-content ol {
+/* Lists: breathing room */
+.main-content ul,
+.main-content ol {
   margin-top: 0.6rem;
   margin-bottom: 0.9rem;
 }
-.main-content li { margin: 0.25rem 0; }
-
-/* Code: calmer */
-code {
-  font-size: 0.95em;
+.main-content li {
+  margin: 0.25rem 0;
 }
+
+/* Code */
+code { font-size: 0.95em; }
 pre {
   border-radius: 10px;
   padding: 0.9rem 1rem;
@@ -68,7 +114,7 @@ mjx-container[jax="CHTML"][display="true"] {
   margin: 1.2rem 0;
 }
 
-/* Better blockquotes (use for remarks) */
+/* Blockquotes */
 blockquote {
   border-left: 4px solid rgba(0,0,0,0.18);
   padding: 0.75rem 1rem;
@@ -77,7 +123,7 @@ blockquote {
   border-radius: 10px;
 }
 
-/* Callout boxes (Definition/Theorem/Remark) */
+/* Callouts (Definition/Theorem/Remark) */
 .callout {
   padding: 0.9rem 1rem;
   border: 1px solid rgba(0,0,0,0.12);
@@ -94,7 +140,7 @@ blockquote {
   opacity: 0.75;
 }
 
-/* Figures: centered images + captions */
+/* Figures */
 .figure {
   margin: 1.2rem 0;
   text-align: center;
@@ -111,371 +157,96 @@ blockquote {
   font-style: italic;
 }
 
-/* Sidebar spacing */
-.side-bar {
-  width: 270px;
-}
-@media (min-width: 66.5rem) {
-  .main {
-    margin-left: 270px;
-  }
-}
-@media print {
-  .side-bar, .site-header, .search, .nav-list, .aux-nav, .breadcrumb-nav {
-    display: none !important;
-  }
+/* ============================================================
+   Sidebar header + logo (Just-the-Docs logo is a DIV background)
+   Fix: no line through logo, no overlap, correct stacking
+   ============================================================ */
 
-  .main { margin-left: 0 !important; }
-  .main-content-wrap { max-width: none !important; }
-
-  body { font-size: 11pt; line-height: 1.55; }
-
-  h1, h2, h3 { page-break-after: avoid; page-break-inside: avoid; }
-  pre, blockquote, table, mjx-container { page-break-inside: avoid; }
-
-  a[href^="http"]:after {
-    content: " (" attr(href) ")";
-    font-size: 9pt;
-  }
-}
-
-
-/* Show site description under the title (Just the Docs brand area) */
-.site-title::after {
-  content: "\A" attr(data-title); /* fallback if description not injected */
-  white-space: pre;
-  display: none;
-}
-.site-title {
-  line-height: 1.15;
-}
-.site-header .site-title {
-  font-weight: 700;
-}
-/* Make the sidebar title look premium */
-.site-title {
-  font-size: 1.1rem;
-  letter-spacing: -0.2px;
-}
-
-/* Reduce the empty feeling in the sidebar */
-.side-bar {
-  padding-top: 0.75rem;
-}
-
-/* Sidebar link spacing */
-.nav-list .nav-list-item {
-  margin: 0.15rem 0;
-}
-/* Force brand/header to show (debug fix) */
-.site-header,
-.site-title,
-.site-title a {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-.site-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-/* Create paper-like content panel */
-.main-content-wrap {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 2.5rem 3rem;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.04);
-}
-
-/* Slightly soften horizontal rules */
-hr {
-  border-top: 1px solid rgba(0,0,0,0.08);
-}
-
-/* Sidebar refinement */
-.side-bar {
-  border-right: 1px solid rgba(0,0,0,0.06);
-}
-
-/* Active nav cleaner */
-.nav-list .nav-list-link.active {
-  font-weight: 600;
-  color: #1c2128;
-}
-/* Increase sidebar logo size */
-
-.site-title {
-  margin-top: 0.4rem;
-}
-/* Force sidebar always expanded */
-.nav-list-expander {
-  display: none !important;
-}
-
-.nav-list .nav-list-item > .nav-list {
-  display: block !important;
-}
-/* Sidebar styling */
-.side-bar {
-  border-right: 1px solid #d8dbe2;
-}
-
-/* Sidebar typography */
-.nav-list-item > a {
-  font-weight: 500;
-  letter-spacing: 0.2px;
-}
-
-.nav-list-item.active > a {
-  font-weight: 600;
-}
-
-.main-content-wrap {
-  max-width: 820px; /* tighter reading column */
-}
-
-.main-content {
-  padding-top: 2rem;
-}
-.side-bar {
-  background: #f4f5f7;
-  border-right: 1px solid #dcdfe6;
-  padding-top: 1.5rem;
-}
-/* ---- Subtle Academic Hover Fade ---- */
-
-.nav-list-item > a {
-  transition: color 180ms ease, background-color 180ms ease;
-  border-radius: 6px;
-  padding: 4px 6px;
-}
-
-/* Hover effect */
-.nav-list-item > a:hover {
-  background-color: rgba(0, 0, 0, 0.025);
-  color: #1f2329;
-}
-
-/* Active item stays calm */
-.nav-list .nav-list-link.active {
-  background-color: rgba(0, 0, 0, 0.06);
-  font-weight: 600;
-}
-
-/* Slight hover for chapter children */
-.nav-list .nav-list .nav-list-item > a:hover {
-  background-color: rgba(0, 0, 0, 0.035);
-}
-
-/* Logo always visible + sized */
-.site-header {
-  padding-top: 1rem !important;
-  padding-bottom: 0.25rem !important;
-  height: auto !important;
-  min-height: 1px !important;
-  overflow: visible !important;
-}
-
-/* =========================
-   Sidebar header + logo FIX
-   ========================= */
-
-/* Header: no divider line, keep normal flow */
-.side-bar .site-header{
+.side-bar .site-header {
   position: relative !important;
-  padding: 1.25rem 0.75rem 0.75rem 0.75rem !important;
-  height: auto !important;
-  min-height: 0 !important;
-  overflow: visible !important;
+  z-index: 10 !important;
 
   border: none !important;
   box-shadow: none !important;
   background: transparent !important;
+
+  padding: 0.35rem 0.75rem 0.25rem 0.75rem !important;
+  height: auto !important;
+  overflow: visible !important;
 }
 
 .side-bar .site-header::before,
-.side-bar .site-header::after{
+.side-bar .site-header::after {
   content: none !important;
   display: none !important;
 }
 
-/* Nav starts below header; no overlap */
-.side-bar .site-nav{
-  position: relative !important;
-  z-index: 1 !important;
-  margin-top: 0 !important;
-}
-/* === Tighten header vertical spacing === */
-.side-bar .site-header{
-  padding-top: 0.1rem !important;     /* move logo up */
-  padding-bottom: 0.4rem !important;
-}
-
-/* === Increase logo size slightly === */
-.side-bar .site-logo{
-  width: min(260px, 95%) !important;  /* slightly wider */
-  height: 135px !important;           /* slightly taller */
-
-  margin: 0 auto 0.6rem auto !important;  /* reduce top gap */
-}
-.side-bar .site-title{
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.side-bar{
-  padding-top: 0.8rem !important;
-}
-/* Remove background highlight */
-.nav-list .nav-list-link.active{
-  background: transparent !important;
-}
-
-/* Base link styling */
-.nav-list-item > a{
-  position: relative;
-  padding-left: 14px;   /* room for indicator */
-}
-
-/* Thin left indicator for active page */
-.nav-list .nav-list-link.active::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 4px;
-  bottom: 4px;
-  width: 3px;
-  border-radius: 2px;
-  background-color: #2f3a4a;   /* deep academic grey */
-}
-/* Highlight parent section when child is active */
-.nav-list-item.active > .nav-list-link::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 4px;
-  bottom: 4px;
-  width: 2px;
-  background-color: #4a5568;
-}
-
-/* Make chapter children slightly indented */
-.nav-list .nav-list{
-  margin-left: 10px;
-  border-left: 1px solid rgba(0,0,0,0.08);
-  padding-left: 10px;
-}
-.nav-list-item > a:hover{
-  background: transparent !important;
-  color: #111;
-  opacity: 0.85;
-}
-/* ============================
-   BRAND / LOGO (Just-the-Docs)
-   ============================ */
-
-/* IMPORTANT: JTD logo is a DIV with background-image, not an <img> */
+/* site-title wraps logo div — center it nicely */
 .side-bar .site-title {
-  /* kill any “underline-as-background” effect that can draw a line through logo */
   background-image: none !important;
   text-decoration: none !important;
-}
 
-/* Make header a clean stacking context so logo never sits behind nav */
-.side-bar .site-header {
-  position: relative !important;
-  z-index: 10 !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0.6rem 0.75rem 0.25rem 0.75rem !important; /* move logo UP */
-}
-
-/* Layout: title/link contains the logo div */
-.side-bar .site-title {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.15;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.2px;
 }
 
-/* Size + position the logo */
+/* Logo sizing (desktop) */
 .side-bar .site-logo {
-  display: block !important;
   position: relative !important;
   z-index: 11 !important;
 
-  width: 240px !important;     /* bigger */
-  height: 110px !important;    /* adjust for your logo aspect */
-  margin: 0.15rem auto 0.6rem auto !important;
+  display: block !important;
+  width: min(270px, 95%) !important;
+  height: 130px !important;
+  margin: 0.05rem auto 0.55rem auto !important;
 
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: contain !important;
 }
 
-/* Ensure nav starts BELOW header; never overlaps */
+/* Ensure nav always starts below header */
 .side-bar .site-nav {
   position: relative !important;
   z-index: 1 !important;
-  margin-top: 0.25rem !important;
+  margin-top: 0.15rem !important;
 }
 
+/* ============================================================
+   Nav: left indicator (not background) + subtle hover fade
+   ============================================================ */
 
-/* ==================================
-   NAV: “Notes” expanded on DESKTOP
-   ================================== */
-
-/* Desktop only: keep nested nav open */
-@media (min-width: 50rem) {
-  /* hide expand/collapse triangles */
-  .nav-list-expander {
-    display: none !important;
-  }
-
-  /* force ALL nested lists open */
-  .nav-list .nav-list-item > .nav-list {
-    display: block !important;
-  }
-
-  /* specifically ensure Notes (2nd item) stays open even if theme toggles it */
-  .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > ul.nav-list {
-    display: block !important;
-  }
-}
-
-/* Mobile: DO NOT force expand (let the drawer behave normally) */
-@media (max-width: 50rem) {
-  .nav-list-expander {
-    display: inline-flex !important;
-  }
-}
-
-
-/* ==================================
-   NAV LOOK: left border indicator + hover fade
-   ================================== */
-
-/* Remove big active background from theme */
+/* Remove theme active background */
 .nav-list .nav-list-link.active {
   background: transparent !important;
   font-weight: 600;
   color: #1c2128;
 }
 
-/* Make links “book-ish” and leave room for left rule */
+/* Base link */
 .nav-list .nav-list-link {
   position: relative;
-  padding: 0.35rem 0.5rem 0.35rem 0.85rem; /* left padding for rule */
+  padding: 0.35rem 0.5rem 0.35rem 0.95rem; /* room for left rule */
   border-radius: 8px;
-  transition: color 160ms ease, opacity 160ms ease;
+  transition: opacity 160ms ease, color 160ms ease;
 }
 
-/* Subtle hover fade */
+/* Hover: subtle fade, no big blocks */
 .nav-list .nav-list-link:hover {
   opacity: 0.86;
+  background: transparent !important;
 }
 
-/* Left vertical accent rule (active) */
+/* Active left rule */
 .nav-list .nav-list-link.active::before {
   content: "";
   position: absolute;
@@ -484,38 +255,137 @@ hr {
   bottom: 0.35rem;
   width: 2px;
   border-radius: 2px;
-  background: rgba(31, 35, 41, 0.45); /* neutral academic grey */
+  background: rgba(31, 35, 41, 0.55);
 }
 
-/* Optional: slightly stronger for the section parent (Notes) when inside it */
-.nav-list-item.active > .nav-list-link::before {
-  background: rgba(31, 35, 41, 0.6);
+/* Optional: nested list guide */
+.nav-list .nav-list {
+  margin-left: 10px;
+  border-left: 1px solid rgba(0,0,0,0.08);
+  padding-left: 10px;
 }
 
+/* ============================================================
+   Notes always expanded on DESKTOP only
+   Mobile: keep drawer behavior normal
+   ============================================================ */
 
-/* ==================================
-   MOBILE TUNING
-   ================================== */
-
-@media (max-width: 50rem) {
-  /* Reduce logo so it doesn’t dominate mobile header */
-  .side-bar .site-logo {
-    width: 180px !important;
-    height: 72px !important;
-    margin: 0.25rem auto 0.35rem auto !important;
+@media (min-width: 66.5rem) {
+  /* hide expand/collapse buttons */
+  .nav-list-expander {
+    display: none !important;
   }
 
-  /* Content panel padding smaller on mobile */
+  /* force all nested lists open */
+  .nav-list .nav-list-item > .nav-list {
+    display: block !important;
+  }
+
+  /* ensure Notes (2nd top item) stays open */
+  .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > ul.nav-list {
+    display: block !important;
+  }
+}
+
+@media (max-width: 66.5rem) {
+  /* DO NOT force open on mobile */
+  .nav-list-expander {
+    display: inline-flex !important;
+  }
+  .nav-list .nav-list-item > .nav-list {
+    display: none !important;
+  }
+  .nav-list-item.active > .nav-list {
+    display: block !important;
+  }
+}
+
+/* ============================================================
+   Mobile tuning (content, logo, math/code)
+   ============================================================ */
+
+@media (max-width: 66.5rem) {
+  /* Content: less “cardy”, more natural on phone */
   .main-content-wrap {
+    max-width: none !important;
     padding: 1.25rem 1.1rem !important;
     border-radius: 12px !important;
     margin: 0.75rem !important;
+    box-shadow: none !important;
+    background: #fff !important;
   }
 
-  /* Slightly smaller body text for phone reading */
   .main-content {
     font-size: 16.5px !important;
     line-height: 1.7 !important;
+    padding-top: 1rem !important;
+  }
+
+  h1 { font-size: 1.7rem !important; }
+  h2 { font-size: 1.25rem !important; }
+  h3 { font-size: 1.05rem !important; }
+
+  /* Logo smaller on mobile so it doesn’t dominate */
+  .side-bar .site-logo {
+    width: min(220px, 92%) !important;
+    height: 92px !important;
+    margin: 0.25rem auto 0.45rem auto !important;
+  }
+
+  /* Code blocks: scroll horizontally instead of breaking layout */
+  pre {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  code {
+    word-break: normal !important;
+    white-space: pre !important;
+  }
+
+  /* Math: allow horizontal scroll for long equations */
+  mjx-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
   }
 }
 
+/* ============================================================
+   Print / PDF export styling
+   ============================================================ */
+
+@media print {
+  .side-bar,
+  .site-header,
+  .search,
+  .nav-list,
+  .aux-nav,
+  .breadcrumb-nav,
+  .main-header {
+    display: none !important;
+  }
+
+  .main { margin-left: 0 !important; }
+  .main-content-wrap {
+    max-width: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  body { font-size: 11pt; line-height: 1.55; }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+  pre, blockquote, table, mjx-container {
+    page-break-inside: avoid;
+  }
+
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+  }
+}
