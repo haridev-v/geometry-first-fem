@@ -9,7 +9,7 @@ We briefly revisit vector spaces, norms, and inner products only to fix the geom
 In finite-dimensional algebra, a vector in $\mathbb{R}^n$ is written in **column form**
 
 $$
-\bm{v} =
+\mathbf{v} =
 \left[
 \begin{array}{c}
 v_1 \\
@@ -198,22 +198,21 @@ This is the meaning of “$Ax$”: applying a linear map defined by how it trans
 ## 1.3 Function spaces as infinite-dimensional vector spaces
 
 A vector in $\mathbb{R}^n$ has finitely many components:
+
 $$
-\bm{v} =
-\left[
-\begin{array}{c}
+\mathbf{v} =
+\begin{bmatrix}
 v_1 \\
 v_2 \\
 \vdots \\
 v_n
-\end{array}
-\right]
+\end{bmatrix}
 $$
-
 
 A function can be thought of as a vector whose components are indexed by space:
+
 $$
-f =
+\mathbf{f} =
 \left[
 \begin{array}{c}
 f(x_1) \\
