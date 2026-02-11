@@ -1,11 +1,18 @@
-$body-background-color: #f7f6f3;
-$sidebar-color: #eceae6;
+/* ---- Backgrounds ---- */
+$body-background-color: #f1f3f6;      // cool grey
+$sidebar-color: #e6e9ee;              // slightly darker cool grey
 
-$body-text-color: #2c2f36;
-$heading-color: #1f2329;
+/* ---- Text ---- */
+$body-text-color: #2b2f36;            // deep charcoal
+$heading-color: #1c2128;              // strong but not black
 
-$link-color: #3a5a8a;
-$nav-child-link-color: #3a5a8a;
+/* ---- Links ---- */
+$link-color: #2f5c9a;                 // muted academic blue
+$nav-child-link-color: #2f5c9a;
 
-$border-color: #d4d6dc;
-$code-background-color: #f0f0f2;
+/* ---- UI Elements ---- */
+$border-color: #d0d5dd;
+$code-background-color: #eef1f5;
+
+/* Optional subtle accent */
+$btn-primary-color: #2f5c9a;
