@@ -1,3 +1,8 @@
+---
+layout: default
+title: Chapter 1 - Fields as Vectors in Function Space (Functional Analysis Preliminaries)
+---
+
 # Chapter 1 — Fields as Vectors in Function Space (Functional Analysis Preliminaries)
 
 We briefly revisit vector spaces, norms, and inner products only to fix the geometric language used later to interpret discretization as projection.
