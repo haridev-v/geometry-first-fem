@@ -72,15 +72,25 @@ Define the error:
 
 $$e := u-u_h.$$
 
-We are trying to approximate $u$ by vectors in $V_h$.
+We are trying to approximate $u$ by vectors in $V_h$. The projection theorem states implies:
 
-If any component of $e$ lies in the subspace $V_h$, then the problem is not minimized:there exists a direction $v\in V_h$ such that moving along $v$ reduces the error.
+- **\(u_h\)** is the orthogonal projection of **\(u\)** onto **\(V\)**.
+- The residual \(r = u - u_h\) is orthogonal to the entire subspace \(V\).
+- No tangential component remains.
+
+To make this idea intuitive, consider a 2D space with a vector $AB$ where the goal is to find the minimum distance between a point $u$ and the vector $AB$. The closest point on the vector will be the foot of the perpendicular to the point $u$:
+
+<p align="center">
+  <img src="figures/2derror.png" width="500">
+</p>
+
+Now we extend this idea to a generalised vector space. If any component of $e$ lies in the subspace $V_h$, then the problem is not minimized:there exists a direction $v\in V_h$ such that moving along $v$ reduces the error.
 So, at the best approximation, we must have exhausted all directions in the subspace:no allowed movement in $V_h$ can reduce the distance.
 Therefore the error must point entirely outside the subspace, i.e. it is orthogonal to $V_h$:
 
 $$\langle u-u_h,\; v\rangle = 0\quad \forall v\in V_h.$$
 
-This vector problem can be represented geometrically as:- $u$ : target vector  - $u_h$ : best approximation in the subspace  - $u-u_h$ : error vector  - $v$ : any test direction (in the solution space)
+This vector problem can be represented geometrically as:- $u$ : target vector  - $u_h$ : best approximation in the subspace  - $u-u_h$ : error vector  - $v$ : any test direction (in the solution space).
 
 ---
 ## 2.5 From Geometry to Algebra
