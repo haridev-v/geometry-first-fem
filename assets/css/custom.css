@@ -521,7 +521,28 @@ blockquote{
   background: rgba(31,35,41,0.7);
 }
 
-
+/* =========================================================   POLISH PACK:   1) Wider content card on large monitors   2) Subtle chapter separators in sidebar   3) Monograph-style search bar   ========================================================= */
+/* -------------------------   1) Wider content card (large screens only)   ------------------------- */@media (min-width: 90rem){ /* ~1440px+ */  .main-content-wrap{    max-width: 980px !important; /* was 820 */  }}@media (min-width: 110rem){ /* ~1760px+ */  .main-content-wrap{    max-width: 1040px !important; /* gentle bump for ultra-wide */  }}
+/* Optional: give the card a little more horizontal padding on big screens */@media (min-width: 90rem){  .main-content-wrap{    padding-left: 3.25rem !important;    padding-right: 3.25rem !important;  }}
+/* -------------------------   2) Subtle chapter separators (sidebar)   ------------------------- */
+/* Separator line ABOVE each top-level section after the first (e.g., Notes) */.side-bar .site-nav > ul.nav-list > li.nav-list-item + li.nav-list-item{  margin-top: 0.85rem !important;  padding-top: 0.85rem !important;  border-top: 1px solid rgba(0,0,0,0.07);}
+/* Make nested chapter list feel like a “chapter block” */.side-bar .site-nav > ul.nav-list > li.nav-list-item > ul.nav-list{  margin-top: 0.35rem !important;  padding-top: 0.35rem !important;}
+/* Slightly tighten child chapter spacing */.side-bar .nav-list .nav-list .nav-list-item{  margin: 0.1rem 0 !important;}
+/* Optional: a tiny “dot” marker for chapters (subtle) */.side-bar .nav-list .nav-list .nav-list-link{  position: relative;  padding-left: 1.05rem !important; /* room for dot */}.side-bar .nav-list .nav-list .nav-list-link::after{  content: "";  position: absolute;  left: 0.55rem;  top: 50%;  transform: translateY(-50%);  width: 3px;  height: 3px;  border-radius: 50%;  background: rgba(31,35,41,0.22);}
+/* Active chapter dot slightly stronger */.side-bar .nav-list .nav-list .nav-list-link.active::after{  background: rgba(31,35,41,0.42);}
+/* -------------------------   3) Search bar: monograph feel   ------------------------- */
+/* The search container */.search{  padding: 0.25rem 0.75rem 0.75rem 0.75rem !important;}
+/* Input box styling */.search-input{  font-family: var(--ui-font) !important;  font-size: 0.95rem !important;
+  background: rgba(255,255,255,0.65) !important;  border: 1px solid rgba(0,0,0,0.08) !important;  border-radius: 12px !important;
+  padding: 0.65rem 0.9rem 0.65rem 2.35rem !important; /* space for icon */  box-shadow: none !important;}
+/* Focus state: quiet, “academic” */.search-input:focus{  outline: none !important;  border-color: rgba(31,35,41,0.18) !important;  box-shadow: 0 0 0 3px rgba(31,35,41,0.06) !important;}
+/* Search icon placement */.search-label{  left: 0.95rem !important;  opacity: 0.55 !important;}
+/* Placeholder: softer */.search-input::placeholder{  color: rgba(31,35,41,0.45) !important;}
+/* Search results: look like a small bibliography list */.search-results{  margin-top: 0.35rem !important;  border-radius: 12px !important;  border: 1px solid rgba(0,0,0,0.08) !important;  background: #fff !important;  box-shadow: 0 8px 24px rgba(0,0,0,0.06) !important;  overflow: hidden !important;}
+/* Result items */.search-results .search-result{  padding: 0.65rem 0.85rem !important;  border-bottom: 1px solid rgba(0,0,0,0.06) !important;}.search-results .search-result:last-child{  border-bottom: none !important;}
+/* Result title (less “linky”) */.search-results .search-result-title{  font-weight: 600 !important;  text-decoration: none !important;}.search-results .search-result-title:hover{  text-decoration: underline !important;  text-underline-offset: 2px;}
+/* Result snippet: muted */.search-results .search-result-previews{  opacity: 0.72 !important;}
+/* -------------------------   Mobile: keep search compact   ------------------------- */@media (max-width: 50rem){  .search{    padding: 0.25rem 0.75rem 0.5rem 0.75rem !important;  }  .search-input{    border-radius: 10px !important;    padding-top: 0.6rem !important;    padding-bottom: 0.6rem !important;  }}
 
 
 
