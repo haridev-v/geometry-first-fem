@@ -9,13 +9,14 @@ We briefly revisit vector spaces, norms, and inner products only to fix the geom
 In finite-dimensional algebra, a vector in $\mathbb{R}^n$ is written in **column form**
 
 $$
-v =
-\begin{bmatrix}
+\left[
+\begin{array}{c}
 v_1 \\
 v_2 \\
 \vdots \\
 v_n
-\end{bmatrix}.
+\end{array}
+\right]
 $$
 
 This representation makes two things explicit:
