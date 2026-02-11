@@ -109,7 +109,7 @@ Then the coordinate representation of the best solution in $V_h$ becomes:
 
 $$u_h = \sum_{j=1}^{N} c_j \phi_j.$$
 
-Since $v\in V_h$ is a linear combination of basis functions, it is sufficient to enforce:
+Since $v\in V_h$ is a linear combination of basis functions $\phi_i$, it is sufficient to enforce:
 
 $$\langle u-u_h,\phi_i\rangle = 0\quad \forall i=1,2,\dots,N.$$
 
