@@ -1,14 +1,11 @@
 title: Geometry-First FEM
 description: Operator-theoretic finite element notes
 
+theme: just-the-docs
+
 url: "https://haridev-v.github.io"
 baseurl: "/geometry-first-fem"
-
-remote_theme: just-the-docs/just-the-docs
 
 markdown: kramdown
 kramdown:
   math_engine: mathjax
-
-plugins:
-  - jekyll-remote-theme
