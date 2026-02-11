@@ -442,4 +442,31 @@ blockquote{
     border-left: 1px solid rgba(0,0,0,0.08);
   }
 }
+/* =======================================
+   Subtle monograph-style site description
+   ======================================= */
+
+.side-bar .site-title::after {
+  content: attr(aria-label); /* fallback */
+}
+
+/* Better: use Jekyll site description */
+.side-bar .site-title::after {
+  content: "Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.";
+  display: block;
+  margin-top: 0.35rem;
+
+  font-family: "STIX Two Text", Georgia, serif;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  font-weight: 400;
+
+  color: rgba(31, 35, 41, 0.55); /* subtle academic grey */
+  text-align: center;
+
+  max-width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
