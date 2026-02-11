@@ -6,16 +6,63 @@ We briefly revisit vector spaces, norms, and inner products only to fix the geom
 
 ## 1.1 Vector spaces (revisited)
 
-In finite-dimensional algebra, a vector is an element of a vector space $\mathbb{R}^n$ equipped with:
-
-- addition
-- scalar multiplication
-
-A basis $\{e_i\}_{i=1}^n$ allows any vector $v$ to be written in coordinates as
+In finite-dimensional algebra, a vector in $\mathbb{R}^n$ is written in **column form**
 
 $$
-v = v_1 e_1 + v_2 e_2 + \cdots + v_n e_n.
+v =
+\begin{bmatrix}
+v_1 \\
+v_2 \\
+\vdots \\
+v_n
+\end{bmatrix}.
 $$
+
+This representation makes two things explicit:
+
+- A vector is a collection of components.
+- A vector is an object on which matrices act.
+
+A basis $\{e_i\}_{i=1}^n$ allows any vector to be written as
+
+$$
+v = \sum_{i=1}^n v_i e_i.
+$$
+
+The column representation is simply the coordinate version of this expansion.
+
+---
+
+### Linear maps as matrices
+
+A linear map $A : \mathbb{R}^n \to \mathbb{R}^m$ is represented by a matrix
+
+$$
+A =
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}.
+$$
+
+Matrix–vector multiplication produces
+
+$$
+Av =
+\begin{bmatrix}
+\sum_{j=1}^n a_{1j} v_j \\
+\sum_{j=1}^n a_{2j} v_j \\
+\vdots \\
+\sum_{j=1}^n a_{mj} v_j
+\end{bmatrix}.
+$$
+
+Thus, a matrix encodes how each output component depends linearly on all input components.
+
+---
+
 
 A set $V$ is called a **vector space** if it supports:
 
@@ -178,10 +225,30 @@ This is the meaning of “$Ax$”: applying a linear map defined by how it trans
 
 ## 1.3 Function spaces as infinite-dimensional vector spaces
 
-A finite-dimensional vector may be viewed as a list of components.
+A vector in $\mathbb{R}^n$ has finitely many components:
+$$
+\bm{v} =
+\begin{bmatrix}
+v_1 \\
+v_2 \\
+\vdots \\
+v_n
+\end{bmatrix}.
+$$
 
-A **function** can be thought of as a vector with infinitely many degrees of freedom — an element of an infinite-dimensional vector space.
+A function can be thought of as a vector whose components are indexed by space:
+$$
+f =
+\begin{bmatrix}
+f(x_1) \\
+f(x_2) \\
+f(x_3) \\
+\vdots
+\end{bmatrix}.
+$$
 
+As the spatial resolution increases, the number of components increases without bound.  
+Thus, function spaces are *infinite-dimensional vector spaces*.
 ---
 
 ### 1.3.1 Basis functions and coordinates
