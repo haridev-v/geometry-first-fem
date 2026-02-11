@@ -810,7 +810,7 @@ blockquote{
     width: 14px !important;
     height: 14px !important;
 
-    opacity: 0.45 !important;        /* softer */
+    opacity: 0.0 !important;        /* softer */
   }
 
   /* Lighten SVG stroke color */
