@@ -425,8 +425,8 @@ blockquote {
 
   .side-bar .site-logo {
     display: block !important;
-    width: 280px !important;           /* <-- change this */
-    height: 140px !important;          /* <-- and this */
+    width: 240px !important;           /* <-- change this */
+    height: 120px !important;          /* <-- and this */
     margin: 0.1rem auto 0.8rem auto !important;
 
     background-size: contain !important;
