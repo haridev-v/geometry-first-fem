@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Geometry-First Foundations of the Finite Element Method
+title: Home
 nav_order: 1
 ---
 
