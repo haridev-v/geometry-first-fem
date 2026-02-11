@@ -267,6 +267,30 @@ hr {
   border-right: 1px solid #dcdfe6;
   padding-top: 1.5rem;
 }
+/* ---- Subtle Academic Hover Fade ---- */
+
+.nav-list-item > a {
+  transition: color 180ms ease, background-color 180ms ease;
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+
+/* Hover effect */
+.nav-list-item > a:hover {
+  background-color: rgba(0, 0, 0, 0.025);
+  color: #1f2329;
+}
+
+/* Active item stays calm */
+.nav-list .nav-list-link.active {
+  background-color: rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+}
+
+/* Slight hover for chapter children */
+.nav-list .nav-list .nav-list-item > a:hover {
+  background-color: rgba(0, 0, 0, 0.035);
+}
 
 
 
