@@ -314,7 +314,7 @@ blockquote{
 /* DESKTOP logo size — force override (put at end of file) */
 @media (min-width: 66.5rem){
   .side-bar .site-title .site-logo{
-    width: 300px !important;
+    width: 220px !important;
     height: 140px !important;
     margin: 0.1rem auto 0.7rem auto !important;
     background-size: contain !important;
@@ -393,3 +393,53 @@ blockquote{
     display: inline-block;
   }
 }
+/* =========================================================
+   MOBILE: guarantee expander (arrow) column is visible
+   (force nav item layout to grid: [arrow][text][spacer])
+   ========================================================= */
+@media (max-width: 50rem){
+
+  /* Each top-level nav item becomes a grid row */
+  .side-bar .site-nav > ul.nav-list > li.nav-list-item{
+    display: grid !important;
+    grid-template-columns: 44px 1fr auto !important;
+    align-items: center !important;
+    position: relative !important;
+  }
+
+  /* Expander sits in column 1 (always visible) */
+  .side-bar .site-nav > ul.nav-list > li.nav-list-item > .nav-list-expander{
+    grid-column: 1 !important;
+    display: inline-flex !important;
+    width: 44px !important;
+    height: 44px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 3 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Link text sits in column 2 */
+  .side-bar .site-nav > ul.nav-list > li.nav-list-item > a.nav-list-link{
+    grid-column: 2 !important;
+    padding: 10px 10px !important;
+    margin: 0 !important;
+  }
+
+  /* Hide expander for items that don’t have children (like Home) */
+  .side-bar .site-nav > ul.nav-list > li.nav-list-item:not(:has(> ul.nav-list)) > .nav-list-expander{
+    display: none !important;
+  }
+
+  /* Submenu should span full width below */
+  .side-bar .site-nav > ul.nav-list > li.nav-list-item > ul.nav-list{
+    grid-column: 1 / -1 !important;
+    margin-left: 0 !important;
+    padding-left: 12px !important;
+    border-left: 1px solid rgba(0,0,0,0.08);
+  }
+}
+
