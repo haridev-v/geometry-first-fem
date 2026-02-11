@@ -213,7 +213,7 @@ f \;\sim\;
 \begin{matrix}
 f(x_1) \\ f(x_2) \\ f(x_3) \\ \vdots
 \end{matrix}
-\right].
+\right]
 $$
 
 As the spatial resolution increases, the number of components increases without bound.  
