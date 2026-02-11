@@ -135,10 +135,16 @@ Each fixed $i$ gives one scalar equation ($i=1$ first equation, …, $i=N$ $N$ t
 
 ## 2.6 Recognising Structure
 
-We observe that
-- For each fixed $i$, this is a linear equation in the unknowns $c_j$: $$\sum_{j=1}^{N} c_j (\phi_j, \phi) = \langle u , \phi \rangle$$
-- The quantities $\langle \phi_j, \phi_i \rangle$ are just numbers.
-- These numbers are indexed by $i$ and $j$.
+We observe that for each fixed $i$, this is a linear equation in the unknowns $c_j$:
+
+$$
+\sum_{j=1}^{N} c_j \langle \phi_j, \phi_i \rangle
+=
+\langle u, \phi_i \rangle
+$$
+
+The quantities $\langle \phi_j, \phi_i \rangle$ are just numbers.
+These numbers are indexed by $i$ and $j$.
 
 Therefore, we can organize them to map the test direction $\phi_i$ to the coefficient $c_j$.
 
@@ -149,7 +155,8 @@ c_1 \langle \phi_1, \phi_1 \rangle
 + c_2 \langle \phi_2, \phi_1 \rangle
 + \cdots
 + c_N \langle \phi_N, \phi_1 \rangle
-= \langle u, \phi_1 \rangle
+=
+\langle u, \phi_1 \rangle
 $$
 
 For $i = 2$:
@@ -159,7 +166,8 @@ c_1 \langle \phi_1, \phi_2 \rangle
 + c_2 \langle \phi_2, \phi_2 \rangle
 + \cdots
 + c_N \langle \phi_N, \phi_2 \rangle
-= \langle u, \phi_2 \rangle
+=
+\langle u, \phi_2 \rangle
 $$
 
 $\vdots$
@@ -171,7 +179,8 @@ c_1 \langle \phi_1, \phi_N \rangle
 + c_2 \langle \phi_2, \phi_N \rangle
 + \cdots
 + c_N \langle \phi_N, \phi_N \rangle
-= \langle u, \phi_N \rangle
+=
+\langle u, \phi_N \rangle
 $$
 
 We convert this to a matrix:
@@ -205,6 +214,7 @@ c_N
 \end{array}
 \right]
 $$
+
 
 ---
 
