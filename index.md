@@ -7,6 +7,12 @@ nav_order: 1
 # Geometry-First Foundations of the Finite Element Method
 
 **A conceptual reconstruction of the Finite Element Method from geometric and operator-projection principles.**
+---
+
+## Author
+
+**Haridev Vaikundamoorthy**  
+Computational Mechanics · Numerical Methods · Scientific Computing
 
 **Thesis statement:**  
 The Finite Element Method is interpreted here as the projection of continuous physical operators onto finite-dimensional function spaces, revealing discretization as a geometric approximation process.
@@ -32,12 +38,6 @@ This perspective aims to clarify:
 - How numerical stability and conditioning emerge from geometric structure
 
 These notes are motivated by practical experience with large-scale thermo-mechanical and transport simulations.
-
----
-## Author
-
-**Haridev Vaikundamoorthy**  
-Computational Mechanics · Numerical Methods · Scientific Computing
 
 ---
 
