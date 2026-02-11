@@ -175,8 +175,8 @@ blockquote {
    ========================= */
 
 :root {
-  --bg: #f4f4f6;          /* very light grey background */
-  --panel: #e8e8ec;       /* sidebar grey */
+  --bg: #f7f6f3;
+  --panel: #eceae6;        
   --text: #2c2f36;        /* dark charcoal text */
   --muted: #6b707c;       /* muted grey */
   --link: #3a5a8a;        /* academic blue */
