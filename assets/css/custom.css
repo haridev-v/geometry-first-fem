@@ -142,4 +142,20 @@ blockquote {
 .site-header .site-title {
   font-weight: 700;
 }
+/* Make the sidebar title look premium */
+.site-title {
+  font-size: 1.1rem;
+  letter-spacing: -0.2px;
+}
+
+/* Reduce the empty feeling in the sidebar */
+.side-bar {
+  padding-top: 0.75rem;
+}
+
+/* Sidebar link spacing */
+.nav-list .nav-list-item {
+  margin: 0.15rem 0;
+}
+
 
