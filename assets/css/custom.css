@@ -216,14 +216,6 @@ hr {
 .nav-list .nav-list-item > .nav-list {
   display: block !important;
 }
-/* Force full sidebar expansion */
-.nav-list-expander {
-  display: none !important;
-}
-
-.nav-list .nav-list-item > .nav-list {
-  display: block !important;
-}
 /* Sidebar styling */
 .side-bar {
   border-right: 1px solid #d8dbe2;
@@ -378,83 +370,152 @@ hr {
   color: #111;
   opacity: 0.85;
 }
-/* =========================
-   Mobile / small screens
-   ========================= */
-@media (max-width: 66.5rem) {
+/* ============================
+   BRAND / LOGO (Just-the-Docs)
+   ============================ */
 
-  /* Let Just-the-Docs handle the mobile drawer */
-  .side-bar{
-    width: auto !important;
-    padding-top: 0.75rem !important;
-  }
+/* IMPORTANT: JTD logo is a DIV with background-image, not an <img> */
+.side-bar .site-title {
+  /* kill any “underline-as-background” effect that can draw a line through logo */
+  background-image: none !important;
+  text-decoration: none !important;
+}
 
-  /* Your "paper card" becomes full-bleed on mobile */
-  .main-content-wrap{
-    max-width: none !important;
-    padding: 1.25rem 1.1rem !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: #fff !important;
-  }
+/* Make header a clean stacking context so logo never sits behind nav */
+.side-bar .site-header {
+  position: relative !important;
+  z-index: 10 !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0.6rem 0.75rem 0.25rem 0.75rem !important; /* move logo UP */
+}
 
-  /* Slightly smaller reading text */
-  .main-content{
-    font-size: 16.5px !important;
-    line-height: 1.65 !important;
-    padding-top: 1rem !important;
-  }
+/* Layout: title/link contains the logo div */
+.side-bar .site-title {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
 
-  h1{ font-size: 1.7rem !important; }
-  h2{ font-size: 1.25rem !important; }
-  h3{ font-size: 1.05rem !important; }
+/* Size + position the logo */
+.side-bar .site-logo {
+  display: block !important;
+  position: relative !important;
+  z-index: 11 !important;
 
-  /* Don’t force nav always expanded on mobile */
-  .nav-list-expander{
-    display: inline-flex !important;
-  }
-  .nav-list .nav-list-item > .nav-list{
+  width: 240px !important;     /* bigger */
+  height: 110px !important;    /* adjust for your logo aspect */
+  margin: 0.15rem auto 0.6rem auto !important;
+
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+}
+
+/* Ensure nav starts BELOW header; never overlaps */
+.side-bar .site-nav {
+  position: relative !important;
+  z-index: 1 !important;
+  margin-top: 0.25rem !important;
+}
+
+
+/* ==================================
+   NAV: “Notes” expanded on DESKTOP
+   ================================== */
+
+/* Desktop only: keep nested nav open */
+@media (min-width: 50rem) {
+  /* hide expand/collapse triangles */
+  .nav-list-expander {
     display: none !important;
   }
-  .nav-list-item.active > .nav-list{
+
+  /* force ALL nested lists open */
+  .nav-list .nav-list-item > .nav-list {
     display: block !important;
   }
 
-  /* Prevent header/logo overlap issues */
-  .side-bar .site-header{
-    padding: 0.75rem 0.75rem 0.5rem 0.75rem !important;
+  /* specifically ensure Notes (2nd item) stays open even if theme toggles it */
+  .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > ul.nav-list {
+    display: block !important;
   }
-  .side-bar .site-logo{
-    width: 200px !important;
-    height: 90px !important;
-    margin: 0.5rem auto 0.5rem auto !important;
-  }
+}
 
-  /* Code blocks: horizontal scroll instead of breaking layout */
-  pre{
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-  code{
-    word-break: normal !important;
-    white-space: pre !important;
-  }
-
-  /* Math: allow long equations to scroll on mobile */
-  mjx-container{
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    max-width: 100%;
+/* Mobile: DO NOT force expand (let the drawer behave normally) */
+@media (max-width: 50rem) {
+  .nav-list-expander {
+    display: inline-flex !important;
   }
 }
 
 
+/* ==================================
+   NAV LOOK: left border indicator + hover fade
+   ================================== */
+
+/* Remove big active background from theme */
+.nav-list .nav-list-link.active {
+  background: transparent !important;
+  font-weight: 600;
+  color: #1c2128;
+}
+
+/* Make links “book-ish” and leave room for left rule */
+.nav-list .nav-list-link {
+  position: relative;
+  padding: 0.35rem 0.5rem 0.35rem 0.85rem; /* left padding for rule */
+  border-radius: 8px;
+  transition: color 160ms ease, opacity 160ms ease;
+}
+
+/* Subtle hover fade */
+.nav-list .nav-list-link:hover {
+  opacity: 0.86;
+}
+
+/* Left vertical accent rule (active) */
+.nav-list .nav-list-link.active::before {
+  content: "";
+  position: absolute;
+  left: 0.35rem;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(31, 35, 41, 0.45); /* neutral academic grey */
+}
+
+/* Optional: slightly stronger for the section parent (Notes) when inside it */
+.nav-list-item.active > .nav-list-link::before {
+  background: rgba(31, 35, 41, 0.6);
+}
 
 
+/* ==================================
+   MOBILE TUNING
+   ================================== */
 
+@media (max-width: 50rem) {
+  /* Reduce logo so it doesn’t dominate mobile header */
+  .side-bar .site-logo {
+    width: 180px !important;
+    height: 72px !important;
+    margin: 0.25rem auto 0.35rem auto !important;
+  }
 
+  /* Content panel padding smaller on mobile */
+  .main-content-wrap {
+    padding: 1.25rem 1.1rem !important;
+    border-radius: 12px !important;
+    margin: 0.75rem !important;
+  }
 
-
-
+  /* Slightly smaller body text for phone reading */
+  .main-content {
+    font-size: 16.5px !important;
+    line-height: 1.7 !important;
+  }
+}
 
