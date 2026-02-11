@@ -20,4 +20,7 @@ back_to_top: true
 back_to_top_text: "Back to top"
 nav_external_links_new_tab: true
 color_scheme: light
+aux_links:
+  "Home":
+    - "/geometry-first-fem/"
 
