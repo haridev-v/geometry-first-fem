@@ -1,121 +1,96 @@
-/* ============================================================
-   Geometry-First FEM — “Monograph” CSS (Just-the-Docs)
-   Clean, non-conflicting, desktop-expanded Notes, mobile-friendly
-   ============================================================ */
-
-/* ---- Typography ---- */
+/* =========================
+   Fonts
+   ========================= */
 @import url("https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 
-/* ---- Base typography split: UI sans, content serif ---- */
-.side-bar,
-.site-header,
-.site-nav,
-.nav-list,
-.search,
-.breadcrumb-nav,
-.aux-nav,
-.main-header {
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+/* =========================
+   Base typography
+   ========================= */
+:root{
+  --ui-font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --body-font: "STIX Two Text", Georgia, "Times New Roman", serif;
+
+  --ink: #1f2329;
+  --muted: rgba(31,35,41,0.65);
+
+  --sidebar-bg: #f4f5f7;
+  --paper: #ffffff;
+
+  --rule: rgba(0,0,0,0.08);
+  --rule-strong: #e2e4ea;
+
+  --active-rule: rgba(31,35,41,0.55);
 }
 
-.main-content {
-  font-family: "STIX Two Text", Georgia, "Times New Roman", serif;
+/* UI is sans, content is serif */
+.side-bar, .site-header, .nav-list, .search, .breadcrumb-nav{
+  font-family: var(--ui-font);
+}
+.main-content{
+  font-family: var(--body-font);
   font-size: 18px;
   line-height: 1.75;
   letter-spacing: 0.1px;
+  color: var(--ink);
 }
 
-/* ============================================================
-   Layout: sidebar + paper-like content panel
-   ============================================================ */
-
-.side-bar {
-  width: 270px;
-  background: #f4f5f7;
-  border-right: 1px solid #dcdfe6;
-  padding-top: 0.8rem;
-}
-
-@media (min-width: 66.5rem) {
-  .main {
-    margin-left: 270px;
-  }
-}
-
-/* “Paper” content panel */
-.main-content-wrap {
+/* =========================
+   Content "paper" panel
+   ========================= */
+.main-content-wrap{
   max-width: 820px;
-  background: #ffffff;
+  background: var(--paper);
   border-radius: 14px;
   padding: 2.5rem 3rem;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.04);
 }
 
-/* Slightly soften default separators */
-hr {
-  border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  margin: 2rem 0;
-}
-
-/* ============================================================
-   Headings: book-ish
-   ============================================================ */
-
-h1, h2, h3 {
-  font-family: "STIX Two Text", Georgia, serif;
+/* Headings */
+h1, h2, h3{
+  font-family: var(--body-font);
   font-weight: 600;
 }
-
-h1 {
+h1{
   font-size: 2.1rem;
   margin-bottom: 1.2rem;
 }
-
-h2 {
+h2{
   margin-top: 2.2rem;
   padding-top: 0.6rem;
-  border-top: 1px solid #e2e4ea;
-  font-size: 1.55rem;
+  border-top: 1px solid var(--rule-strong);
 }
-
-h3 {
+h3{
   font-size: 1.2rem;
   margin-top: 1.6rem;
 }
 
-/* Links: calmer */
-a {
+hr{
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+
+a{
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 
-/* Lists: breathing room */
-.main-content ul,
-.main-content ol {
-  margin-top: 0.6rem;
-  margin-bottom: 0.9rem;
-}
-.main-content li {
-  margin: 0.25rem 0;
-}
-
 /* Code */
-code { font-size: 0.95em; }
-pre {
+pre{
   border-radius: 10px;
   padding: 0.9rem 1rem;
   line-height: 1.5;
 }
+code{ font-size: 0.95em; }
 
-/* Math spacing */
-mjx-container[jax="CHTML"][display="true"] {
+/* Math */
+mjx-container[jax="CHTML"][display="true"]{
   margin: 1.2rem 0;
 }
 
-/* Blockquotes */
-blockquote {
+/* Quotes */
+blockquote{
   border-left: 4px solid rgba(0,0,0,0.18);
   padding: 0.75rem 1rem;
   margin: 1rem 0;
@@ -123,131 +98,75 @@ blockquote {
   border-radius: 10px;
 }
 
-/* Callouts (Definition/Theorem/Remark) */
-.callout {
-  padding: 0.9rem 1rem;
-  border: 1px solid rgba(0,0,0,0.12);
-  border-radius: 12px;
-  background: rgba(0,0,0,0.02);
-  margin: 1rem 0;
+/* =========================
+   Sidebar (desktop)
+   ========================= */
+.side-bar{
+  background: var(--sidebar-bg);
+  border-right: 1px solid rgba(0,0,0,0.08);
+  width: 270px;
+  padding-top: 0.8rem;
 }
-.callout .label {
-  font-family: Inter, system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 0.95rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  opacity: 0.75;
+@media (min-width: 66.5rem){
+  .main{ margin-left: 270px; }
 }
 
-/* Figures */
-.figure {
-  margin: 1.2rem 0;
-  text-align: center;
-}
-.figure img {
-  max-width: 100%;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.10);
-}
-.figure .caption {
-  margin-top: 0.5rem;
-  font-size: 0.95rem;
-  opacity: 0.75;
-  font-style: italic;
-}
-
-/* ============================================================
-   Sidebar header + logo (Just-the-Docs logo is a DIV background)
-   Fix: no line through logo, no overlap, correct stacking
-   ============================================================ */
-
-.side-bar .site-header {
-  position: relative !important;
-  z-index: 10 !important;
-
+/* =========================
+   Logo: Just-the-Docs uses a DIV with background-image
+   ========================= */
+.side-bar .site-header{
   border: none !important;
   box-shadow: none !important;
   background: transparent !important;
 
-  padding: 0.35rem 0.75rem 0.25rem 0.75rem !important;
-  height: auto !important;
-  overflow: visible !important;
+  /* make it a clean stacking context */
+  position: relative;
+  z-index: 5;
+  padding: 0.4rem 0.75rem 0.25rem 0.75rem;
 }
 
-.side-bar .site-header::before,
-.side-bar .site-header::after {
-  content: none !important;
-  display: none !important;
-}
-
-/* site-title wraps logo div — center it nicely */
-.side-bar .site-title {
+/* the clickable title container */
+.side-bar .site-title{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-image: none !important;
   text-decoration: none !important;
-
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 1.15;
-  font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: -0.2px;
 }
 
-/* Logo sizing (desktop) */
-.side-bar .site-logo {
-  position: relative !important;
-  z-index: 11 !important;
-
+/* the logo itself */
+.side-bar .site-title .site-logo{
   display: block !important;
-  width: min(270px, 95%) !important;
-  height: 130px !important;
-  margin: 0.05rem auto 0.55rem auto !important;
+  width: 260px !important;   /* desktop size */
+  height: 120px !important;
+  margin: 0.1rem auto 0.6rem auto !important;
 
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: contain !important;
 }
 
-/* Ensure nav always starts below header */
-.side-bar .site-nav {
-  position: relative !important;
-  z-index: 1 !important;
-  margin-top: 0.15rem !important;
-}
-
-/* ============================================================
-   Nav: left indicator (not background) + subtle hover fade
-   ============================================================ */
-
-/* Remove theme active background */
-.nav-list .nav-list-link.active {
-  background: transparent !important;
-  font-weight: 600;
-  color: #1c2128;
-}
-
-/* Base link */
-.nav-list .nav-list-link {
+/* =========================
+   Nav look: left rule + subtle hover
+   ========================= */
+.nav-list .nav-list-link{
   position: relative;
-  padding: 0.35rem 0.5rem 0.35rem 0.95rem; /* room for left rule */
+  padding: 0.35rem 0.5rem 0.35rem 0.85rem;
   border-radius: 8px;
   transition: opacity 160ms ease, color 160ms ease;
 }
-
-/* Hover: subtle fade, no big blocks */
-.nav-list .nav-list-link:hover {
+.nav-list .nav-list-link:hover{
   opacity: 0.86;
-  background: transparent !important;
 }
-
-/* Active left rule */
-.nav-list .nav-list-link.active::before {
+.nav-list .nav-list-link.active{
+  background: transparent !important;
+  font-weight: 600;
+  color: var(--ink);
+}
+.nav-list .nav-list-link.active::before{
   content: "";
   position: absolute;
   left: 0.35rem;
@@ -255,356 +174,118 @@ blockquote {
   bottom: 0.35rem;
   width: 2px;
   border-radius: 2px;
-  background: rgba(31, 35, 41, 0.55);
+  background: var(--active-rule);
 }
 
-/* Optional: nested list guide */
-.nav-list .nav-list {
+/* Indent children visually */
+.nav-list .nav-list{
   margin-left: 10px;
   border-left: 1px solid rgba(0,0,0,0.08);
   padding-left: 10px;
 }
 
-/* ============================================================
-   Notes always expanded on DESKTOP only
-   Mobile: keep drawer behavior normal
-   ============================================================ */
-
-@media (min-width: 66.5rem) {
-  /* hide expand/collapse buttons */
-  .nav-list-expander {
-    display: none !important;
-  }
-
-  /* force all nested lists open */
-  .nav-list .nav-list-item > .nav-list {
-    display: block !important;
-  }
-
-  /* ensure Notes (2nd top item) stays open */
-  .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > ul.nav-list {
-    display: block !important;
-  }
+/* =========================
+   Desktop: keep Notes expanded
+   ========================= */
+@media (min-width: 50rem){
+  .nav-list-expander{ display: none !important; }
+  .nav-list .nav-list-item > .nav-list{ display: block !important; }
 }
 
-@media (max-width: 66.5rem) {
-  /* DO NOT force open on mobile */
-  .nav-list-expander {
-    display: inline-flex !important;
-  }
-  .nav-list .nav-list-item > .nav-list {
-    display: none !important;
-  }
-  .nav-list-item.active > .nav-list {
-    display: block !important;
-  }
-}
+/* =========================
+   MOBILE (critical fixes)
+   ========================= */
+@media (max-width: 66.5rem){
 
-/* ============================================================
-   Mobile tuning (content, logo, math/code)
-   ============================================================ */
+  /* 1) Remove the sidebar border on mobile -> removes that vertical line */
+  .side-bar{
+    width: 100% !important;
+    border-right: none !important;
+  }
 
-@media (max-width: 66.5rem) {
-  /* Content: less “cardy”, more natural on phone */
-  .main-content-wrap {
+  /* 2) Make the top bar a real flex header: logo left, hamburger right */
+  .side-bar .site-header{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0.45rem 0.75rem !important;
+  }
+
+  /* Logo container should not “center stack” on mobile */
+  .side-bar .site-title{
+    flex: 1 1 auto !important;
+    align-items: flex-start !important;
+  }
+
+  /* Smaller logo for mobile top bar */
+  .side-bar .site-title .site-logo{
+    width: 200px !important;
+    height: 80px !important;
+    margin: 0 !important;
+  }
+
+  /* 3) Put the hamburger at the far right */
+  .side-bar .site-header .site-button{
+    position: static !important;
+    margin-left: 0.75rem !important;
+    z-index: 10 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Content card: less padding on mobile */
+  .main-content-wrap{
     max-width: none !important;
+    margin: 0.75rem !important;
     padding: 1.25rem 1.1rem !important;
     border-radius: 12px !important;
-    margin: 0.75rem !important;
-    box-shadow: none !important;
-    background: #fff !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.03) !important;
   }
-
-  .main-content {
+  .main-content{
     font-size: 16.5px !important;
     line-height: 1.7 !important;
     padding-top: 1rem !important;
   }
+  h1{ font-size: 1.7rem !important; }
+  h2{ font-size: 1.25rem !important; }
+  h3{ font-size: 1.05rem !important; }
 
-  h1 { font-size: 1.7rem !important; }
-  h2 { font-size: 1.25rem !important; }
-  h3 { font-size: 1.05rem !important; }
-
-  /* Logo smaller on mobile so it doesn’t dominate */
-  .side-bar .site-logo {
-    width: min(220px, 92%) !important;
-    height: 92px !important;
-    margin: 0.25rem auto 0.45rem auto !important;
-  }
-
-  /* Code blocks: scroll horizontally instead of breaking layout */
-  pre {
+  /* Code blocks & Math should scroll horizontally */
+  pre{
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
   }
-  code {
-    word-break: normal !important;
-    white-space: pre !important;
-  }
-
-  /* Math: allow horizontal scroll for long equations */
-  mjx-container {
+  mjx-container{
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
   }
-}
 
-/* ============================================================
-   Print / PDF export styling
-   ============================================================ */
-
-@media print {
-  .side-bar,
-  .site-header,
-  .search,
-  .nav-list,
-  .aux-nav,
-  .breadcrumb-nav,
-  .main-header {
-    display: none !important;
-  }
-
-  .main { margin-left: 0 !important; }
-  .main-content-wrap {
-    max-width: none !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-  }
-
-  body { font-size: 11pt; line-height: 1.55; }
-
-  h1, h2, h3 {
-    page-break-after: avoid;
-    page-break-inside: avoid;
-  }
-  pre, blockquote, table, mjx-container {
-    page-break-inside: avoid;
-  }
-
-  a[href^="http"]:after {
-    content: " (" attr(href) ")";
-    font-size: 9pt;
-  }
-}
-
-/* ============================
-   Bigger logo on DESKTOP only
-   ============================ */
-
-@media (min-width: 66.5rem) {
-
-  .side-bar .site-logo {
-    width: min(300px, 96%) !important;   /* increase width */
-    height: 160px !important;            /* increase height */
-
-    margin: 0.1rem auto 0.75rem auto !important;
-
-    background-size: contain !important;
-  }
-
-}
-@media (min-width: 66.5rem) {
-  .side-bar a.site-title {
-    height: auto !important;
-    min-height: 0 !important;
-    padding: 0 !important;
-  }
-}
-
-/* ============================
-   DESKTOP LOGO SIZE (force)
-   ============================ */
-@media (min-width: 66.5rem) {
-  .side-bar .site-header { 
-    padding-top: 0.5rem !important;   /* move logo up */
-    padding-bottom: 0.4rem !important;
-  }
-
-  .side-bar .site-logo {
-    display: block !important;
-    width: 240px !important;           /* <-- change this */
-    height: 120px !important;          /* <-- and this */
-    margin: 0.1rem auto 0.8rem auto !important;
-
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-  }
-}
-/* ============================================================
-   MOBILE: make "Notes" expandable (tap expander, not the link)
-   ============================================================ */
-@media (max-width: 66.5rem) {
-
-  /* Ensure expanders are visible and clickable */
+  /* 4) Mobile nav behaviour:
+        Let expanders work normally (don’t force all open) */
   .nav-list-expander{
     display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
+  }
 
-    width: 44px;          /* thumb-friendly */
-    height: 44px;
-    margin-right: 6px;
-    border-radius: 10px;
-    z-index: 5;
+  /* OPTIONAL: Make tapping "Notes" expand instead of navigating:
+     We make the expander button cover the whole row for the Notes item. */
+  .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2){
     position: relative;
   }
-
-  /* Make sure the expander sits ABOVE the link hit-area */
-  .nav-list-item{
-    position: relative;
-  }
-
-  /* Reduce the link’s left padding so it doesn’t sit under the expander */
-  .nav-list-item > .nav-list-link{
-    padding-left: 0.6rem !important;
-    margin-left: 0 !important;
-  }
-
-  /* Keep nested lists collapsed by default */
-  .nav-list .nav-list-item > .nav-list{
-    display: none !important;
-  }
-
-  /* Expand when aria-expanded is true (Just-the-Docs toggles this) */
-  .nav-list-item > .nav-list-expander[aria-expanded="true"] + .nav-list-link + .nav-list{
-    display: block !important;
-  }
-
-  /* Make the arrow rotation obvious */
-  .nav-list-expander svg{
-    transition: transform 160ms ease;
-  }
-  .nav-list-expander[aria-expanded="true"] svg{
-    transform: rotate(90deg);
-  }
-}
-/* ============================
-   MOBILE NAV: make expanders usable
-   (fixes: tapping Notes goes to /notes/ instead of expanding)
-   ============================ */
-@media (max-width: 50rem) {
-
-  /* Ensure expanders are visible on mobile */
-  .site-nav .nav-list-expander{
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-
-    /* big thumb target */
-    width: 44px !important;
-    height: 44px !important;
-
-    /* make it feel like a button */
-    border-radius: 10px;
-    margin: 0 !important;
-  }
-
-  /* Put the expander into its own left hit-zone */
-  .site-nav .nav-list-item{
-    position: relative;
-  }
-  .site-nav .nav-list-item > .nav-list-expander{
+  .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > .nav-list-expander{
     position: absolute !important;
-    left: 6px;
-    top: 2px;
-    z-index: 2;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important;   /* invisible tap target */
+    z-index: 5 !important;
   }
-
-  /* Push the link text right so it doesn’t overlap the expander hit-zone */
-  .site-nav .nav-list-item > .nav-list-link{
-    display: block;
-    padding-left: 56px !important;  /* space for the 44px expander */
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-  }
-
-  /* Submenu closed by default on mobile */
-  .site-nav .nav-list-item > .nav-list{
-    display: none !important;
-  }
-
-  /* Submenu opens only when the expander says expanded */
-  .site-nav .nav-list-expander[aria-expanded="true"] + .nav-list-link + .nav-list{
-    display: block !important;
-  }
-
-  /* Optional: subtle hover/press feedback for expander */
-  .site-nav .nav-list-expander:active{
-    background: rgba(0,0,0,0.06);
-  }
-   @media (max-width: 50rem) {
-  .side-bar .site-logo{
-    width: 180px !important;
-    height: 70px !important;
-    margin: 0.25rem auto 0.25rem auto !important;
-  }
-  .side-bar .site-header{
-    padding: 0.35rem 0.6rem 0.25rem 0.6rem !important;
+  /* Disable clicking the Notes link itself (so it doesn’t jump to TOC page) */
+  .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > a.nav-list-link{
+    pointer-events: none !important;
   }
 }
-
-}
-/* ============================
-   MOBILE: Move hamburger to content side
-   ============================ */
-@media (max-width: 50rem) {
-
-  /* Sidebar header shouldn't constrain the button */
-  .side-bar .site-header {
-    position: relative !important;
-  }
-
-  /* Move hamburger outside the sidebar visual boundary */
-  #menu-button {
-    position: fixed !important;     /* detach from sidebar */
-    right: 16px !important;         /* push to right edge */
-    top: 18px !important;           /* align with logo baseline */
-    z-index: 2000 !important;       /* ensure above everything */
-
-    background: transparent;
-  }
-
-  /* Hide default placement spacing */
-  .side-bar .site-header #menu-button {
-    margin-left: 0 !important;
-  }
-}
-/* ============================
-   MOBILE: move hamburger to the right of the sidebar divider
-   ============================ */
-@media (max-width: 50rem) {
-
-  /* Make the header a positioning context */
-  .side-bar .site-header {
-    position: relative !important;
-  }
-
-  /* This is the hamburger button on JTD */
-  .side-bar .site-header .site-button {
-    position: absolute !important;
-
-    /* push it across the sidebar boundary */
-    left: calc(100% + 22px) !important;
-
-    /* vertical alignment */
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-
-    z-index: 3000 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-
-  /* Ensure it stays clickable above everything */
-  .side-bar, .main-header, .main-content-wrap {
-    overflow: visible !important;
-  }
-}
-
-
-
-
