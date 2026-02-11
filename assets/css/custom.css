@@ -389,3 +389,21 @@ blockquote {
     font-size: 9pt;
   }
 }
+
+/* ============================
+   Bigger logo on DESKTOP only
+   ============================ */
+
+@media (min-width: 66.5rem) {
+
+  .side-bar .site-logo {
+    width: min(300px, 96%) !important;   /* increase width */
+    height: 160px !important;            /* increase height */
+
+    margin: 0.1rem auto 0.75rem auto !important;
+
+    background-size: contain !important;
+  }
+
+}
+
