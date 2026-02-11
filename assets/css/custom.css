@@ -1,20 +1,16 @@
-/* Slightly wider text column */
 .main-content-wrap {
-  max-width: 980px;
+  max-width: 1000px;
 }
 
-/* Better body typography */
 .main-content {
   font-size: 17px;
   line-height: 1.7;
 }
 
-/* Make headings feel more "book" */
-h1 { font-size: 2.2rem; }
-h2 { margin-top: 2.0rem; }
-h3 { margin-top: 1.5rem; }
+h1 {
+  font-weight: 600;
+}
 
-/* Make inline code less shouty */
-code {
-  font-size: 0.95em;
+h2 {
+  margin-top: 2rem;
 }
