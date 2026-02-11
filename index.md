@@ -1,6 +1,7 @@
 ---
 layout: default
-title: FEM Notes
+title: Home
+nav_order: 1
 ---
 
 # Geometry-First Foundations of the Finite Element Method
