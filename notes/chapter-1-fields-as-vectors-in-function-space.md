@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Chapter 1 — Fields as Vectors in Function Space
-parent: Notes
+parent: Table of Contents
 nav_order: 1
 ---
 # {{ page.title }}
