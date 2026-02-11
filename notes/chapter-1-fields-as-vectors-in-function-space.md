@@ -223,7 +223,6 @@ f(x_3) \\
 \right]
 $$
 
-
 As the spatial resolution increases, the number of components increases without bound.  
 Thus, function spaces are *infinite-dimensional vector spaces*.
 ---
