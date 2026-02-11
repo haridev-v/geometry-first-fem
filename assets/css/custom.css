@@ -337,8 +337,8 @@ blockquote{
 
   /* Hard-force the logo box size (don’t let flex shrink it) */
   .side-bar .site-header a.site-title .site-logo{
-    width: 320px !important;
-    height: 120px !important;
+    width: 190px !important;
+    height: auto !important;
 
     max-width: none !important;
     max-height: none !important;
