@@ -523,6 +523,77 @@ blockquote{
     opacity: 0.6;
   }
 }
+/* =========================================
+   FIX: desktop sidebar overlap (header + nav)
+   ========================================= */
+
+/* Desktop/tablet: keep Just-the-Docs normal flow */
+@media (min-width: 50rem) {
+  .side-bar { 
+    display: block !important; 
+  }
+
+  .side-bar .site-header {
+    position: relative !important;
+    z-index: 2 !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding-bottom: 0.9rem !important; /* space for description */
+  }
+
+  .side-bar .site-nav {
+    position: static !important;   /* CRITICAL: don't let nav float up */
+    top: auto !important;
+    overflow: visible !important;
+    margin-top: 0.25rem !important;
+    z-index: 1 !important;
+  }
+}
+
+/* Mobile only: use flex column so nav never overlaps header */
+@media (max-width: 50rem) {
+  .side-bar{
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .side-bar .site-header{
+    flex: 0 0 auto !important;
+  }
+  .side-bar .site-nav{
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* =========================================
+   Subtitle under logo (safe + subtle)
+   ========================================= */
+
+.side-bar .site-title{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  background-image: none !important;
+}
+
+.side-bar .site-title::after{
+  content: "Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.";
+  display: block !important;
+  max-width: 240px;
+  padding: 0 0.6rem;
+  margin: 0.35rem auto 0.85rem auto;
+
+  font-family: "STIX Two Text", Georgia, serif;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: rgba(31, 35, 41, 0.55);
+  text-align: center;
+
+  white-space: normal !important;
+}
+
 
 
 
