@@ -29,7 +29,7 @@ nav_show_all: true
 nav_show_all: true
 nav_next_prev: true
 
-color_scheme: monograph
+color_scheme: ink
 aux_links:
   "Home":
     - "/geometry-first-fem/"
