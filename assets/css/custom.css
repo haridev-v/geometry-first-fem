@@ -315,8 +315,81 @@ blockquote{
 @media (min-width: 66.5rem){
   .side-bar .site-title .site-logo{
     width: 300px !important;
-    height: 120px !important;
+    height: 140px !important;
     margin: 0.1rem auto 0.7rem auto !important;
     background-size: contain !important;
+  }
+}
+/* ============================
+   DESKTOP: FORCE LOGO BIG
+   (Just-the-Docs uses a DIV.site-logo with background-image)
+   ============================ */
+@media (min-width: 66.5rem){
+
+  /* Let the title/link span the sidebar width */
+  .side-bar .site-header a.site-title{
+    width: 100% !important;
+    max-width: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* Hard-force the logo box size (don’t let flex shrink it) */
+  .side-bar .site-header a.site-title .site-logo{
+    width: 320px !important;
+    height: 150px !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    flex: 0 0 auto !important;
+
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+
+    margin: 0.1rem auto 0.7rem auto !important;
+  }
+
+  /* Ensure header isn't clipping */
+  .side-bar .site-header{
+    height: auto !important;
+    overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding-top: 0.25rem !important;
+  }
+}
+/* ============================
+   MOBILE: bring back the Notes arrow (expander)
+   ============================ */
+@media (max-width: 50rem){
+
+  /* Force the expander button to exist + be tappable */
+  .side-bar .site-nav .nav-list-item > .nav-list-expander{
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    width: 2rem !important;
+    height: 2rem !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    margin-right: 0.25rem !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* Ensure the chevron svg shows */
+  .side-bar .site-nav .nav-list-expander svg{
+    display: block !important;
+    width: 1.1rem !important;
+    height: 1.1rem !important;
+  }
+
+  /* Keep the Notes link clickable separately */
+  .side-bar .site-nav .nav-list-item > .nav-list-link{
+    display: inline-block;
   }
 }
