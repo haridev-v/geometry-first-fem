@@ -681,199 +681,96 @@ blockquote{
   }
 }
 /* ======================================================
-   MONOGRAPH SEARCH BAR (Desktop)
+   MONOGRAPH SEARCH BAR (Clean, non-overlapping)
+   Put this at the END of your CSS
    ====================================================== */
-
-/* Remove floating pill look */
-.search {
-  padding: 0.5rem 0.9rem 0.9rem 0.9rem !important;
-  background: transparent !important;
-}
-
-/* Make search width match sidebar */
-.side-bar .search {
-  width: 100% !important;
-}
-
-/* Input field */
-.search-input {
-  font-family: var(--ui-font) !important;
-  font-size: 0.9rem !important;
-
-  background: #ffffff !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-  border-radius: 8px !important;
-
-  padding: 0.6rem 0.85rem 0.6rem 3.5rem !important;
-  box-shadow: none !important;
-
-  width: 100% !important;
-}
-
-/* Focus: subtle academic highlight */
-.search-input:focus {
-  outline: none !important;
-  border-color: rgba(31,35,41,0.18) !important;
-  box-shadow: 0 0 0 2px rgba(31,35,41,0.06) !important;
-}
-
-/* Placeholder tone */
-.search-input::placeholder {
-  color: rgba(31,35,41,0.45) !important;
-}
-
-/* Search results dropdown */
-.search-results {
-  border-radius: 8px !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06) !important;
-}
-
-/* Result entries */
-.search-results .search-result {
-  padding: 0.65rem 0.85rem !important;
-  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
-}
-
-.search-results .search-result:last-child {
-  border-bottom: none !important;
-}
-
-/* Title styling */
-.search-results .search-result-title {
-  font-weight: 400 !important;
-  text-decoration: none !important;
-}
-
-.search-results .search-result-title:hover {
-  text-decoration: underline !important;
-}
-/* =========================================
-   Refined Monograph Search Bar (Desktop)
-   ========================================= */
 
 @media (min-width: 50rem){
 
-  /* Wrapper spacing so it never overlaps content */
-  .search{
-    margin: 0.6rem auto 1.4rem auto !important;
-    max-width: 520px !important;
-    position: relative !important;
-    z-index: 3 !important;
+  /* Ensure the header row doesn't clip the search */
+  .main-header{
+    overflow: visible !important;
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.6rem !important;
   }
 
-  /* The input field itself */
-  .search-input{
-    height: 42px !important;
-    padding: 0 1.1rem !important;
+  /* Search container */
+  .search{
+    background: transparent !important;
+    padding: 0 !important;
 
-    border-radius: 24px !important;   /* rounder */
-    border: 1px solid rgba(0,0,0,0.08) !important;
+    max-width: 520px !important;
+    margin: 0.25rem auto 1rem auto !important;
+
+    position: relative !important;
+    z-index: 5 !important;
+  }
+
+  /* The wrap must be positioning context for the icon */
+  .search-input-wrap{
+    position: relative !important;
+  }
+
+  /* Input (single source of truth) */
+  .search-input{
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    height: 40px !important;
+    border-radius: 999px !important;
 
     font-family: "STIX Two Text", Georgia, serif !important;
     font-size: 0.95rem !important;
 
-    background: #ffffff !important;
+    background: #fff !important;
+    border: 1px solid rgba(0,0,0,0.08) !important;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
 
-    transition: all 160ms ease !important;
+    /* IMPORTANT: leave room for icon */
+    padding: 0 1.1rem 0 2.6rem !important;
+
+    transition: border-color 160ms ease, box-shadow 160ms ease !important;
   }
 
-  /* Focus state */
   .search-input:focus{
     outline: none !important;
     border-color: rgba(0,0,0,0.18) !important;
     box-shadow: 0 3px 12px rgba(0,0,0,0.06) !important;
   }
 
-}
-.main-content-wrap{
-  margin-top: 1rem !important;
-}
-/* =========================================
-   Refined Search Icon (Monograph Style)
-   ========================================= */
-
-@media (min-width: 50rem){
-
-  /* Adjust padding so text doesn't crowd icon */
-  .search-input-wrap{
-  position: relative !important;
-   }
-   .search-input{
-    padding-left: 2.4rem !important;
+  .search-input::placeholder{
+    color: rgba(31,35,41,0.45) !important;
   }
-   .search-input-wrap svg{
-  position: absolute !important;
-  left: 0.85rem !important;          /* keep a normal left value */
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  pointer-events: none !important;
-   }
 
-  /* Style the search icon */
-  .search .search-icon{
-    left: 0.25rem !important;
+  /* Icon — target ONLY the official icon wrapper */
+  .search-input-wrap .search-icon{
+    position: absolute !important;
+    left: 0.95rem !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
 
     width: 14px !important;
     height: 14px !important;
 
-    opacity: 0.5 !important;        /* softer */
+    opacity: 0.45 !important;
+    pointer-events: none !important;
   }
 
-  /* Lighten SVG stroke color */
-  .search .search-icon svg{
+  .search-input-wrap .search-icon svg{
+    display: block !important;
+    width: 14px !important;
+    height: 14px !important;
     stroke: rgba(31,35,41,0.45) !important;
   }
-   /* 1) Stop the header/top area from clipping the search */
-.main-header,
-.site-header,
-.header,
-.search{
-  height: auto !important;
-  overflow: visible !important;
-}
 
-/* 2) Make sure the search bar is not absolutely positioned/clipped */
-.search{
-  position: relative !important;
-  z-index: 5 !important;
-}
-
-/* 3) Ensure the input stays fully inside the available width */
-.search-input-wrap{
-  width: 100% !important;
-  max-width: 520px !important;  /* tweak */
-  margin: 0.5rem auto 0.75rem auto !important;
-}
-
-.search-input{
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-
-}
-/* =========================================
-   Move search bar upward (desktop)
-   ========================================= */
-
-@media (min-width: 50rem){
-
-  /* Reduce header vertical padding */
-  .main-header{
-    padding-top: 0.35rem !important;
-    padding-bottom: 0.35rem !important;
+  /* Results dropdown */
+  .search-results{
+    border-radius: 10px !important;
+    border: 1px solid rgba(0,0,0,0.08) !important;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.08) !important;
   }
-
-  /* Pull search container upward slightly */
-  .search{
-    margin-top: -0.4rem !important;
-  }
-
 }
+
 
 
 
