@@ -170,5 +170,28 @@ blockquote {
   font-size: 1.1rem;
   font-weight: 700;
 }
+/* Create paper-like content panel */
+.main-content-wrap {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.04);
+}
+
+/* Slightly soften horizontal rules */
+hr {
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Sidebar refinement */
+.side-bar {
+  border-right: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Active nav cleaner */
+.nav-list .nav-list-link.active {
+  font-weight: 600;
+  color: #1c2128;
+}
 
 
