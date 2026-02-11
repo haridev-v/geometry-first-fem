@@ -129,3 +129,17 @@ blockquote {
     font-size: 9pt;
   }
 }
+
+/* Show site description under the title (Just the Docs brand area) */
+.site-title::after {
+  content: "\A" attr(data-title); /* fallback if description not injected */
+  white-space: pre;
+  display: none;
+}
+.site-title {
+  line-height: 1.15;
+}
+.site-header .site-title {
+  font-weight: 700;
+}
+
