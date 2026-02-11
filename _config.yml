@@ -22,6 +22,8 @@ nav_external_links_new_tab: true
 nav_external_links: false
 nav_sort: case_sensitive
 nav_enabled: true
+nav_show_all: true
+
 color_scheme: light
 aux_links:
   "Home":
