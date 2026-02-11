@@ -81,7 +81,7 @@ We are trying to approximate $u$ by vectors in $V_h$. The projection theorem sta
 To make this idea intuitive, consider a 2D space with a vector $AB$ where the goal is to find the minimum distance between a point $u$ and the vector $AB$. The closest point on the vector will be the foot of the perpendicular to the point $u$:
 
 <p align="center">
-  <img src="./figures/2derror.png" width="500">
+  <img src="../figures/2derror.png" width="500">
 </p>
 
 Now we extend this idea to a generalised vector space. If any component of $e$ lies in the subspace $V_h$, then the problem is not minimized:there exists a direction $v\in V_h$ such that moving along $v$ reduces the error.
