@@ -208,13 +208,12 @@ $$
 
 A function can be thought of as a vector whose components are indexed by space:
 $$
-f =
-\begin{bmatrix}
-f(x_1) \\
-f(x_2) \\
-f(x_3) \\
-\vdots
-\end{bmatrix}
+f \;\sim\;
+\left[
+\begin{matrix}
+f(x_1) \\ f(x_2) \\ f(x_3) \\ \vdots
+\end{matrix}
+\right].
 $$
 
 As the spatial resolution increases, the number of components increases without bound.  
