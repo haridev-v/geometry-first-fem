@@ -548,6 +548,32 @@ blockquote {
 }
 
 }
+/* ============================
+   MOBILE: Move hamburger to content side
+   ============================ */
+@media (max-width: 50rem) {
+
+  /* Sidebar header shouldn't constrain the button */
+  .side-bar .site-header {
+    position: relative !important;
+  }
+
+  /* Move hamburger outside the sidebar visual boundary */
+  #menu-button {
+    position: fixed !important;     /* detach from sidebar */
+    right: 16px !important;         /* push to right edge */
+    top: 18px !important;           /* align with logo baseline */
+    z-index: 2000 !important;       /* ensure above everything */
+
+    background: transparent;
+  }
+
+  /* Hide default placement spacing */
+  .side-bar .site-header #menu-button {
+    margin-left: 0 !important;
+  }
+}
+
 
 
 
