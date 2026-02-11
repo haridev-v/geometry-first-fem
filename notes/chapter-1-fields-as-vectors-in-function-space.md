@@ -295,8 +295,7 @@ where $\mathcal{L}$ is a (linear) operator acting on functions.
 An operator acting on functions can be viewed abstractly as an infinite-dimensional matrix:
 
 $$
-\mathcal{L}
-\;\sim\;
+\mathcal{L} =
 \left[
 \begin{array}{ccc}
 \ell_{11} & \ell_{12} & \cdots \\
@@ -318,6 +317,7 @@ The finite element method replaces the infinite-dimensional space $V$ with a fin
 The infinite-dimensional coefficient vector
 
 $$
+\mathbf{c} =
 \begin{bmatrix}
 c_1 \\
 c_2 \\
