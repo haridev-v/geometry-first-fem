@@ -1,448 +1,51 @@
-/* =========================
-   Fonts
-   ========================= */
-@import url("https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-
-/* =========================
-   Base typography
-   ========================= */
-:root{
-  --ui-font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --body-font: "STIX Two Text", Georgia, "Times New Roman", serif;
-
-  --ink: #1f2329;
-  --muted: rgba(31,35,41,0.65);
-
-  --sidebar-bg: #f4f5f7;
-  --paper: #ffffff;
-
-  --rule: rgba(0,0,0,0.08);
-  --rule-strong: #e2e4ea;
-
-  --active-rule: rgba(31,35,41,0.55);
-}
-
-/* UI is sans, content is serif */
-.side-bar, .site-header, .nav-list, .search, .breadcrumb-nav{
-  font-family: var(--ui-font);
-}
-.main-content{
-  font-family: var(--body-font);
-  font-size: 18px;
-  line-height: 1.75;
-  letter-spacing: 0.1px;
-  color: var(--ink);
-}
-
-/* =========================
-   Content "paper" panel
-   ========================= */
-.main-content-wrap{
-  max-width: 820px;
-  background: var(--paper);
-  border-radius: 14px;
-  padding: 2.5rem 3rem;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.04);
-}
-
-/* Headings */
-h1, h2, h3{
-  font-family: var(--body-font);
-  font-weight: 600;
-}
-h1{
-  font-size: 2.1rem;
-  margin-bottom: 1.2rem;
-}
-h2{
-  margin-top: 2.2rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--rule-strong);
-}
-h3{
-  font-size: 1.2rem;
-  margin-top: 1.6rem;
-}
-
-hr{
-  border: 0;
-  border-top: 1px solid var(--rule);
-  margin: 2rem 0;
-}
-
-a{
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-}
-
-/* Code */
-pre{
-  border-radius: 10px;
-  padding: 0.9rem 1rem;
-  line-height: 1.5;
-}
-code{ font-size: 0.95em; }
-
-/* Math */
-mjx-container[jax="CHTML"][display="true"]{
-  margin: 1.2rem 0;
-}
-
-/* Quotes */
-blockquote{
-  border-left: 4px solid rgba(0,0,0,0.18);
-  padding: 0.75rem 1rem;
-  margin: 1rem 0;
-  background: rgba(0,0,0,0.02);
-  border-radius: 10px;
-}
-
-/* =========================
-   Sidebar (desktop)
-   ========================= */
-.side-bar{
-  background: var(--sidebar-bg);
-  border-right: 1px solid rgba(0,0,0,0.08);
-  width: 270px;
-  padding-top: 0.8rem;
-}
-@media (min-width: 66.5rem){
-  .main{ margin-left: 270px; }
-}
-
-/* =========================
-   Logo: Just-the-Docs uses a DIV with background-image
-   ========================= */
-.side-bar .site-header{
-  border: none !important;
-  box-shadow: none !important;
-  background: transparent !important;
-
-  /* make it a clean stacking context */
-  position: relative;
-  z-index: 5;
-  padding: 0.4rem 0.75rem 0.25rem 0.75rem;
-}
-
-/* the clickable title container */
-.side-bar .site-title{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-image: none !important;
-  text-decoration: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* the logo itself */
-.side-bar .site-title .site-logo{
-  display: block !important;
-  width: 260px !important;   /* desktop size */
-  height: 120px !important;
-  margin: 0.1rem auto 0.6rem auto !important;
-
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: contain !important;
-}
-
-/* =========================
-   Nav look: left rule + subtle hover
-   ========================= */
-.nav-list .nav-list-link{
-  position: relative;
-  padding: 0.35rem 0.5rem 0.35rem 0.85rem;
-  border-radius: 8px;
-  transition: opacity 160ms ease, color 160ms ease;
-}
-.nav-list .nav-list-link:hover{
-  opacity: 0.86;
-}
-.nav-list .nav-list-link.active{
-  background: transparent !important;
-  font-weight: 600;
-  color: var(--ink);
-}
-.nav-list .nav-list-link.active::before{
-  content: "";
-  position: absolute;
-  left: 0.35rem;
-  top: 0.35rem;
-  bottom: 0.35rem;
-  width: 2px;
-  border-radius: 2px;
-  background: var(--active-rule);
-}
-
-/* Indent children visually */
-.nav-list .nav-list{
-  margin-left: 10px;
-  border-left: 1px solid rgba(0,0,0,0.08);
-  padding-left: 10px;
-}
-
-/* =========================
-   Desktop: keep Notes expanded
-   ========================= */
-@media (min-width: 50rem){
-  .nav-list-expander{ display: none !important; }
-  .nav-list .nav-list-item > .nav-list{ display: block !important; }
-}
-
-/* =========================
-   MOBILE (critical fixes)
-   ========================= */
-@media (max-width: 66.5rem){
-
-  /* 1) Remove the sidebar border on mobile -> removes that vertical line */
-  .side-bar{
-    width: 100% !important;
-    border-right: none !important;
-  }
-
-  /* 2) Make the top bar a real flex header: logo left, hamburger right */
-  .side-bar .site-header{
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 0.45rem 0.75rem !important;
-  }
-
-  /* Logo container should not “center stack” on mobile */
-  .side-bar .site-title{
-    flex: 1 1 auto !important;
-    align-items: flex-start !important;
-  }
-
-  /* Smaller logo for mobile top bar */
-  .side-bar .site-title .site-logo{
-    width: 200px !important;
-    height: 80px !important;
-    margin: 0 !important;
-  }
-
-  /* 3) Put the hamburger at the far right */
-  .side-bar .site-header .site-button{
-    position: static !important;
-    margin-left: 0.75rem !important;
-    z-index: 10 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-
-  /* Content card: less padding on mobile */
-  .main-content-wrap{
-    max-width: none !important;
-    margin: 0.75rem !important;
-    padding: 1.25rem 1.1rem !important;
-    border-radius: 12px !important;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.03) !important;
-  }
-  .main-content{
-    font-size: 16.5px !important;
-    line-height: 1.7 !important;
-    padding-top: 1rem !important;
-  }
-  h1{ font-size: 1.7rem !important; }
-  h2{ font-size: 1.25rem !important; }
-  h3{ font-size: 1.05rem !important; }
-
-  /* Code blocks & Math should scroll horizontally */
-  pre{
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-  mjx-container{
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    max-width: 100%;
-  }
-
-  /* 4) Mobile nav behaviour:
-        Let expanders work normally (don’t force all open) */
-  .nav-list-expander{
-    display: inline-flex !important;
-  }
-
-  /* Mobile: Notes should expand via the arrow (visible) */
-.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2){
-  position: relative;
-}
-
-/* Put the expander (arrow) back as a visible right-side control */
-.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > .nav-list-expander{
-  position: absolute !important;
-  right: 0.35rem !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-
-  width: 2.25rem !important;
-  height: 2.25rem !important;
-  opacity: 1 !important;          /* <-- show it */
-  z-index: 6 !important;
-
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* Make room for the arrow so text doesn't sit under it */
-.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > a.nav-list-link{
-  padding-right: 2.75rem !important;
-}
-
-/* Stop "Notes" text from navigating (so it doesn't jump to TOC);
-   user taps arrow to expand */
-.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > a.nav-list-link{
-  pointer-events: none !important;
-}
-
-/* Make arrow actually visible (some themes dim it) */
-.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > .nav-list-expander svg{
-  opacity: 0.85 !important;
-}
-
-  /* Disable clicking the Notes link itself (so it doesn’t jump to TOC page) */
-  .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > a.nav-list-link{
-    pointer-events: none !important;
-  }
-}
-/* DESKTOP logo size — force override (put at end of file) */
-@media (min-width: 66.5rem){
-  .side-bar .site-title .site-logo{
-    width: 220px !important;
-    height: 140px !important;
-    margin: 0.1rem auto 0.7rem auto !important;
-    background-size: contain !important;
-  }
-}
-/* ============================
-   DESKTOP: FORCE LOGO BIG
-   (Just-the-Docs uses a DIV.site-logo with background-image)
-   ============================ */
-@media (min-width: 66.5rem){
-
-  /* Let the title/link span the sidebar width */
-  .side-bar .site-header a.site-title{
-    width: 100% !important;
-    max-width: none !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  /* Hard-force the logo box size (don’t let flex shrink it) */
-  .side-bar .site-header a.site-title .site-logo{
-    width: 240px !important;
-    height: 150 !important;
-
-    max-width: none !important;
-    max-height: none !important;
-
-    flex: 0 0 auto !important;
-
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-
-    margin: 0.1rem auto 0.7rem auto !important;
-  }
-
-  /* Ensure header isn't clipping */
-  .side-bar .site-header{
-    height: auto !important;
-    overflow: visible !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding-top: 0.25rem !important;
-  }
-}
-/* ============================
-   MOBILE: bring back the Notes arrow (expander)
-   ============================ */
-@media (max-width: 50rem){
-
-  /* Force the expander button to exist + be tappable */
-  .side-bar .site-nav .nav-list-item > .nav-list-expander{
-    display: inline-flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-
-    width: 2rem !important;
-    height: 2rem !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    margin-right: 0.25rem !important;
-    flex: 0 0 auto !important;
-  }
-
-  /* Ensure the chevron svg shows */
-  .side-bar .site-nav .nav-list-expander svg{
-    display: block !important;
-    width: 1.1rem !important;
-    height: 1.1rem !important;
-  }
-
-  /* Keep the Notes link clickable separately */
-  .side-bar .site-nav .nav-list-item > .nav-list-link{
-    display: inline-block;
-  }
-}
-/* =========================================================
-   MOBILE: guarantee expander (arrow) column is visible
-   (force nav item layout to grid: [arrow][text][spacer])
-   ========================================================= */
-@media (max-width: 50rem){
-
-  /* Each top-level nav item becomes a grid row */
-  .side-bar .site-nav > ul.nav-list > li.nav-list-item{
-    display: grid !important;
-    grid-template-columns: 44px 1fr auto !important;
-    align-items: center !important;
-    position: relative !important;
-  }
-
-  /* Expander sits in column 1 (always visible) */
-  .side-bar .site-nav > ul.nav-list > li.nav-list-item > .nav-list-expander{
-    grid-column: 1 !important;
-    display: inline-flex !important;
-    width: 44px !important;
-    height: 44px !important;
-    align-items: center !important;
-    justify-content: center !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    z-index: 3 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  /* Link text sits in column 2 */
-  .side-bar .site-nav > ul.nav-list > li.nav-list-item > a.nav-list-link{
-    grid-column: 2 !important;
-    padding: 10px 10px !important;
-    margin: 0 !important;
-  }
-
-  /* Hide expander for items that don’t have children (like Home) */
-  .side-bar .site-nav > ul.nav-list > li.nav-list-item:not(:has(> ul.nav-list)) > .nav-list-expander{
-    display: none !important;
-  }
-
-  /* Submenu should span full width below */
-  .side-bar .site-nav > ul.nav-list > li.nav-list-item > ul.nav-list{
-    grid-column: 1 / -1 !important;
-    margin-left: 0 !important;
-    padding-left: 12px !important;
-    border-left: 1px solid rgba(0,0,0,0.08);
-  }
-}
-
-
-
-
+/* ============================================================   Geometric Foundations of FEM — Custom CSS (Just the Docs)   Clean + stable: desktop logo big, mobile header works, expanders work   ============================================================ */
+/* =========================   Fonts   ========================= */@import url("https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;600&display=swap");@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+/* =========================   Design tokens   ========================= */:root{  --ui-font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;  --body-font: "STIX Two Text", Georgia, "Times New Roman", serif;
+  --ink: #1f2329;  --muted: rgba(31,35,41,0.65);
+  --sidebar-bg: #f4f5f7;  --paper: #ffffff;
+  --rule: rgba(0,0,0,0.08);  --rule-strong: #e2e4ea;
+  --active-rule: rgba(31,35,41,0.55);}
+/* =========================   Base typography   ========================= */.side-bar, .site-header, .nav-list, .search, .breadcrumb-nav{  font-family: var(--ui-font);}
+.main-content{  font-family: var(--body-font);  font-size: 18px;  line-height: 1.75;  letter-spacing: 0.1px;  color: var(--ink);}
+a{  text-decoration-thickness: 1px;  text-underline-offset: 2px;}
+/* Headings */h1, h2, h3{  font-family: var(--body-font);  font-weight: 600;}h1{  font-size: 2.1rem;  margin-bottom: 1.2rem;}h2{  margin-top: 2.2rem;  padding-top: 0.6rem;  border-top: 1px solid var(--rule-strong);}h3{  font-size: 1.2rem;  margin-top: 1.6rem;}
+hr{  border: 0;  border-top: 1px solid var(--rule);  margin: 2rem 0;}
+/* Code */pre{  border-radius: 10px;  padding: 0.9rem 1rem;  line-height: 1.5;}code{ font-size: 0.95em; }
+/* Math spacing */mjx-container[jax="CHTML"][display="true"]{  margin: 1.2rem 0;}
+/* Quotes */blockquote{  border-left: 4px solid rgba(0,0,0,0.18);  padding: 0.75rem 1rem;  margin: 1rem 0;  background: rgba(0,0,0,0.02);  border-radius: 10px;}
+/* =========================   Content "paper" panel   ========================= */.main-content-wrap{  max-width: 820px;  background: var(--paper);  border-radius: 14px;  padding: 2.5rem 3rem;  box-shadow: 0 6px 24px rgba(0,0,0,0.04);}
+/* =========================   Sidebar (desktop layout)   ========================= */.side-bar{  background: var(--sidebar-bg);  border-right: 1px solid var(--rule);  width: 270px;  padding-top: 0.8rem;}
+@media (min-width: 66.5rem){  .main{ margin-left: 270px; }}
+/* ============================================================   BRAND / LOGO (Just-the-Docs)   NOTE: .site-logo is a DIV with background-image.   ============================================================ */.side-bar .site-header{  border: none !important;  box-shadow: none !important;  background: transparent !important;
+  position: relative !important;  z-index: 5 !important;
+  height: auto !important;  overflow: visible !important;
+  padding: 0.75rem 0.75rem 0.25rem 0.75rem !important;}
+/* Keep the title link as a simple block stack (avoid flex side effects) */.side-bar a.site-title{  display: block !important;  text-decoration: none !important;  background-image: none !important;  padding: 0 !important;  margin: 0 !important;}
+/* BIG DESKTOP LOGO (requested) */.side-bar .site-logo{  display: block !important;
+  width: 260px !important; /* big on desktop */  max-width: 100% !important;  height: 120px !important;
+  margin: 0.1rem auto 0.6rem auto !important;
+  background-repeat: no-repeat !important;  background-position: center !important;  background-size: contain !important;}
+/* Optional subtitle under logo (DESKTOP ONLY) */@media (min-width: 50rem){  .side-bar a.site-title::after{    content: "Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.";    display: block !important;
+    max-width: 260px;    margin: 0.35rem auto 0.85rem auto !important;    padding: 0 0.25rem !important;
+    font-family: var(--body-font);    font-size: 0.82rem;    line-height: 1.35;    color: rgba(31, 35, 41, 0.55);    text-align: center;
+    white-space: normal !important;  }
+  /* Ensure nav starts below logo+subtitle */  .side-bar .site-nav{    position: static !important;    margin-top: 0 !important;  }}
+/* =========================   Nav look: left rule + subtle hover   ========================= */.nav-list .nav-list-link{  position: relative;  padding: 0.35rem 0.5rem 0.35rem 0.85rem;  border-radius: 8px;  transition: opacity 160ms ease, color 160ms ease;}
+.nav-list .nav-list-link:hover{ opacity: 0.86; }
+.nav-list .nav-list-link.active{  background: transparent !important;  font-weight: 600;  color: var(--ink);}
+.nav-list .nav-list-link.active::before{  content: "";  position: absolute;  left: 0.35rem;  top: 0.35rem;  bottom: 0.35rem;  width: 2px;  border-radius: 2px;  background: var(--active-rule);}
+/* Indent children visually */.nav-list .nav-list{  margin-left: 10px;  border-left: 1px solid var(--rule);  padding-left: 10px;}
+/* ============================================================   DESKTOP: keep Notes expanded (but do NOT break mobile expanders)   ============================================================ */@media (min-width: 50rem){  .nav-list-expander{ display: none !important; }  .nav-list .nav-list-item > .nav-list{ display: block !important; }}
+/* ============================================================   MOBILE (critical fixes)   - remove vertical sidebar border line   - header: logo left, hamburger right   - keep expand/collapse arrows working   ============================================================ */@media (max-width: 66.5rem){
+  /* Sidebar becomes full width; no right border line */  .side-bar{    width: 100% !important;    border-right: none !important;    padding-top: 0.5rem !important;  }
+  /* Top header as a real row */  .side-bar .site-header{    display: flex !important;    align-items: center !important;    justify-content: space-between !important;    padding: 0.45rem 0.75rem !important;  }
+  /* Title area not centered-stack on mobile */  .side-bar a.site-title{    display: block !important;    flex: 1 1 auto !important;  }
+  /* Smaller logo for the mobile top bar */  .side-bar .site-logo{    width: 200px !important;    height: 80px !important;    margin: 0 !important;  }
+  /* Hide subtitle on mobile to avoid collisions */  .side-bar a.site-title::after{    display: none !important;    content: "" !important;  }
+  /* Hamburger button sits at far right */  .side-bar .site-header .site-button{    position: static !important;    margin-left: 0.75rem !important;    z-index: 10 !important;    background: transparent !important;    box-shadow: none !important;  }
+  /* Mobile content panel padding */  .main-content-wrap{    max-width: none !important;    margin: 0.75rem !important;    padding: 1.25rem 1.1rem !important;    border-radius: 12px !important;    box-shadow: 0 6px 20px rgba(0,0,0,0.03) !important;  }
+  .main-content{    font-size: 16.5px !important;    line-height: 1.7 !important;    padding-top: 1rem !important;  }
+  h1{ font-size: 1.7rem !important; }  h2{ font-size: 1.25rem !important; }  h3{ font-size: 1.05rem !important; }
+  /* Code & Math horizontal scroll */  pre{    overflow-x: auto !important;    -webkit-overflow-scrolling: touch;  }  mjx-container{    overflow-x: auto;    overflow-y: hidden;    -webkit-overflow-scrolling: touch;    max-width: 100%;  }
+  /* MOBILE: expanders must be visible (this brings back the arrow next to Notes) */  .nav-list-expander{    display: inline-flex !important;    visibility: visible !important;    opacity: 1 !important;  }
+  /* IMPORTANT: do NOT disable clicking Notes on mobile     (removes your "goes to TOC" hack that hid the arrow) */  .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > a.nav-list-link{    pointer-events: auto !important;  }}
