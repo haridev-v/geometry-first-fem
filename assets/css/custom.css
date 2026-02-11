@@ -797,9 +797,19 @@ blockquote{
 @media (min-width: 50rem){
 
   /* Adjust padding so text doesn't crowd icon */
-  .search-input{
-    padding-left: 2.25rem !important;
+  .search-input-wrap{
+  position: relative !important;
+   }
+   .search-input{
+    padding-left: 2.4rem !important;
   }
+   .search-input-wrap svg{
+  position: absolute !important;
+  left: 0.85rem !important;          /* keep a normal left value */
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  pointer-events: none !important;
+   }
 
   /* Style the search icon */
   .search .search-icon{
