@@ -588,7 +588,7 @@ blockquote {
     position: absolute !important;
 
     /* push it across the sidebar boundary */
-    left: calc(100% + 14px) !important;
+    left: calc(100% + 22px) !important;
 
     /* vertical alignment */
     top: 50% !important;
