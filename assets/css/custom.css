@@ -803,7 +803,7 @@ blockquote{
 
   /* Style the search icon */
   .search .search-icon{
-    left: 0.85rem !important;
+    left: 0.25rem !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
 
