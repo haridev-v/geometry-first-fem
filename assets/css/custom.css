@@ -157,5 +157,18 @@ blockquote {
 .nav-list .nav-list-item {
   margin: 0.15rem 0;
 }
+/* Force brand/header to show (debug fix) */
+.site-header,
+.site-title,
+.site-title a {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.site-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
 
 
