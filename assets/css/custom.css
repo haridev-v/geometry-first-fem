@@ -311,6 +311,40 @@ hr {
 .side-bar .site-header {
   background: transparent !important;
 }
+/* --- Keep logo confined to header; prevent overlap with nav --- */
+
+/* 1) Make the header a normal flow container */
+.side-bar .site-header{
+  position: relative !important;
+  padding: 1.25rem 0.75rem 0.75rem 0.75rem !important;
+  overflow: visible !important;
+}
+
+/* 2) Logo is a background on a div, so size the div + keep it above nav */
+.side-bar .site-logo{
+  display: block !important;
+  width: 220px !important;
+  height: 120px !important;          /* reduce if it still overlaps */
+  margin: 0 auto 0.75rem auto !important;
+
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+
+  z-index: 2 !important;
+}
+
+/* 3) Force nav to start under the header (no floating under logo) */
+.side-bar .site-nav{
+  position: relative !important;
+  z-index: 1 !important;
+  margin-top: 0.25rem !important;
+}
+
+/* 4) Ensure nothing uses negative margin to pull nav upward */
+.side-bar .site-title{
+  margin-bottom: 0 !important;
+}
 
 
 
