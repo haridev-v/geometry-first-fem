@@ -334,6 +334,50 @@ hr {
 .side-bar{
   padding-top: 0.8rem !important;
 }
+/* Remove background highlight */
+.nav-list .nav-list-link.active{
+  background: transparent !important;
+}
+
+/* Base link styling */
+.nav-list-item > a{
+  position: relative;
+  padding-left: 14px;   /* room for indicator */
+}
+
+/* Thin left indicator for active page */
+.nav-list .nav-list-link.active::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  border-radius: 2px;
+  background-color: #2f3a4a;   /* deep academic grey */
+}
+/* Highlight parent section when child is active */
+.nav-list-item.active > .nav-list-link::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background-color: #4a5568;
+}
+
+/* Make chapter children slightly indented */
+.nav-list .nav-list{
+  margin-left: 10px;
+  border-left: 1px solid rgba(0,0,0,0.08);
+  padding-left: 10px;
+}
+.nav-list-item > a:hover{
+  background: transparent !important;
+  color: #111;
+  opacity: 0.85;
+}
 
 
 
