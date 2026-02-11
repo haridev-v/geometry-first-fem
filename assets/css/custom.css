@@ -138,13 +138,6 @@ blockquote {
     font-size: 9pt;
   }
 }
-.site-logo {
-  display: block;
-  width: 200px !important;   /* control actual size */
-  max-width: 180px !important;
-  height: auto !important;
-  margin: 1.2rem auto 0.6rem auto;
-}
 
 
 /* Show site description under the title (Just the Docs brand area) */
@@ -211,10 +204,6 @@ hr {
   color: #1c2128;
 }
 /* Increase sidebar logo size */
-.site-logo {
-  display: block;
-  margin: 1rem auto 0.6rem auto;
-}
 
 .site-title {
   margin-top: 0.4rem;
@@ -257,11 +246,6 @@ hr {
 .main-content {
   padding-top: 2rem;
 }
-
-.site-header {
-  border-bottom: none !important;
-  box-shadow: none !important;
-}
 .side-bar {
   background: #f4f5f7;
   border-right: 1px solid #dcdfe6;
@@ -290,6 +274,18 @@ hr {
 /* Slight hover for chapter children */
 .nav-list .nav-list .nav-list-item > a:hover {
   background-color: rgba(0, 0, 0, 0.035);
+}
+
+.site-logo {
+  display: block;
+  width: 180px;
+  height: auto;
+  margin: 0 auto 1rem auto;
+}
+.site-header {
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 
