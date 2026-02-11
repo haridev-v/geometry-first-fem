@@ -4,7 +4,7 @@ title: Home
 nav_order: 1
 ---
 
-# Geometry-First Foundations of the Finite Element Method
+# Geometric Foundations of the Finite Element Method
 
 **A conceptual reconstruction of the Finite Element Method from geometric and operator-projection principles.**
 ---
