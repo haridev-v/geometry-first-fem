@@ -249,7 +249,7 @@ So for $c\neq 0$, we get $\|v\|^2>0$.
 
 Therefore:
 
-$$\boxed{M \text{ is symmetric positive definite (SPD)}} \quad \Rightarrow \quadMc=b \text{ has a unique solution}.$$
+$$\boxed{M \text{ is symmetric positive definite (SPD)}} \quad \Rightarrow \quad Mc=b \text{ has a unique solution}.$$
 
 ---
 
