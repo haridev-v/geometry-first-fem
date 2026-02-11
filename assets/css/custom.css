@@ -790,6 +790,53 @@ blockquote{
 .main-content-wrap{
   margin-top: 1rem !important;
 }
+/* =========================================
+   Refined Search Icon (Monograph Style)
+   ========================================= */
+
+@media (min-width: 50rem){
+
+  /* Adjust padding so text doesn't crowd icon */
+  .search-input{
+    padding-left: 2.6rem !important;
+  }
+
+  /* Style the search icon */
+  .search .search-icon{
+    left: 0.95rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+
+    width: 14px !important;
+    height: 14px !important;
+
+    opacity: 0.45 !important;        /* softer */
+  }
+
+  /* Lighten SVG stroke color */
+  .search .search-icon svg{
+    stroke: rgba(31,35,41,0.45) !important;
+  }
+
+}
+/* =========================================
+   Move search bar upward (desktop)
+   ========================================= */
+
+@media (min-width: 50rem){
+
+  /* Reduce header vertical padding */
+  .main-header{
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+  }
+
+  /* Pull search container upward slightly */
+  .search{
+    margin-top: -0.4rem !important;
+  }
+
+}
 
 
 
