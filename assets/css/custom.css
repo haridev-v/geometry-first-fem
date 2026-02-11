@@ -445,29 +445,6 @@ blockquote{
 /* =======================================
    Subtle monograph-style site description
    ======================================= */
-
-.side-bar .site-title::after {
-  content: attr(aria-label); /* fallback */
-}
-
-/* Better: use Jekyll site description */
-.side-bar .site-title::after {
-  content: "Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.";
-  display: block;
-  margin-top: 0.35rem;
-
-  font-family: "STIX Two Text", Georgia, serif;
-  font-size: 0.82rem;
-  line-height: 1.35;
-  font-weight: 400;
-
-  color: rgba(31, 35, 41, 0.55); /* subtle academic grey */
-  text-align: center;
-
-  max-width: 240px;
-  margin-left: auto;
-  margin-right: auto;
-}
 /* ============================
    Fix: description overlaps nav
    ============================ */
@@ -478,26 +455,6 @@ blockquote{
   flex-direction: column !important;
   align-items: center !important;
   justify-content: flex-start !important;
-}
-
-/* Render description neatly under the logo */
-.side-bar .site-title::after{
-  content: "Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.";
-  display: block !important;
-
-  margin: 0.35rem auto 0.85rem auto !important; /* <-- this creates space before nav */
-  padding: 0 0.5rem !important;
-
-  max-width: 240px;
-  white-space: normal !important;
-  word-break: normal !important;
-
-  font-family: "STIX Two Text", Georgia, serif;
-  font-size: 0.82rem;
-  line-height: 1.35;
-  font-weight: 400;
-  color: rgba(31, 35, 41, 0.55);
-  text-align: center;
 }
 
 /* IMPORTANT: ensure header grows with content and pushes nav down */
@@ -512,16 +469,6 @@ blockquote{
 .side-bar .site-nav{
   margin-top: 0.25rem !important;
   padding-top: 0.25rem !important;
-}
-
-/* Mobile: make description smaller so it doesn't crowd */
-@media (max-width: 50rem){
-  .side-bar .site-title::after{
-    max-width: 210px;
-    font-size: 0.75rem;
-    margin-bottom: 0.6rem !important;
-    opacity: 0.6;
-  }
 }
 /* =========================================
    FIX: desktop sidebar overlap (header + nav)
@@ -565,33 +512,83 @@ blockquote{
     -webkit-overflow-scrolling: touch;
   }
 }
+/* ============================================================
+   DESKTOP: brand block (logo + subtitle) with guaranteed height
+   ============================================================ */
 
-/* =========================================
-   Subtitle under logo (safe + subtle)
-   ========================================= */
+@media (min-width: 50rem) {
 
-.side-bar .site-title{
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  text-decoration: none !important;
-  background-image: none !important;
+  /* Sidebar header behaves like a simple stacked "brand block" */
+  .side-bar .site-header {
+    position: relative !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0.75rem 0.75rem 0.25rem 0.75rem !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Make the title link a vertical stack */
+  .side-bar a.site-title {
+    display: block !important;      /* (avoid flex side effects) */
+    text-decoration: none !important;
+    background-image: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* The logo "div" is the only thing that should control the logo size */
+  .side-bar .site-logo {
+    display: block !important;
+    width: 240px !important;        /* DESKTOP SIZE */
+    max-width: 100% !important;
+    height: 110px !important;       /* match your logo aspect */
+    margin: 0 auto !important;
+
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+  }
+
+  /* Subtitle: reserve space and prevent overlap */
+  .side-bar a.site-title::after {
+    content: "Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.";
+    display: block !important;
+
+    max-width: 240px;
+    margin: 0.45rem auto 0.85rem auto !important;
+    padding: 0 0.25rem !important;
+
+    font-family: "STIX Two Text", Georgia, serif;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: rgba(31, 35, 41, 0.55);
+    text-align: center;
+
+    white-space: normal !important;
+  }
+
+  /* Nav always starts below the brand block */
+  .side-bar .site-nav {
+    position: relative !important;
+    margin-top: 0 !important;
+  }
 }
 
-.side-bar .site-title::after{
-  content: "Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.";
-  display: block !important;
-  max-width: 240px;
-  padding: 0 0.6rem;
-  margin: 0.35rem auto 0.85rem auto;
+/* ============================================================
+   MOBILE: keep it compact (logo only or smaller subtitle)
+   ============================================================ */
+@media (max-width: 50rem) {
+  .side-bar .site-logo {
+    width: 180px !important;
+    height: 72px !important;
+    margin: 0.25rem auto !important;
+  }
 
-  font-family: "STIX Two Text", Georgia, serif;
-  font-size: 0.82rem;
-  line-height: 1.35;
-  color: rgba(31, 35, 41, 0.55);
-  text-align: center;
-
-  white-space: normal !important;
+  /* Optional: hide subtitle on mobile to reduce clutter */
+  .side-bar a.site-title::after {
+    display: none !important;
+  }
 }
 
 
