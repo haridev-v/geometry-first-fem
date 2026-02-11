@@ -517,6 +517,10 @@ blockquote{
     align-items: flex-start !important;
   }
 }
+.nav-list .nav-list-link.active::before{
+  background: rgba(31,35,41,0.7);
+}
+
 
 
 
