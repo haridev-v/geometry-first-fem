@@ -201,6 +201,7 @@ c_2 \\
 c_N
 \end{array}
 \right]
+
 =
 \left[
 \begin{array}{c}
