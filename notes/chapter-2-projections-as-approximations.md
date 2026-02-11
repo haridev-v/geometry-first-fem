@@ -6,7 +6,7 @@ nav_order: 2
 ---
 
 
-# Chapter 2 — Projections as Approximations
+# Chapter {{ page.nav_order }} — {{ page.title }}
 
 ## 2.1 Motivation — Why Approximation is Geometric
 
