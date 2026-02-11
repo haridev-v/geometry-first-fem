@@ -1,5 +1,11 @@
-/* --- Monograph typography --- */
+/* ---- Typography (monograph feel) ---- */
 @import url("https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+/* Keep UI sans, content serif */
+.side-bar, .site-header, .nav-list, .search, .breadcrumb-nav {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
 
 .main-content {
   font-family: "STIX Two Text", Georgia, "Times New Roman", serif;
@@ -8,31 +14,44 @@
   letter-spacing: 0.1px;
 }
 
+/* Wider reading column */
 .main-content-wrap {
   max-width: 980px;
 }
 
-/* Headings feel like a book */
+/* Headings: book-ish */
 h1, h2, h3 {
   font-family: "STIX Two Text", Georgia, serif;
   font-weight: 600;
 }
-h1 { font-size: 2.2rem; }
+h1 { font-size: 2.25rem; letter-spacing: -0.2px; }
 h2 { font-size: 1.55rem; margin-top: 2.1rem; }
-h3 { font-size: 1.2rem; margin-top: 1.6rem; }
+h3 { font-size: 1.2rem;  margin-top: 1.6rem; }
 
-/* Gentle rule for section separation */
 hr {
   border: 0;
   border-top: 1px solid rgba(0,0,0,0.12);
   margin: 2rem 0;
 }
 
-/* Better blockquotes for “Remarks” */
-blockquote {
-  border-left: 4px solid rgba(0,0,0,0.18);
-  padding-left: 1rem;
-  color: rgba(0,0,0,0.75);
+/* Links: slightly less “electric blue” */
+a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+/* Lists: more breathing room */
+.main-content ul, .main-content ol {
+  margin-top: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+.main-content li { margin: 0.25rem 0; }
+
+/* Code: calmer */
+code {
+  font-size: 0.95em;
+}
+pre {
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  line-height: 1.5;
 }
 
 /* Math spacing */
@@ -40,58 +59,55 @@ mjx-container[jax="CHTML"][display="true"] {
   margin: 1.2rem 0;
 }
 
-/* Optional: a simple theorem/definition box */
+/* Better blockquotes (use for remarks) */
+blockquote {
+  border-left: 4px solid rgba(0,0,0,0.18);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.02);
+  border-radius: 10px;
+}
+
+/* Callout boxes (Definition/Theorem/Remark) */
 .callout {
   padding: 0.9rem 1rem;
   border: 1px solid rgba(0,0,0,0.12);
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgba(0,0,0,0.02);
+  margin: 1rem 0;
+}
+.callout .label {
+  font-family: Inter, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
 }
 
-/* Number chapter links in the sidebar using their order */
-.nav-list .nav-list-item > a.nav-list-link {
-  counter-increment: navitem;
+/* Figures: centered images + captions */
+.figure {
+  margin: 1.2rem 0;
+  text-align: center;
 }
-.nav-list {
-  counter-reset: navitem;
+.figure img {
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.10);
 }
-.nav-list .nav-list-item > a.nav-list-link::before {
-  content: counter(navitem) ". ";
-  opacity: 0.65;
+.figure .caption {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  opacity: 0.75;
+  font-style: italic;
 }
-@media print {
-  /* Hide UI chrome */
-  .side-bar, .site-header, .search, .nav-list, .aux-nav, .breadcrumb-nav {
-    display: none !important;
-  }
 
-  /* Expand content */
+/* Sidebar spacing */
+.side-bar {
+  width: 270px;
+}
+@media (min-width: 66.5rem) {
   .main {
-    margin-left: 0 !important;
-  }
-  .main-content-wrap {
-    max-width: none !important;
-  }
-
-  /* Better print typography */
-  body {
-    font-size: 11pt;
-    line-height: 1.55;
-  }
-
-  /* Page breaks */
-  h1, h2, h3 {
-    page-break-after: avoid;
-    page-break-inside: avoid;
-  }
-  pre, blockquote, table, mjx-container {
-    page-break-inside: avoid;
-  }
-
-  /* Show link URLs */
-  a[href^="http"]:after {
-    content: " (" attr(href) ")";
-    font-size: 9pt;
+    margin-left: 270px;
   }
 }
-
