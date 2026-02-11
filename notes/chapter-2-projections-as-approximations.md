@@ -70,7 +70,7 @@ $$u_h=\arg\min_{v\in V_h}\|u-v\|.$$
 
 Define the error:
 
-$$e := u-u_h.$$
+$$e := u-u_h$$
 
 We are trying to approximate $u$ by vectors in $V_h$. The projection theorem states implies:
 
@@ -78,7 +78,7 @@ We are trying to approximate $u$ by vectors in $V_h$. The projection theorem sta
 - The residual \(r = u - u_h\) is orthogonal to the entire subspace \(V\).
 - No tangential component remains.
 
-To make this idea intuitive, consider a 2D space with a vector $AB$ where the goal is to find the minimum distance between a point $u$ and the vector $AB$. The closest point on the vector will be the foot of the perpendicular to the point $u$:
+To make this idea intuitive, consider a 2D space with a vector $AB$ where the goal is to find the minimum distance between a point $u$ and the vector $AB$. The closest point on the vector will be the foot of the perpendicular to the point $u$. For any other point $w$ along $AB$, the error vector $$e := u - w$$ will have a component along $AB$, and moving along that component leads us to the point $u_h$:
 
 <p align="center">
   <img src="../figures/2derror.png" width="500">
