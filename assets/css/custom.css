@@ -308,27 +308,26 @@ hr {
   display: none !important;
 }
 
-/* Logo container (Just-the-Docs uses a DIV with background-image) */
-.side-bar .site-logo{
-  display: block !important;
-  width: min(240px, 92%) !important;
-  height: 120px !important;              /* adjust 100–140 as needed */
-  margin: 0.25rem auto 0.9rem auto !important;
-
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-
-  position: relative !important;
-  z-index: 2 !important;
-}
-
 /* Nav starts below header; no overlap */
 .side-bar .site-nav{
   position: relative !important;
   z-index: 1 !important;
   margin-top: 0 !important;
 }
+/* === Tighten header vertical spacing === */
+.side-bar .site-header{
+  padding-top: 0.5rem !important;     /* move logo up */
+  padding-bottom: 0.4rem !important;
+}
+
+/* === Increase logo size slightly === */
+.side-bar .site-logo{
+  width: min(260px, 95%) !important;  /* slightly wider */
+  height: 135px !important;           /* slightly taller */
+
+  margin: 0 auto 0.6rem auto !important;  /* reduce top gap */
+}
+
 
 
 
