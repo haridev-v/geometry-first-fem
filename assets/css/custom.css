@@ -419,7 +419,7 @@ blockquote {
    ============================ */
 @media (min-width: 66.5rem) {
   .side-bar .site-header { 
-    padding-top: 0.35rem !important;   /* move logo up */
+    padding-top: 0.5rem !important;   /* move logo up */
     padding-bottom: 0.4rem !important;
   }
 
@@ -482,5 +482,72 @@ blockquote {
     transform: rotate(90deg);
   }
 }
+/* ============================
+   MOBILE NAV: make expanders usable
+   (fixes: tapping Notes goes to /notes/ instead of expanding)
+   ============================ */
+@media (max-width: 50rem) {
+
+  /* Ensure expanders are visible on mobile */
+  .site-nav .nav-list-expander{
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    /* big thumb target */
+    width: 44px !important;
+    height: 44px !important;
+
+    /* make it feel like a button */
+    border-radius: 10px;
+    margin: 0 !important;
+  }
+
+  /* Put the expander into its own left hit-zone */
+  .site-nav .nav-list-item{
+    position: relative;
+  }
+  .site-nav .nav-list-item > .nav-list-expander{
+    position: absolute !important;
+    left: 6px;
+    top: 2px;
+    z-index: 2;
+  }
+
+  /* Push the link text right so it doesn’t overlap the expander hit-zone */
+  .site-nav .nav-list-item > .nav-list-link{
+    display: block;
+    padding-left: 56px !important;  /* space for the 44px expander */
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  /* Submenu closed by default on mobile */
+  .site-nav .nav-list-item > .nav-list{
+    display: none !important;
+  }
+
+  /* Submenu opens only when the expander says expanded */
+  .site-nav .nav-list-expander[aria-expanded="true"] + .nav-list-link + .nav-list{
+    display: block !important;
+  }
+
+  /* Optional: subtle hover/press feedback for expander */
+  .site-nav .nav-list-expander:active{
+    background: rgba(0,0,0,0.06);
+  }
+   @media (max-width: 50rem) {
+  .side-bar .site-logo{
+    width: 180px !important;
+    height: 70px !important;
+    margin: 0.25rem auto 0.25rem auto !important;
+  }
+  .side-bar .site-header{
+    padding: 0.35rem 0.6rem 0.25rem 0.6rem !important;
+  }
+}
+
+}
+
 
 
