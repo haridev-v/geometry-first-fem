@@ -24,8 +24,17 @@ h1, h2, h3 {
   font-family: "STIX Two Text", Georgia, serif;
   font-weight: 600;
 }
-h1 { font-size: 2.25rem; letter-spacing: -0.2px; }
-h2 { font-size: 1.55rem; margin-top: 2.1rem; }
+h1 {
+  font-size: 2.1rem;
+  margin-bottom: 1.2rem;
+}
+
+h2 {
+  margin-top: 2.2rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid #e2e4ea;
+}
+
 h3 { font-size: 1.2rem;  margin-top: 1.6rem; }
 
 hr {
@@ -238,6 +247,13 @@ hr {
   font-weight: 600;
 }
 
+.main-content-wrap {
+  max-width: 820px; /* tighter reading column */
+}
+
+.main-content {
+  padding-top: 2rem;
+}
 
 
 
