@@ -6,7 +6,7 @@ nav_order: 2
 ---
 
 
-# Chapter {{ page.nav_order }} — {{ page.title }}
+# {{ page.title }}
 
 ## 2.1 Motivation — Why Approximation is Geometric
 
