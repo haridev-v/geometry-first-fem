@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Chapter 2 — Projections as Approximations
-nav_order: 3
 parent: Home
+nav_order: 2
 ---
 
 
