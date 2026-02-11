@@ -2,6 +2,7 @@
 layout: default
 title: Home
 nav_order: 1
+has_children: true
 ---
 
 # Geometry-First Foundations of the Finite Element Method
