@@ -1,3 +1,11 @@
+---
+layout: default
+title: Chapter 2 — Projections as Approximations
+nav_order: 3
+parent: Home
+---
+
+
 # Chapter 2 — Projections as Approximations
 
 ## 2.1 Motivation — Why Approximation is Geometric
