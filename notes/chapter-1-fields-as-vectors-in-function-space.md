@@ -292,18 +292,55 @@ $$
 
 where $\mathcal{L}$ is a (linear) operator acting on functions.
 
+An operator acting on functions can be viewed abstractly as an infinite-dimensional matrix:
+
+$$
+\mathcal{L}
+\;\sim\;
+\left[
+\begin{array}{ccc}
+\ell_{11} & \ell_{12} & \cdots \\
+\ell_{21} & \ell_{22} & \cdots \\
+\vdots    & \vdots    & \ddots
+\end{array}
+\right]
+$$
+
+While this infinite matrix is rarely written explicitly, the analogy guides the interpretation of discretization.
+
+
 ---
 
 ## 1.5 FEM as subspace approximation
 
-The finite element method replaces an infinite-dimensional space $V$ with a finite-dimensional subspace $V_h\subset V$.
+The finite element method replaces the infinite-dimensional space $V$ with a finite-dimensional subspace $V_h \subset V$.
 
-The approximate solution is written in a finite basis:
+The infinite-dimensional coefficient vector
 
 $$
-u_h = \sum_{i=1}^N c_i\,\phi_i.
+\begin{bmatrix}
+c_1 \\
+c_2 \\
+\vdots \\
+\vdots
+\end{bmatrix}
 $$
 
+is replaced by the finite vector
+
+$$
+\mathbf{c} =
+\begin{bmatrix}
+c_1 \\
+c_2 \\
+\vdots \\
+c_N
+\end{bmatrix}.
+$$
+
+Operators then become finite matrices acting on $\mathbf{c}$.
+
+Discretization is therefore a projection from an infinite-dimensional vector space onto a finite-dimensional subspace.
 Key interpretation:
 
 - In FEM, the “solution” is not stored as a function; it is stored as a **vector of coefficients** in a function basis.
@@ -312,7 +349,7 @@ Key interpretation:
 
 ---
 
-## 1.6 Summary (bridge to projections)
+## 1.6 Summary
 
 - A function is a vector in an infinite-dimensional vector space.
 - A basis gives coordinates; norms and inner products give geometry.
