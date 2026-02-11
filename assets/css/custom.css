@@ -59,4 +59,39 @@ mjx-container[jax="CHTML"][display="true"] {
   content: counter(navitem) ". ";
   opacity: 0.65;
 }
+@media print {
+  /* Hide UI chrome */
+  .side-bar, .site-header, .search, .nav-list, .aux-nav, .breadcrumb-nav {
+    display: none !important;
+  }
+
+  /* Expand content */
+  .main {
+    margin-left: 0 !important;
+  }
+  .main-content-wrap {
+    max-width: none !important;
+  }
+
+  /* Better print typography */
+  body {
+    font-size: 11pt;
+    line-height: 1.55;
+  }
+
+  /* Page breaks */
+  h1, h2, h3 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+  pre, blockquote, table, mjx-container {
+    page-break-inside: avoid;
+  }
+
+  /* Show link URLs */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+  }
+}
 
