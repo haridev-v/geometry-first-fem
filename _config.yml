@@ -1,0 +1,6 @@
+title: FEM Notes
+description: Operator-theoretic FEM notes
+theme: minima
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
