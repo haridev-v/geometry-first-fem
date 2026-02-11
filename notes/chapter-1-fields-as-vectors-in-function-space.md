@@ -33,37 +33,6 @@ The column representation is simply the coordinate version of this expansion.
 
 ---
 
-### Linear maps as matrices
-
-A linear map $A : \mathbb{R}^n \to \mathbb{R}^m$ is represented by a matrix
-
-$$
-A =
-\begin{bmatrix}
-a_{11} & a_{12} & \cdots & a_{1n} \\
-a_{21} & a_{22} & \cdots & a_{2n} \\
-\vdots & \vdots & \ddots & \vdots \\
-a_{m1} & a_{m2} & \cdots & a_{mn}
-\end{bmatrix}.
-$$
-
-Matrix–vector multiplication produces
-
-$$
-Av =
-\begin{bmatrix}
-\sum_{j=1}^n a_{1j} v_j \\
-\sum_{j=1}^n a_{2j} v_j \\
-\vdots \\
-\sum_{j=1}^n a_{mj} v_j
-\end{bmatrix}.
-$$
-
-Thus, a matrix encodes how each output component depends linearly on all input components.
-
----
-
-
 A set $V$ is called a **vector space** if it supports:
 
 1. **Addition:** for any $u, v \in V$, $(u+v) \in V$
@@ -233,7 +202,7 @@ v_1 \\
 v_2 \\
 \vdots \\
 v_n
-\end{bmatrix}.
+\end{bmatrix}
 $$
 
 A function can be thought of as a vector whose components are indexed by space:
@@ -244,7 +213,7 @@ f(x_1) \\
 f(x_2) \\
 f(x_3) \\
 \vdots
-\end{bmatrix}.
+\end{bmatrix}
 $$
 
 As the spatial resolution increases, the number of components increases without bound.  
