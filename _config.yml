@@ -12,3 +12,6 @@ kramdown:
 
 plugins:
   - jekyll-include-cache
+
+  aux_links_new_tab: true
+
