@@ -147,7 +147,6 @@ For $i = 1$:
 $$
 c_1 \langle \phi_1, \phi_1 \rangle
 + c_2 \langle \phi_2, \phi_1 \rangle
-+ c_3 \langle \phi_3, \phi_1 \rangle
 + \cdots
 + c_N \langle \phi_N, \phi_1 \rangle
 = \langle u, \phi_1 \rangle
@@ -178,27 +177,33 @@ $$
 We convert this to a matrix:
 
 $$
-\begin{bmatrix}
+\left[
+\begin{array}{cccc}
 \langle \phi_1, \phi_1 \rangle & \langle \phi_2, \phi_1 \rangle & \cdots & \langle \phi_N, \phi_1 \rangle \\
 \langle \phi_1, \phi_2 \rangle & \langle \phi_2, \phi_2 \rangle & \cdots & \langle \phi_N, \phi_2 \rangle \\
 \vdots & \vdots & \ddots & \vdots \\
 \langle \phi_1, \phi_N \rangle & \langle \phi_2, \phi_N \rangle & \cdots & \langle \phi_N, \phi_N \rangle
-\end{bmatrix}
-\begin{bmatrix}
+\end{array}
+\right]
+\left[
+\begin{array}{c}
 c_1 \\
 c_2 \\
 \vdots \\
 c_N
-\end{bmatrix}
+\end{array}
+\right]
 
 =
 
-\begin{bmatrix}
+\left[
+\begin{array}{c}
 \langle u, \phi_1 \rangle \\
 \langle u, \phi_2 \rangle \\
 \vdots \\
 \langle u, \phi_N \rangle
-\end{bmatrix}
+\end{array}
+\right]
 $$
 
 ---
