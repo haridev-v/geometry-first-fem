@@ -193,5 +193,14 @@ hr {
   font-weight: 600;
   color: #1c2128;
 }
+/* Increase sidebar logo size */
+.site-logo {
+  max-height: 90px !important;
+  height: 90px !important;
+}
+
+.site-title {
+  margin-top: 0.4rem;
+}
 
 
