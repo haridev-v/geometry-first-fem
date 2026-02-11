@@ -135,11 +135,90 @@ Each fixed $i$ gives one scalar equation ($i=1$ first equation, …, $i=N$ $N$ t
 
 ## 2.6 Recognising Structure
 
-We have, for each $i$:
+We observe that
+- For each fixed $i$, this is a linear equation in the unknowns $c_j$: $$\sum_{j=1}^{N} c_j (\phi_j, phi) = \langle u , phi \rangle$$
+- The quantities $\langle \phi_j, \phi_i \rangle$ are just numbers.
+- These numbers are indexed by $i$ and $j$.
 
-$$\sum_{j=1}^{N} c_j\langle \phi_j,\phi_i\rangle = \langle u,\phi_i\rangle.$$
+Therefore, we can organize them to map the test direction $\phi_i$ to the coefficient $c_j$.
 
-Observe: for fixed $i$, this is a linear equation in the unknowns $c_j$.
+For $i = 1$:
+
+$$
+c_1 \langle \phi_1, \phi_1 \rangle
++ c_2 \langle \phi_2, \phi_1 \rangle
++ c_3 \langle \phi_3, \phi_1 \rangle
++ \cdots
++ c_N \langle \phi_N, \phi_1 \rangle
+= \langle u, \phi_1 \rangle
+$$
+
+For $i = 2$:
+
+$$
+c_1 \langle \phi_1, \phi_2 \rangle
++ c_2 \langle \phi_2, \phi_2 \rangle
++ \cdots
++ c_N \langle \phi_N, \phi_2 \rangle
+= \langle u, \phi_2 \rangle
+$$
+
+$\vdots$
+
+For $i = N$:
+
+$$
+c_1 \langle \phi_1, \phi_N \rangle
++ c_2 \langle \phi_2, \phi_N \rangle
++ \cdots
++ c_N \langle \phi_N, \phi_N \rangle
+= \langle u, \phi_N \rangle
+$$
+
+We convert this to a matrix:
+
+$$
+\begin{bmatrix}
+\langle \phi_1, \phi_1 \rangle & \langle \phi_2, \phi_1 \rangle & \cdots & \langle \phi_N, \phi_1 \rangle \\
+\langle \phi_1, \phi_2 \rangle & \langle \phi_2, \phi_2 \rangle & \cdots & \langle \phi_N, \phi_2 \rangle \\
+\vdots & \vdots & \ddots & \vdots \\
+\langle \phi_1, \phi_N \rangle & \langle \phi_2, \phi_N \rangle & \cdots & \langle \phi_N, \phi_N \rangle
+\end{bmatrix}
+\begin{bmatrix}
+c_1 \\
+c_2 \\
+\vdots \\
+c_N
+\end{bmatrix}
+
+=
+
+\begin{bmatrix}
+\langle u, \phi_1 \rangle \\
+\langle u, \phi_2 \rangle \\
+\vdots \\
+\langle u, \phi_N \rangle
+\end{bmatrix}
+$$
+
+---
+
+Explicitly:
+
+- Row $i$ corresponds to "test with $\phi_i$".
+- Column $j$ corresponds to $c_j$ multiplying $\phi_j$.
+- Entry $(i,j)$ is the inner product:
+
+$$
+M_{ij} = \langle \phi_j, \phi_i \rangle
+$$
+
+Thus, the system becomes:
+
+$$
+M c = b
+$$
+
 
 ---
 
