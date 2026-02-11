@@ -139,10 +139,13 @@ blockquote {
   }
 }
 .site-logo {
-  height: 120px !important;
-  max-height: 120px !important;
-  margin-bottom: 0.8rem;
+  display: block;
+  width: 200px !important;   /* control actual size */
+  max-width: 180px !important;
+  height: auto !important;
+  margin: 1.2rem auto 0.6rem auto;
 }
+
 
 /* Show site description under the title (Just the Docs brand area) */
 .site-title::after {
@@ -256,8 +259,15 @@ hr {
 }
 
 .site-header {
-  border-bottom: 1px solid #e2e4ea;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
+.side-bar {
+  background: #f4f5f7;
+  border-right: 1px solid #dcdfe6;
+  padding-top: 1.5rem;
+}
+
 
 
 
