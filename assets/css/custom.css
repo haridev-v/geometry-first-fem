@@ -316,7 +316,7 @@ hr {
 }
 /* === Tighten header vertical spacing === */
 .side-bar .site-header{
-  padding-top: 0.4rem !important;     /* move logo up */
+  padding-top: 0.2rem !important;     /* move logo up */
   padding-bottom: 0.4rem !important;
 }
 
