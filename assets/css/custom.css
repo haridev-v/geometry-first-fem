@@ -202,5 +202,14 @@ hr {
 .site-title {
   margin-top: 0.4rem;
 }
+/* Force sidebar always expanded */
+.nav-list-expander {
+  display: none !important;
+}
+
+.nav-list .nav-list-item > .nav-list {
+  display: block !important;
+}
+
 
 
