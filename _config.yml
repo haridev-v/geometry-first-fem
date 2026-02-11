@@ -1,6 +1,7 @@
 title: FEM Notes
 description: Operator-theoretic FEM notes
-theme: jekyll-theme-cayman
+theme: just-the-docs
 markdown: kramdown
+
 kramdown:
   math_engine: mathjax
