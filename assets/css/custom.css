@@ -277,18 +277,6 @@ hr {
 }
 
 /* Logo always visible + sized */
-img.site-logo {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-
-  width: 210px !important;
-  max-width: 85% !important;
-  height: auto !important;
-
-  margin: 1.2rem auto 0.75rem auto !important;
-}
-
 .site-header {
   padding-top: 1rem !important;
   padding-bottom: 0.25rem !important;
@@ -296,6 +284,35 @@ img.site-logo {
   min-height: 1px !important;
   overflow: visible !important;
 }
+
+/* --- Force Just-the-Docs logo background + sizing --- */
+.site-logo {
+  display: block !important;
+  width: 220px !important;
+  height: 140px !important;      /* controls visible box height */
+  margin: 1.2rem auto 0.8rem auto !important;
+
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+/* --- Remove any divider slicing through header/logo --- */
+.site-header {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.site-header::before,
+.site-header::after {
+  content: none !important;
+  display: none !important;
+}
+
+.side-bar .site-header {
+  background: transparent !important;
+}
+
+
 
 
 
