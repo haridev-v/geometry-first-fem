@@ -442,6 +442,81 @@ blockquote{
     border-left: 1px solid rgba(0,0,0,0.08);
   }
 }
+/* =========================================================
+   Sidebar: flush to content edge + right aligned contents
+   Put this at the VERY END of your CSS
+   ========================================================= */
+
+/* 1) Make the sidebar fill its column (no inner right gap) */
+@media (min-width: 50rem){
+  .side-bar{
+    padding-right: 0 !important;         /* remove right padding/gutter */
+  }
+
+  /* The theme often gives the nav a max-width + padding.
+     Remove that so the sidebar meets the content edge cleanly. */
+  .side-bar .site-header,
+  .side-bar .site-nav,
+  .side-bar .site-footer{
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* If Just-the-Docs limits sidebar inner width, remove it */
+  .side-bar .site-header,
+  .side-bar .site-nav{
+    max-width: none !important;
+  }
+}
+
+/* 2) Right-align the brand block (logo + description) */
+@media (min-width: 50rem){
+  .side-bar .site-title{
+    align-items: flex-end !important;     /* push logo to the right */
+    text-align: right !important;
+  }
+
+  .side-bar .site-logo{
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+
+  /* If you are using ::after for description, align it right too */
+  .side-bar a.site-title::after{
+    text-align: right !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* 3) Right-align nav links, but keep the expander (arrow) clickable */
+@media (min-width: 50rem){
+  /* right-align link text */
+  .side-bar .nav-list .nav-list-link{
+    text-align: right !important;
+  }
+
+  /* keep your active left-rule, but add a little extra right padding for aesthetics */
+  .side-bar .nav-list .nav-list-link{
+    padding-right: 0.85rem !important;
+  }
+
+  /* Child indent: keep the left border but align text right */
+  .side-bar .nav-list .nav-list{
+    margin-left: 10px !important;        /* keep your structure */
+    padding-left: 10px !important;
+    text-align: right !important;
+  }
+}
+
+/* 4) Mobile: DO NOT force right align (it hurts usability) */
+@media (max-width: 50rem){
+  .side-bar .site-title,
+  .side-bar .nav-list .nav-list-link{
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+}
 
 
 
