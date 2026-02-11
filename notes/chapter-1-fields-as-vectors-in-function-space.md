@@ -191,7 +191,7 @@ $$
 M(u)=3M(e_1)+5M(e_2)=3(2,1)+5(-1,3).
 $$
 
-This is the meaning of “$Ax$”: applying a linear map defined by how it transforms the basis.
+This is the meaning of “ $Ax$ ” : applying a linear map defined by how it transforms the basis.
 
 ---
 
