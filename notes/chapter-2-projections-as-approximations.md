@@ -129,7 +129,7 @@ $i$ : which test direction we enforce orthogonality against (row index)
 
 $j$ : which basis function contributes to the approximation $u_h$ (column index)
 
-Each fixed $i$ gives one scalar equation ($i=1$ first equation, …, $i=N$ $N$th equation).
+Each fixed $i$ gives one scalar equation ($i=1$ first equation, …, $i=N$ $N$ th equation).
 
 ---
 
