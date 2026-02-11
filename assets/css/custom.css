@@ -590,6 +590,11 @@ blockquote{
     display: none !important;
   }
 }
+@media (min-width: 50rem) {
+  .side-bar { display: block !important; }
+  .side-bar .site-header,
+  .side-bar .site-nav { position: static !important; }
+}
 
 
 
