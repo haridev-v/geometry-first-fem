@@ -171,36 +171,68 @@ blockquote {
   font-weight: 700;
 }
 /* =========================
-   INK THEME (CSS-only)
-   Toggle by adding ?theme=ink later if you want.
-   For now, always-on to prove it works.
+   MONOGRAPH GREY THEME
    ========================= */
+
 :root {
-  --bg: #0f1115;
-  --panel: #141824;
-  --text: #e7eaf0;
-  --muted: rgba(231,234,240,0.75);
-  --link: #7aa2ff;
-  --border: rgba(255,255,255,0.12);
-  --codebg: rgba(255,255,255,0.06);
+  --bg: #f4f4f6;          /* very light grey background */
+  --panel: #e8e8ec;       /* sidebar grey */
+  --text: #2c2f36;        /* dark charcoal text */
+  --muted: #6b707c;       /* muted grey */
+  --link: #3a5a8a;        /* academic blue */
+  --border: #d4d6dc;
+  --codebg: #f0f0f2;
 }
 
+/* Page background */
 body {
   background: var(--bg) !important;
   color: var(--text) !important;
 }
 
+/* Sidebar */
 .side-bar {
   background: var(--panel) !important;
   border-right: 1px solid var(--border) !important;
 }
 
-.main-content, .main-content p, .main-content li {
+/* Main content */
+.main-content {
   color: var(--text) !important;
 }
 
+/* Headings */
+.main-content h1,
+.main-content h2,
+.main-content h3 {
+  color: #1f2329 !important;
+}
+
+/* Links */
 a {
   color: var(--link) !important;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Search box */
+.search-input {
+  background: white !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Code blocks */
+pre, code {
+  background: var(--codebg) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Horizontal rule */
+hr {
+  border-top: 1px solid var(--border) !important;
 }
 
 .search-input {
