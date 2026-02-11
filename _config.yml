@@ -1,5 +1,7 @@
 title: Geometric foundations of FEM
-description: Operator-theoretic finite element notes
+description: Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.
+title_separator: "—"
+
 
 theme: just-the-docs
 
