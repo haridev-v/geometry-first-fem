@@ -14,3 +14,16 @@ h1 {
 h2 {
   margin-top: 2rem;
 }
+
+/* Number chapter links in the sidebar using their order */
+.nav-list .nav-list-item > a.nav-list-link {
+  counter-increment: navitem;
+}
+.nav-list {
+  counter-reset: navitem;
+}
+.nav-list .nav-list-item > a.nav-list-link::before {
+  content: counter(navitem) ". ";
+  opacity: 0.65;
+}
+
