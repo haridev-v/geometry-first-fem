@@ -133,7 +133,7 @@ $$\sum_{j=1}^{N}\langle \phi_j,\phi_i\rangle c_j = \langle u,\phi_i\rangle\quad 
 
 Define
 
-$$M_{ij}:=\langle \phi_j,\phi_i\rangle,\qquadb_i:=\langle u,\phi_i\rangle.$$
+$$M_{ij}:=\langle \phi_j,\phi_i\rangle, \quad b_i:=\langle u,\phi_i\rangle.$$
 
 Then the system becomes
 
@@ -179,11 +179,11 @@ The quantities $\langle \phi_j,\phi_i\rangle$ are just numbers, indexed by $i$ a
 
 1. $L^2$ inner product
 
-$$\langle u,v\rangle = \int_\Omega u\,v\,dx\quad\Rightarrow\quad \text{minimizes } L^2 \text{ error}.$$
+$$\langle u,v\rangle = \int_\Omega u\,v\,dx \quad \Rightarrow \quad \text{minimizes } L^2 \text{ error}.$$
 
 2. Gradient (energy) inner product
 
-$$\langle u,v\rangle = \int_\Omega \nabla u\cdot \nabla v\,dx\quad\Rightarrow\quad \text{minimizes error in gradients}.$$
+$$\langle u,v\rangle = \int_\Omega \nabla u\cdot \nabla v\,dx \quad \Rightarrow \quad \text{minimizes error in gradients}.$$
 
 **Interpretation note:**
 
@@ -249,7 +249,7 @@ So for $c\neq 0$, we get $\|v\|^2>0$.
 
 Therefore:
 
-$$\boxed{M \text{ is symmetric positive definite (SPD)}}\quad\Rightarrow\quadMc=b \text{ has a unique solution}.$$
+$$\boxed{M \text{ is symmetric positive definite (SPD)}} \quad \Rightarrow \quadMc=b \text{ has a unique solution}.$$
 
 ---
 
@@ -285,7 +285,7 @@ $$\langle \phi_i, \phi_j \rangle = \delta_{ij},$$
 
 then
 
-$$M = I,\qquadk(M) = 1.$$
+$$M = I, k(M) = 1$$
 
 Even if $M$ is ill-conditioned, $u_h$ may still be reasonable, because the instability appears in the coefficients $c$, not the reconstructed function $u_h$.
 The condition number $k(M)$ represents how much the geometry of the subspace is distorted by the chosen coordinates.
