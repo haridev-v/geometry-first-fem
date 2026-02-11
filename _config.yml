@@ -26,7 +26,6 @@ nav_external_links: false
 nav_sort: case_sensitive
 nav_enabled: true
 nav_show_all: true
-nav_show_all: true
 nav_next_prev: true
 
 color_scheme: ink
