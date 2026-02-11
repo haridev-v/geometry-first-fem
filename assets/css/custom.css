@@ -468,5 +468,61 @@ blockquote{
   margin-left: auto;
   margin-right: auto;
 }
+/* ============================
+   Fix: description overlaps nav
+   ============================ */
+
+/* Make the title area a true vertical stack */
+.side-bar .site-title{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+/* Render description neatly under the logo */
+.side-bar .site-title::after{
+  content: "Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.";
+  display: block !important;
+
+  margin: 0.35rem auto 0.85rem auto !important; /* <-- this creates space before nav */
+  padding: 0 0.5rem !important;
+
+  max-width: 240px;
+  white-space: normal !important;
+  word-break: normal !important;
+
+  font-family: "STIX Two Text", Georgia, serif;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  font-weight: 400;
+  color: rgba(31, 35, 41, 0.55);
+  text-align: center;
+}
+
+/* IMPORTANT: ensure header grows with content and pushes nav down */
+.side-bar .site-header{
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding-bottom: 0.25rem !important;
+}
+
+/* Force nav to start below the whole header (logo + description) */
+.side-bar .site-nav{
+  margin-top: 0.25rem !important;
+  padding-top: 0.25rem !important;
+}
+
+/* Mobile: make description smaller so it doesn't crowd */
+@media (max-width: 50rem){
+  .side-bar .site-title::after{
+    max-width: 210px;
+    font-size: 0.75rem;
+    margin-bottom: 0.6rem !important;
+    opacity: 0.6;
+  }
+}
+
 
 
