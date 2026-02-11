@@ -129,6 +129,11 @@ blockquote {
     font-size: 9pt;
   }
 }
+.site-logo {
+  height: 120px !important;
+  max-height: 120px !important;
+  margin-bottom: 0.8rem;
+}
 
 /* Show site description under the title (Just the Docs brand area) */
 .site-title::after {
