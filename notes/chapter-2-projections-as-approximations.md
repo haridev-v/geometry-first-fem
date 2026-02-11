@@ -136,7 +136,7 @@ Each fixed $i$ gives one scalar equation ($i=1$ first equation, …, $i=N$ $N$ t
 ## 2.6 Recognising Structure
 
 We observe that
-- For each fixed $i$, this is a linear equation in the unknowns $c_j$: $$\sum_{j=1}^{N} c_j (\phi_j, phi) = \langle u , phi \rangle$$
+- For each fixed $i$, this is a linear equation in the unknowns $c_j$: $$\sum_{j=1}^{N} c_j (\phi_j, \phi) = \langle u , \phi \rangle$$
 - The quantities $\langle \phi_j, \phi_i \rangle$ are just numbers.
 - These numbers are indexed by $i$ and $j$.
 
