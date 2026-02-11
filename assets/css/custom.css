@@ -223,6 +223,21 @@ hr {
 .nav-list .nav-list-item > .nav-list {
   display: block !important;
 }
+/* Sidebar styling */
+.side-bar {
+  border-right: 1px solid #d8dbe2;
+}
+
+/* Sidebar typography */
+.nav-list-item > a {
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.nav-list-item.active > a {
+  font-weight: 600;
+}
+
 
 
 
