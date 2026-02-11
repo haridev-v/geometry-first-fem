@@ -1,10 +1,12 @@
-
 ---
 layout: default
 title: Chapter 1 — Fields as Vectors in Function Space
 parent: Home
 nav_order: 1
 ---
+
+# Chapter 1 — Fields as Vectors in Function Space
+
 
 # Chapter 1 — Fields as Vectors in Function Space
 
