@@ -285,66 +285,51 @@ hr {
   overflow: visible !important;
 }
 
-/* --- Force Just-the-Docs logo background + sizing --- */
-.site-logo {
-  display: block !important;
-  width: 220px !important;
-  height: 140px !important;      /* controls visible box height */
-  margin: 1.2rem auto 0.8rem auto !important;
+/* =========================
+   Sidebar header + logo FIX
+   ========================= */
 
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-}
-/* --- Remove any divider slicing through header/logo --- */
-.site-header {
+/* Header: no divider line, keep normal flow */
+.side-bar .site-header{
+  position: relative !important;
+  padding: 1.25rem 0.75rem 0.75rem 0.75rem !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+
   border: none !important;
   box-shadow: none !important;
+  background: transparent !important;
 }
 
-.site-header::before,
-.site-header::after {
+.side-bar .site-header::before,
+.side-bar .site-header::after{
   content: none !important;
   display: none !important;
 }
 
-.side-bar .site-header {
-  background: transparent !important;
-}
-/* --- Keep logo confined to header; prevent overlap with nav --- */
-
-/* 1) Make the header a normal flow container */
-.side-bar .site-header{
-  position: relative !important;
-  padding: 1.25rem 0.75rem 0.75rem 0.75rem !important;
-  overflow: visible !important;
-}
-
-/* 2) Logo is a background on a div, so size the div + keep it above nav */
+/* Logo container (Just-the-Docs uses a DIV with background-image) */
 .side-bar .site-logo{
   display: block !important;
-  width: 220px !important;
-  height: 80px !important;          /* reduce if it still overlaps */
-  margin: 0 auto 0.75rem auto !important;
+  width: min(240px, 92%) !important;
+  height: 120px !important;              /* adjust 100–140 as needed */
+  margin: 0.25rem auto 0.9rem auto !important;
 
   background-size: contain !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
 
+  position: relative !important;
   z-index: 2 !important;
 }
 
-/* 3) Force nav to start under the header (no floating under logo) */
+/* Nav starts below header; no overlap */
 .side-bar .site-nav{
   position: relative !important;
   z-index: 1 !important;
-  margin-top: 0.25rem !important;
+  margin-top: 0 !important;
 }
 
-/* 4) Ensure nothing uses negative margin to pull nav upward */
-.side-bar .site-title{
-  margin-bottom: 0 !important;
-}
 
 
 
