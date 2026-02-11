@@ -139,6 +139,7 @@ We observe that for each fixed $i$, this is a linear equation in the unknowns $c
 
 $$
 \sum_{j=1}^{N} c_j \langle \phi_j, \phi_i \rangle
+
 =
 \langle u, \phi_i \rangle
 $$
