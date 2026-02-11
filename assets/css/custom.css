@@ -680,6 +680,80 @@ blockquote{
     padding-bottom: 0.6rem !important;
   }
 }
+/* ======================================================
+   MONOGRAPH SEARCH BAR (Desktop)
+   ====================================================== */
+
+/* Remove floating pill look */
+.search {
+  padding: 0.5rem 0.75rem 0.75rem 0.75rem !important;
+  background: transparent !important;
+}
+
+/* Make search width match sidebar */
+.side-bar .search {
+  width: 100% !important;
+}
+
+/* Input field */
+.search-input {
+  font-family: var(--ui-font) !important;
+  font-size: 0.9rem !important;
+
+  background: #ffffff !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-radius: 8px !important;
+
+  padding: 0.6rem 0.85rem 0.6rem 2.2rem !important;
+  box-shadow: none !important;
+
+  width: 100% !important;
+}
+
+/* Focus: subtle academic highlight */
+.search-input:focus {
+  outline: none !important;
+  border-color: rgba(31,35,41,0.18) !important;
+  box-shadow: 0 0 0 2px rgba(31,35,41,0.06) !important;
+}
+
+/* Search icon */
+.search-label {
+  left: 0.85rem !important;
+  opacity: 0.55 !important;
+}
+
+/* Placeholder tone */
+.search-input::placeholder {
+  color: rgba(31,35,41,0.45) !important;
+}
+
+/* Search results dropdown */
+.search-results {
+  border-radius: 8px !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06) !important;
+}
+
+/* Result entries */
+.search-results .search-result {
+  padding: 0.65rem 0.85rem !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+
+.search-results .search-result:last-child {
+  border-bottom: none !important;
+}
+
+/* Title styling */
+.search-results .search-result-title {
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+
+.search-results .search-result-title:hover {
+  text-decoration: underline !important;
+}
 
 
 
