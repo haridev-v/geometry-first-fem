@@ -276,17 +276,27 @@ hr {
   background-color: rgba(0, 0, 0, 0.035);
 }
 
-.site-logo {
-  display: block;
-  width: 180px;
-  height: auto;
-  margin: 0 auto 1rem auto;
+/* Logo always visible + sized */
+img.site-logo {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  width: 210px !important;
+  max-width: 85% !important;
+  height: auto !important;
+
+  margin: 1.2rem auto 0.75rem auto !important;
 }
+
 .site-header {
-  padding-top: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding-top: 1rem !important;
+  padding-bottom: 0.25rem !important;
+  height: auto !important;
+  min-height: 1px !important;
+  overflow: visible !important;
 }
+
 
 
 
