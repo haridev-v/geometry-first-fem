@@ -170,5 +170,52 @@ blockquote {
   font-size: 1.1rem;
   font-weight: 700;
 }
+/* =========================
+   INK THEME (CSS-only)
+   Toggle by adding ?theme=ink later if you want.
+   For now, always-on to prove it works.
+   ========================= */
+:root {
+  --bg: #0f1115;
+  --panel: #141824;
+  --text: #e7eaf0;
+  --muted: rgba(231,234,240,0.75);
+  --link: #7aa2ff;
+  --border: rgba(255,255,255,0.12);
+  --codebg: rgba(255,255,255,0.06);
+}
+
+body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+.side-bar {
+  background: var(--panel) !important;
+  border-right: 1px solid var(--border) !important;
+}
+
+.main-content, .main-content p, .main-content li {
+  color: var(--text) !important;
+}
+
+a {
+  color: var(--link) !important;
+}
+
+.search-input {
+  background: var(--codebg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+pre, code {
+  background: var(--codebg) !important;
+  border: 1px solid var(--border) !important;
+}
+
+hr {
+  border-top: 1px solid var(--border) !important;
+}
 
 
