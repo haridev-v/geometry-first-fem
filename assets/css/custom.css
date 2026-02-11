@@ -406,4 +406,81 @@ blockquote {
   }
 
 }
+@media (min-width: 66.5rem) {
+  .side-bar a.site-title {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* ============================
+   DESKTOP LOGO SIZE (force)
+   ============================ */
+@media (min-width: 66.5rem) {
+  .side-bar .site-header { 
+    padding-top: 0.35rem !important;   /* move logo up */
+    padding-bottom: 0.4rem !important;
+  }
+
+  .side-bar .site-logo {
+    display: block !important;
+    width: 280px !important;           /* <-- change this */
+    height: 140px !important;          /* <-- and this */
+    margin: 0.1rem auto 0.8rem auto !important;
+
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+}
+/* ============================================================
+   MOBILE: make "Notes" expandable (tap expander, not the link)
+   ============================================================ */
+@media (max-width: 66.5rem) {
+
+  /* Ensure expanders are visible and clickable */
+  .nav-list-expander{
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;          /* thumb-friendly */
+    height: 44px;
+    margin-right: 6px;
+    border-radius: 10px;
+    z-index: 5;
+    position: relative;
+  }
+
+  /* Make sure the expander sits ABOVE the link hit-area */
+  .nav-list-item{
+    position: relative;
+  }
+
+  /* Reduce the link’s left padding so it doesn’t sit under the expander */
+  .nav-list-item > .nav-list-link{
+    padding-left: 0.6rem !important;
+    margin-left: 0 !important;
+  }
+
+  /* Keep nested lists collapsed by default */
+  .nav-list .nav-list-item > .nav-list{
+    display: none !important;
+  }
+
+  /* Expand when aria-expanded is true (Just-the-Docs toggles this) */
+  .nav-list-item > .nav-list-expander[aria-expanded="true"] + .nav-list-link + .nav-list{
+    display: block !important;
+  }
+
+  /* Make the arrow rotation obvious */
+  .nav-list-expander svg{
+    transition: transform 160ms ease;
+  }
+  .nav-list-expander[aria-expanded="true"] svg{
+    transform: rotate(90deg);
+  }
+}
+
 
