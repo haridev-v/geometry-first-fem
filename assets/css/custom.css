@@ -324,7 +324,7 @@ hr {
 .side-bar .site-logo{
   display: block !important;
   width: 220px !important;
-  height: 120px !important;          /* reduce if it still overlaps */
+  height: 80px !important;          /* reduce if it still overlaps */
   margin: 0 auto 0.75rem auto !important;
 
   background-size: contain !important;
@@ -345,7 +345,6 @@ hr {
 .side-bar .site-title{
   margin-bottom: 0 !important;
 }
-.side-bar .site-logo{ height: 90px !important; }
 
 
 
