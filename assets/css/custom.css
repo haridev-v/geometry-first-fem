@@ -827,6 +827,33 @@ blockquote{
   .search .search-icon svg{
     stroke: rgba(31,35,41,0.45) !important;
   }
+   /* 1) Stop the header/top area from clipping the search */
+.main-header,
+.site-header,
+.header,
+.search{
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* 2) Make sure the search bar is not absolutely positioned/clipped */
+.search{
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+/* 3) Ensure the input stays fully inside the available width */
+.search-input-wrap{
+  width: 100% !important;
+  max-width: 520px !important;  /* tweak */
+  margin: 0.5rem auto 0.75rem auto !important;
+}
+
+.search-input{
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 
 }
 /* =========================================
