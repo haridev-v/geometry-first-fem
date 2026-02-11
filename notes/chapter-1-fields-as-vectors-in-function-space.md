@@ -1,6 +1,9 @@
+
 ---
 layout: default
-title: Chapter 1 - Fields as Vectors in Function Space (Functional Analysis Preliminaries)
+title: Chapter 1 — Fields as Vectors in Function Space (Functional Analysis Preliminaries)
+nav_order: 2
+parent: Home
 ---
 
 # Chapter 1 — Fields as Vectors in Function Space (Functional Analysis Preliminaries)
