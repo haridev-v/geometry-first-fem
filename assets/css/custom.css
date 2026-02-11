@@ -209,8 +209,8 @@ hr {
 }
 /* Increase sidebar logo size */
 .site-logo {
-  max-height: 90px !important;
-  height: 90px !important;
+  display: block;
+  margin: 1rem auto 0.6rem auto;
 }
 
 .site-title {
