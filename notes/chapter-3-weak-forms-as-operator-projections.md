@@ -31,6 +31,7 @@ where:
 - $f$ is a given forcing / source
 - $L$ is a differential operator (encodes the physics / constraints)
 - $\Omega$ is the domain
+
 In contrast to what was presented in chapter 2, this problem changes how we must view the projection:
 > The object we must project is no longer a free vector - it is constrained by an operator equation.
 
@@ -100,7 +101,7 @@ $$
 \int_\Omega (\nabla^2 u_h) v dx \rightarrow \int_\Omega \nabla u_h \nabla v dx
 $$
 
-This step essentially passes the derivative from $u_h$ to $v$. Now both $u_h$ and $v$ must be once differentiable.
+This step essentially passes the derivative from $u_h$ to $v$. Now both $u_h$ and $v$ must be once differentiable. Note that this is essentially the same problem expressed in a different form. We call this form as the "weak form" because it "weakens" the requirement of higher derivatives on the subspace.
 
 ---
 
@@ -147,10 +148,10 @@ $$
 | After moving derivatives | Weak-form “measurement” | What it geometrically measures |
 |---|---|---|
 | No integration by parts | $\int_\Omega u\, v\, dx$ | **value / amplitude geometry** |
-| One integration by parts | $\int_\Omega \nabla u \cdot \nabla v\, dx$ | **variation / gradient geometry** |
-| Two integrations by parts | $\int_\Omega (\nabla^2 u) (\nabla^2 v)\, dx$ (schematically) | **curvature geometry** |
+| One integration by parts | $\int_\Omega \nabla u \cdot \nabla v\, dx$ | **gradient geometry** |
+| Two integrations by parts | $\int_\Omega (\nabla^2 u) (\nabla^2 v)\, dx$ | **curvature geometry** |
 
-(You can read this as: *moving derivatives changes which “feature” of the function the geometry cares about*.)
+You can read this as: *moving derivatives changes which “feature” of the function the geometry cares about*. 
 
 ---
 
@@ -164,7 +165,7 @@ Let $L$ be a differential operator of order $k$.
 **Core idea:**  
 > The order of $L$ determines what geometry appears in the weak form, and that geometry dictates what function space is compatible.
 
-### Examples / intuition
+### Examples
 
 - $k=1$: geometry is about **values / fluxes** (easy)
 - $k=2$: geometry becomes **gradients** (standard $H^1$ FEM)
@@ -173,19 +174,28 @@ Let $L$ be a differential operator of order $k$.
 
 ### Key observation (even vs odd)
 
-- **Even-order operators** can often be integrated by parts into a “symmetric” interior form (curvature / gradient squared).
-- **Odd-order operators** tend to produce awkward boundary/nonlocal requirements and fractional smoothness.
+- **Even-order operators** can often be integrated by parts into a “symmetric” interior form (curvature / gradient squared). They can be mapped to Hilbert spaces.
+- **Odd-order operators** tend to produce awkward boundary/nonlocal requirements and fractional smoothness. We need Sobolev fractional spaces to deal with such problems.
+
+The next chapter will introduce the concepts of Hilbert spaces and Sobolev spaces more rigorously. 
 
 ---
 
-## 3.6: Why higher-order PDEs are hard in FEM
+## 3.6: Even order operators and geometric recoverability
+
+For the moment we consider a fourth order operator $Lu = \Delta^2 u$
+Its weak form contains the term $\int_\Omega \nabla^2 u : \nabla^2 v dx$
+
+i.e., for fourth order derivatives the orthogonality is defined in terms of curvature. What subspace could we use for this projection?
 
 ### $H^1$ finite element spaces are
 
 - continuous in value ($C^0$)
 - discontinuous in gradient across elements
 
-But **$H^2$ FEM spaces** require continuity of first derivatives:
+So $H^1$ is usually not admissible.
+
+**$H^2$ FEM spaces** require continuity of first derivatives:
 
 - i.e. they need $C^1$ continuity (or an equivalent workaround)
 
@@ -238,7 +248,7 @@ Idea:
 
 ---
 
-## 3.7: Final geometric summary
+## 3.7: Geometric summary
 
 - FEM is a **projection method**
 - Projection requires a **well-defined inner product**
@@ -269,15 +279,6 @@ A form $a(u,v)$ is **bilinear** if:
    a(u,\; v_1 + v_2) = a(u,\; v_1) + a(u,\; v_2)
    $$
 
-### Concept map: finite vectors vs functions/FEM
-
-| Concept | Finite vectors | Functions / FEM |
-|---|---|---|
-| vector | $\mathbf{x} \in \mathbb{R}^n$ | $u(x)$ |
-| dot product | $\mathbf{x}^T \mathbf{y}$ | $\int u\, v$ |
-| generalized dot product | $\mathbf{x}^T A \mathbf{y}$ | $a(u,v)$ |
-| matrix | $A$ | operator encoded by a form |
-
 All weak forms can be written as:
 
 $$
@@ -288,6 +289,16 @@ where:
 
 - $a(\cdot,\cdot)$ is a bilinear form on $U \times V$
 - $\ell(\cdot)$ is a linear functional on $V$
+
+
+### Concept map: finite vectors vs functions/FEM
+
+| Concept | Finite vectors | Functions / FEM |
+|---|---|---|
+| vector | $\mathbf{x} \in \mathbb{R}^n$ | $u(x)$ |
+| dot product | $\mathbf{x}^T \mathbf{y}$ | $\int u\, v$ |
+| generalized dot product | $\mathbf{x}^T A \mathbf{y}$ | $a(u,v)$ |
+| matrix | $A$ | operator encoded by a form |
 
 ---
 
@@ -332,10 +343,6 @@ $$
 
 This is a system of $N$ linear equations in $N$ unknowns $c_j$.
 
----
-
-## 3.10: Stiffness matrix as operator-induced geometry
-
 Define two matrices/vectors:
 
 1. Operator matrix:
@@ -357,16 +364,20 @@ $$
 
 The operator matrix $K$ is also called the **stiffness matrix**.
 
+---
+
+## 3.10: Stiffness matrix as operator-induced geometry
+
 Just as the mass matrix in Chapter 2 encoded the geometry of the subspace, the stiffness matrix encodes:
 
 - geometry induced by the operator
 - energy norms
 - stability properties
 
-**Box statement (as in notes):**
+**Key insight:**
 
-> The mass matrix comes from expressing geometry in coordinates.  
-> The stiffness matrix comes from expressing the operator induced geometry of the solution space in coordinates.
+> The mass matrix comes from expressing geometry in coordinates (as we saw earlier).  
+> The stiffness matrix comes from expressing the *operator induced geometry* of the solution space in coordinates.
 
 ---
 
@@ -381,6 +392,13 @@ In Chapter 2, everything was clean because projection lived entirely inside one 
 That worked because the inner product was closed: no “leaks”.
 
 In PDEs, the moment we move derivatives around, the geometry “leaks” into the boundary.
+
+To make sense of this statement, consider how integration by parts actually behaves. An integration by parts always produces: 
+
+- An interior term (domain integral)
+- A boundary term (integral over $\partial \Omega$)
+
+Thus, the boundary term becomes a part of the solution, and by extension, a part of the operator induced geometry.
 
 ### Dirichlet boundary conditions: geometry by restriction
 
@@ -415,14 +433,13 @@ $$
 \int_{\partial\Omega} q\, v \, ds
 $$
 
-**Box statement (as in notes):**
+**Key insight:**
 
 > Dirichlet BCs constrain the trial space.  
 > Neumann BCs contribute to the load functional.
 
-Also:
+Also note that boundary conditions are not “external loads” in general.  
 
-> Boundary conditions are not “external loads” in general.  
 > Some boundary conditions become loads after integration by parts; others fundamentally reshape the geometry of the space.
 
 ---
@@ -466,7 +483,7 @@ And geometry gives:
 
 ---
 
-### 3.12.2: Value based geometry (Amplitude geometry)
+### 3.12.2: Amplitude geometry
 
 On $V=L^2(\Omega)$ define:
 
@@ -489,7 +506,7 @@ What this geometry measures:
 
 ---
 
-### 3.12.3: Variation based geometry (Gradient geometry)
+### 3.12.3: Gradient geometry
 
 Define:
 
@@ -511,7 +528,7 @@ What this geometry measures:
 
 ---
 
-### 3.12.4: Curvature based geometry (Second order geometry)
+### 3.12.4: Curvature geometry (Second order geometry)
 
 Functions that only differ by a constant are identical in this geometry.
 
@@ -592,8 +609,7 @@ This is called **operator induced geometry**.
 
 ### 3.12.7: Implication for weak forms
 
-Weak forms are not a mathematical trick.  
-They are a geometric necessity.
+Weak forms are not a mathematical trick. They are a geometric necessity.
 
 Some operator-induced geometries:
 
