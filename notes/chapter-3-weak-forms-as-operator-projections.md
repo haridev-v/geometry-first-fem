@@ -63,7 +63,7 @@ $$
 \langle Lu - f,\; v \rangle = 0 \qquad \forall v \in V
 $$
 
-- the residual $r$ is **orthogonal** to the space of test functions $V$
+- the residual $e$ is **orthogonal** to the space of test functions $V$
 - i.e. we are enforcing the PDE by making the error “invisible” under all test probes $v$
 
 This is exactly the geometry of **projection**:
