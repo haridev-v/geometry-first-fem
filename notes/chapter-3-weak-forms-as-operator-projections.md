@@ -297,7 +297,7 @@ a(u, v) = \int_{\Omega} \nabla u \cdot \nabla v \, dx
 $$
 
 $$
-l(v) = \int_{\Omega} f\, v\, dx \;+\; \int_{\partial\Omeega} \frac{\partial u}{\partial n}\, v \, ds
+l(v) = \int_{\Omega} f\, v\, dx \;+\; \int_{\partial\Omega} \frac{\partial u}{\partial n}\, v \, ds
 $$
 
 
