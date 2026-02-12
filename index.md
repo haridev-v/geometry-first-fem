@@ -7,15 +7,14 @@ nav_order: 1
 # Geometric Foundations of the Finite Element Method
 
 **A conceptual reconstruction of the Finite Element Method from geometric and operator-projection principles.**
+The Finite Element Method is interpreted here as the projection of continuous physical operators onto finite-dimensional function spaces, revealing discretization as a geometric approximation process.
+
 ---
 
 ## Author
 
 **Haridev Vaikundamoorthy**  
 Computational Mechanics · Numerical Methods · Scientific Computing
-
-**Thesis statement:**  
-The Finite Element Method is interpreted here as the projection of continuous physical operators onto finite-dimensional function spaces, revealing discretization as a geometric approximation process.
 
 ---
 
