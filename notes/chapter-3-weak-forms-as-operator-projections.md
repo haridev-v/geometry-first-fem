@@ -290,14 +290,14 @@ where:
 - $a(\cdot,\cdot)$ is a bilinear form on $U \times V$
 - $\ell(\cdot)$ is a linear functional on $V$
 
-For instance, in the Poisson case, if we ignore the boundary integral for the moment:
+For instance, in the Poisson case:
 
 $$
 a(u, v) = \int_{\Omega} \nabla u \cdot \nabla v \, dx 
 $$
 
 $$
-l(v) = \int_{\Omega} f\, v\, dx
+l(v) = \int_{\Omega} f\, v\, dx \;+\; \int_{\partial\Omeega} \frac{\partial u}{\partial n}\, v \, ds
 $$
 
 
