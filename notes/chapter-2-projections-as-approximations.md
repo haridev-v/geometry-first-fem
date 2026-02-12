@@ -36,9 +36,6 @@ A norm answers one question:
 An inner product answers another:
 > How do two vectors relate geometrically? (angle, alignment, overlap)
 
-In 2-D space, imagine a point $u$ and a line $V_h$ in the plane.  What is the closest point on the line?
-> The foot of the perpendicular.
-
 ---
 
 ### 2.2.1 Definition
