@@ -135,13 +135,7 @@ $$
 $$
 
 - The first term is **interior geometry**
-- The boundary term is **boundary geometry**
-
-The boundary term has the generic form:
-
-$$
-\int_{\partial\Omega} (\text{flux}) \cdot (\text{test amplitude}) \, ds
-$$
+- The second term is **boundary geometry**
 
 ### 3.4 table: “what geometry is being measured?”
 
@@ -152,6 +146,12 @@ $$
 | Two integrations by parts | $\int_\Omega (\nabla^2 u) (\nabla^2 v)\, dx$ | **curvature geometry** |
 
 You can read this as: *moving derivatives changes which “feature” of the function the geometry cares about*. 
+
+The first entry in the table is an expression that says "how close are the values of $u$ and $v$ in the space?"
+
+The second entry in the table is an expression that says "how close are the derivatives of $u$ and $v$ in the space?" - the projection approximates variations, not values. 
+
+The third entry in the table is an expression that says "how close are the curvatures of $u$ and $v$ in the space?" - the projection approximates curvatures, not values.
 
 ---
 
@@ -409,6 +409,12 @@ To make sense of this statement, consider how integration by parts actually beha
 - A boundary term (integral over $\partial \Omega$)
 
 Thus, the boundary term becomes a part of the solution, and by extension, a part of the operator induced geometry.
+
+The boundary term has the generic form:
+
+$$
+\int_{\partial\Omega} (\text{flux}) \cdot (\text{test amplitude}) \, ds
+$$
 
 ### Dirichlet boundary conditions: geometry by restriction
 
