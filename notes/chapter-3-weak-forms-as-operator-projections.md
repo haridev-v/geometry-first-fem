@@ -290,6 +290,16 @@ where:
 - $a(\cdot,\cdot)$ is a bilinear form on $U \times V$
 - $\ell(\cdot)$ is a linear functional on $V$
 
+For instance, in the Poisson case, if we ignore the boundary integral for the moment:
+
+$$
+a(u, v) = \int_{\Omega} \nabla u \cdot \nabla v \, dx 
+$$
+
+$$
+l(v) = \int_{\Omega} f\, v\, dx
+$$
+
 
 ### Concept map: finite vectors vs continuous functions
 
