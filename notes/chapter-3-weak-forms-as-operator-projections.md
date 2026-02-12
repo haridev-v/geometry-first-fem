@@ -308,7 +308,7 @@ $$
 | vector | $\mathbf{x} \in \mathbb{R}^n$ | $u(x)$ |
 | dot product | $\mathbf{x}^T \mathbf{y}$ | $\int u\, v$ |
 | generalized dot product | $\mathbf{x}^T A \mathbf{y}$ | $a(u,v)$ |
-| matrix | $A$ | operator encoded by a form |
+| matrix | $A$ | operator encoded by bilinear form |
 
 ---
 
