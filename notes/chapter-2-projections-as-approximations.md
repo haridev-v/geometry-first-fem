@@ -36,6 +36,9 @@ A norm answers one question:
 An inner product answers another:
 > How do two vectors relate geometrically? (angle, alignment, overlap)
 
+An inner product of a vector with itself:
+> measures the squared length of the vector
+
 ---
 
 ### 2.2.1 Definition
