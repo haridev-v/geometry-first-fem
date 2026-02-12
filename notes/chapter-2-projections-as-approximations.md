@@ -20,8 +20,10 @@ nav_order: 2
 ## 2.1 Motivation — Why Approximation is Geometric
 
 From Chapter 1 we learned:
+
 - A function is a vector in an infinite-dimensional vector space.- FEM replaces this space with a finite-dimensional subspace.- The FEM solution is a vector written in a function basis.
 This raises a fundamental question:
+
 > What does it mean to approximate a vector by another vector in a subspace?
 In linear algebra, approximation is a projection problem.
 
@@ -30,8 +32,10 @@ In linear algebra, approximation is a projection problem.
 ## 2.2 Inner-Product-Induced Norms
 A norm answers one question:
 > How big is a vector?
+
 An inner product answers another:
 > How do two vectors relate geometrically? (angle, alignment, overlap)
+
 In 2-D space, imagine a point $u$ and a line $V_h$ in the plane.  What is the closest point on the line?
 > The foot of the perpendicular.
 
@@ -91,8 +95,10 @@ $$e := u-u_h$$
 
 We are trying to approximate $u$ by vectors in $V_h$. The projection theorem states implies:
 
-- \(u_h\) is the orthogonal projection of \(u\) onto \(V\).
-- The residual \(r = u - u_h\) is orthogonal to the entire subspace \(V\).
+- $u_h$ is the orthogonal projection of $u$ onto $V$.
+
+- The residual $e = u - u_h$ is orthogonal to the entire subspace $V$.
+
 - No tangential component remains.
 
 To make this idea intuitive, consider a 2D space with a vector $AB$ where the goal is to find the minimum distance between a point $u$ and the vector $AB$. The closest point on the vector will be the foot of the perpendicular to the point $u$. For any other point $w$ along $AB$, the error vector $$e := u - w$$ will have a component along $AB$, and moving along that component leads us to the point $u_h$:
@@ -113,7 +119,11 @@ Therefore the error must point entirely outside the subspace, i.e. it is orthogo
 
 $$\langle u-u_h,\; v\rangle = 0\quad \forall v\in V_h$$
 
-This vector problem can be represented geometrically as:- $u$ : target vector  - $u_h$ : best approximation in the subspace  - $u-u_h$ : error vector  - $v$ : any test direction (in the solution space).
+This vector problem can be represented geometrically as:
+- $u$ : target vector
+- $u_h$ : best approximation in the subspace
+- $u-u_h$ : error vector
+- $v$ : any test direction (in the solution space).
 
 ---
 ## 2.5 From Geometry to Algebra
@@ -268,7 +278,10 @@ $$Mc=b.$$
 
 Interpretation:
 
-- $c\in\mathbb{R}^N$ contains the coordinates of the approximation $u_h$.- $M$ is not arbitrary — it is built entirely from inner products.- $M$ encodes how the basis functions overlap geometrically.
+- $c\in\mathbb{R}^N$ contains the coordinates of the approximation $u_h$.
+- $M$ is not arbitrary — it is built entirely from inner products.
+- $M$ encodes how the basis functions overlap geometrically.
+- 
 > The matrix is the inner-product geometry of the subspace written in coordinates.
 
 ---
@@ -294,7 +307,7 @@ is equivalent to solving the algebraic system
 $$Mc=b.$$
 
 **Key message:**
-> FEM computes coordinates, not functions.  > The function is reconstructed only after solving the algebraic problem.
+> FEM computes coordinates, not functions. The function is reconstructed only after solving the algebraic problem.
 
 ---
 
@@ -343,7 +356,7 @@ Recall that the matrix $M$ was obtained when we expressed the vector minimizatio
 
 **Key message:**
 
-> The linear system does not come from discretizing equations;  > it comes from expressing geometry in coordinates.
+> The linear system does not come from discretizing equations; it comes from expressing geometry in coordinates.
 
 We have
 
@@ -366,7 +379,7 @@ $$v=\sum_{j=1}^{N}c_j\phi_j \in V_h.$$
 Now compute:
 
 $$c^T M c= \sum_{i=1}^{N}\sum_{j=1}^{N} c_i\,M_{ij}\,c_j= \sum_{i=1}^{N}\sum_{j=1}^{N} c_i\,\langle \phi_j,\phi_i\rangle\,c_j= \left\langle \sum_{j=1}^{N}c_j\phi_j,\;\sum_{i=1}^{N}c_i\phi_i \right\rangle= \langle 
-v,v\rangle= \|v\|^2.$$
+v,v\rangle= \|v\|^2$$
 
 Now $\|v\|^2\ge 0$ always, and $\|v\|^2=0 \Rightarrow v=0$.
 
@@ -389,7 +402,8 @@ In exact mathematics, $Mc = b$ has a unique solution since $M$ is SPD.
 In floating-point arithmetic, solving it depends on how sensitive $c$ is to small perturbations.
 
 Introduce the condition number $k(M)$:
-- $k(M) \approx 1$ $\Rightarrow$ very stable  - $k(M) \gg 1$ $\Rightarrow$ small errors in data or rounding create large errors in $c$
+- $k(M) \approx 1$ $\Rightarrow$ very stable
+- $k(M) \gg 1$ $\Rightarrow$ small errors in data or rounding create large errors in $c$
 
 To see how ill-conditioning comes from coordinate choice, look at two basis functions $\phi_1, \phi_2$.
 If they are almost the same direction, they are nearly linearly dependent:
@@ -404,7 +418,7 @@ so the overlap is huge.
 
 That makes columns of $M$ nearly dependent, which makes $M$ close to singular:
 
-$$k(M) \gg 1.$$
+$$k(M) \gg 1$$
 
 If the basis is orthonormal:
 
