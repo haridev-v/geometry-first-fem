@@ -203,7 +203,7 @@ So $H^2$ is **geometrically admissible** but **algebraically demanding**.
 
 ### Three strategies exist
 
-#### 1. $C^1$-conforming elements
+**1. $C^1$-conforming elements**
 
 Examples:
 - Hermite elements  
@@ -214,7 +214,7 @@ These enforce:
 - function continuity
 - gradient continuity
 
-#### 2. Mixed formulations
+**2. Mixed formulations**
 
 Rewrite a 4th order PDE as a coupled system of 2nd order PDEs.
 
@@ -234,7 +234,7 @@ Now:
 - each equation is second order
 - standard $H^1$ FEM applies
 
-#### 3. Weakly imposed continuity
+**3. Weakly imposed continuity**
 
 Examples:
 - discontinuous Galerkin  
@@ -600,7 +600,7 @@ This is called **operator induced geometry**.
 
 | Geometry | Operator |
 |---|---|
-| Value geometry | $B = I$ |
+| Amplitude geometry | $B = I$ |
 | Variation geometry | $B = \nabla$ |
 | Curvature geometry | $B = \nabla^2$ |
 | Transport geometry | $B = \beta\cdot\nabla$ |
