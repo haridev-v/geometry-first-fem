@@ -296,7 +296,8 @@ This establishes a mapping:
 
 $$u_h \;\longleftrightarrow\; c=(c_1,c_2,\dots,c_N)\in\mathbb{R}^N.$$
 
-- $u_h$ lives in the function space.- $c$ lives in the coefficient (coordinate) space $\mathbb{R}^N$.
+- $u_h$ lives in the function space.
+- $c$ lives in the coefficient (coordinate) space $\mathbb{R}^N$.
 
 The projection problem
 
