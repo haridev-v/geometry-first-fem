@@ -8,6 +8,8 @@ nav_order: 2
 
 # {{ page.title }}
 
+In chapter 2 we introduced a powerful idea: approximation is projection. In chapter 3 we further develop this idea to apply to PDEs from a operator projection perspective. The key idea we will develop is that weak forms are operator projections.
+
 ---
 
 ## Contents
@@ -15,271 +17,590 @@ nav_order: 2
 1. TOC
 {:toc}
 
-## 3.1 Weak Forms as Operator Projections
+## 3.1: The PDE problem
 
-We start from the abstract operator equation
+We start with a (typical) PDE written as an operator equation:
 
-$$Lu = f \quad \text{in } \Omega.$$
+$$
+L u = f \qquad \text{in } \Omega
+$$
 
-Instead of solving this equation pointwise, we test it against functions  $v \in V$ and require
+where:
 
-$$\langle Lu, v \rangle = \langle f, v \rangle.$$
-
-This expresses the PDE as an operator relation inside an inner-product space.
-
-We define
-
-$$a(u,v) := \langle Lu, v \rangle, \qquad l(v) := \langle f, v \rangle.$$
-
-Thus, the weak form becomes
-
-$$a(u,v) = l(v) \quad \forall v \in V.$$
-
-Here:- $a(\cdot,\cdot)$ is a bilinear form- $l(\cdot)$ is a linear functional
+- $u$ is the unknown function (the “field”)
+- $f$ is a given forcing / source
+- $L$ is a differential operator (encodes the physics / constraints)
+- $\Omega$ is the domain
+In contrast to what was presented in chapter 2, this problem changes how we must view the projection:
+> The object we must project is no longer a free vector - it is constrained by an operator equation.
 
 ---
 
-## 3.2 Bilinearity and Linear Functionals
+## 3.2: Pointwise Enforcement - Why it fails
 
-The bilinear form $a(u,v)$ satisfies:
-1. Linearity in the first argument$$a(u_1 + u_2, v) = a(u_1,v) + a(u_2,v)$$
-2. Linearity in the second argument$$a(u, v_1 + v_2) = a(u,v_1) + a(u,v_2)$$
+A natural first thought is to enforce the operator equation pointwise. This fails immediately because:
 
-Similarly, the load functional satisfies
+- Pointwise equality on a continuous operator imposes infinitely many constraints
+- But $u_h$ belongs to a finite dimensional subspace
+- A finite dimensional subspace cannot satisfy infinitely many independent constraints.
 
-$$l(v_1 + v_2) = l(v_1) + l(v_2).$$
-
----
-
-## 3.3 Weak Form Geometry
-The weak form can be interpreted geometrically:
-> Find $u \in V$ such that  > $$a(u,v) = l(v) \quad \forall v \in V.$$
-This means that the residual $Lu - f$ is orthogonal to all test functions.
-Thus, the solution is a projection in function space determined by the inner product geometry.
+Hence, we cannot proceed. As such, we will look at enforcing the PDE through projection as we did earlier.
 
 ---
 
-## 3.4 Finite-Dimensional Subspace Projection
+## 3.3: Projection of Continuous Operators
 
-We choose a finite-dimensional subspace
+Define the **residual**:
 
-$$V_h = \text{span}\{\phi_1, \phi_2, \dots, \phi_N\}.$$
+$$
+e := Lu - f
+$$
 
-We approximate the solution as
+Then the projection problem becomes
 
-$$u_h = \sum_{j=1}^N c_j \phi_j.$$
+$$
+\langle Lu - f,\; v \rangle = 0 \qquad \forall v \in V
+$$
 
-Enforcing the weak form on each basis function gives
+- the residual $r$ is **orthogonal** to the space of test functions $V$
+- i.e. we are enforcing the PDE by making the error “invisible” under all test probes $v$
 
-$$a(u_h, \phi_i) = l(\phi_i), \quad i = 1,\dots,N.$$
+This is exactly the geometry of **projection**:
 
-Substituting $u_h$,
+- Choose a subspace $V$
+- Enforce orthogonality of the error/residual against $V$
 
-$$a\left(\sum_{j=1}^N c_j \phi_j, \phi_i\right) = l(\phi_i)$$
+We can rewrite the above equation in a more convenient form (from the linearity axiom of the inner product): 
 
-which yields
+$$
+\langle Lu,\; v \rangle = \langle f,\; v \rangle \qquad \forall v \in V
+$$
 
-$$\sum_{j=1}^N c_j\, a(\phi_j, \phi_i) = l(\phi_i).$$
 
-This is a linear system of $N$ equations in $N$ unknowns $c_j$.
+For this equation to make sense: 
 
----
+- $L u_h$ must belong to the dual space of $v$
+- $f$ must belong to the same space
 
-## 3.5 Operator Matrix and Load Vector
+That is, both sides of the equation must live in the same geometric space so that "equality of projections" is meaningful.
 
-We define:
-1. Operator matrix$$K_{ij} := a(\phi_j, \phi_i)$$
-2. Load vector$$b_i := l(\phi_i)$$
+If $L$ contains derivatives, then those derivatives must exist in the chosen space, and the result must lie in the same space where the inner product is defined.
 
-Then the system becomes
+Let us consider a second order operator: 
 
-$$\sum_{j=1}^N K_{ij} c_j = b_i$$
+$$
+Lu = - \nabla^2 u
+$$
 
-or in matrix form
+If we now write $\langle L u_h \; v \rangle = \int_\Omega (- \nabla^2 u_h) v dx $, we are asking for second derivatives of $u_h$. If $u_h$ is not twice differentiable in $V$, we run into a problem because the projection will no longer be defined. 
 
-$$Kc = b.$$
+We now integrate by parts the above equation to get: 
 
-The matrix $K$ is the stiffness matrix.
+$$
+\int_\Omega (\nabla^2 u_h) v dx \rightarrow \int_\Omega \nabla u_h \nabla v dx
+$$
 
----
-
-## 3.6 Weak Continuity and Higher-Order Spaces
-
-$H^1$ finite element spaces are:- continuous in value ($C^0$)- discontinuous in gradient across elements
-But $H^2$ problems require continuity of first derivatives.
-This is geometrically admissible but algebraically demanding.
-Three strategies exist:
-1. $C^1$-conforming elements     Examples: Hermite elements, Argyris triangle, Bogner–Fox–Schmit rectangle     These enforce:   - function continuity   - gradient continuity
-2. Mixed formulations     Example:   $$   \Delta^2 u = f   \Rightarrow   \begin{cases}   w = \Delta u \\   \Delta w = f   \end{cases}   $$   Each equation is second order, so standard $H^1$ FEM applies.
-3. Weakly imposed continuity     Examples: discontinuous Galerkin, interior penalty methods     Idea:   - allow discontinuous gradients   - penalize jumps weakly in the variational form
-
----
-
-## 3.7 Final Geometric Summary
-- FEM is a projection method- Projection requires a well-defined inner product- Inner products define geometry- Geometry dictates function space compatibility
-| Operator order | Weak form geometry | FEM status ||----------------|------------------|------------|| 1 | Value / flux | easy || 2 | gradient | standard || 3 | fractional curvature | incompatible || 4 | curvature | hard but possible |
----
-
-## 3.8 The Bilinear Form
-
-A form $a(u,v)$ is bilinear if:
-1. It is linear in the first argument$$a(u_1+u_2, v) = a(u_1,v) + a(u_2,v)$$
-2. It is linear in the second argument$$a(u, v_1+v_2) = a(u,v_1) + a(u,v_2)$$
-
-Concept correspondence:
-| Concept | Finite vectors | Functions / FEM ||---------|---------------|-----------------|| vector | $\tilde{x}\in \mathbb{R}^n$ | $u(x)$ || dot product | $x^T y$ | $\int uv$ || generalized dot | $x^T A y$ | $a(u,v)$ || matrix | $A$ | operator encoded by $a$ |
-
-All weak forms can be written as
-$$a(u_h, v) = l(v),$$
-where $a(\cdot,\cdot)$ is bilinear and $l(\cdot)$ is linear.
+This step essentially passes the derivative from $u_h$ to $v$. Now both $u_h$ and $v$ must be once differentiable.
 
 ---
 
-## 3.9 From Weak Forms to Linear Systems
+## 3.4: The geometric meaning of integration by parts
 
-We start from
+Weak forms are not just “multiply and integrate”.
+For differential operators, we typically **move derivatives** off $u$ onto $v$ using integration by parts (Green’s identity).
 
-$$a(u_h, v) = l(v).$$
+### Integration by parts always produces
 
-Let
-$$V_h = \text{span}\{\phi_1,\phi_2,\dots,\phi_N\},$$
+1. An **interior term** (domain integral)
+2. A **boundary term** (integral over $\partial\Omega$)
 
-so
-$$u_h = \sum_{j=1}^N c_j \phi_j.$$
+For example, take the Poisson operator:
 
-Enforcing on basis functions:
-$$a(u_h, \phi_i) = l(\phi_i)$$
+$$
+Lu = -\Delta u
+$$
 
-$$\Rightarrow \sum_{j=1}^N c_j a(\phi_j,\phi_i) = l(\phi_i).$$
+Start from:
 
-This produces the linear system
+$$
+\int_{\Omega} (-\Delta u)\, v \, dx = \int_{\Omega} f\, v\, dx
+$$
 
-$$Kc = b.$$
+Integrate by parts (Green’s identity):
 
----
+$$
+\int_{\Omega} \nabla u \cdot \nabla v \, dx \;-\; \int_{\partial\Omega} \frac{\partial u}{\partial n}\, v \, ds
+= \int_{\Omega} f\, v\, dx
+$$
 
-## 3.10 Stiffness Matrix as Operator-Induced Geometry
+- The first term is **interior geometry**
+- The boundary term is **boundary geometry**
 
-The mass matrix encoded the geometry of the subspace.  The stiffness matrix encodes:
-- geometry induced by the operator- energy norms- stability properties
-Thus, matrices represent geometry in coordinates.
-The mass matrix comes from expressing geometry in coordinates.  The stiffness matrix comes from expressing operator-induced geometry of the solution space in coordinates.
+The boundary term has the generic form:
 
----
+$$
+\int_{\partial\Omega} (\text{flux}) \cdot (\text{test amplitude}) \, ds
+$$
 
-## 3.11 Boundary Conditions as Part of Geometry
+### 3.4 table: “what geometry is being measured?”
 
-In earlier chapters, projection lived entirely inside one space:- we had space $V$- we had an inner product- we projected onto a subspace $V_h$
-This worked because the inner product was closed: no "leaks".
-In PDEs, when derivatives are moved (integration by parts), geometry leaks into the boundary.
+| After moving derivatives | Weak-form “measurement” | What it geometrically measures |
+|---|---|---|
+| No integration by parts | $\int_\Omega u\, v\, dx$ | **value / amplitude geometry** |
+| One integration by parts | $\int_\Omega \nabla u \cdot \nabla v\, dx$ | **variation / gradient geometry** |
+| Two integrations by parts | $\int_\Omega (\nabla^2 u) (\nabla^2 v)\, dx$ (schematically) | **curvature geometry** |
 
-### 1. Dirichlet boundary conditions — geometry by restriction
-
-We enforce
-$$u = g \quad \text{on } \partial\Omega,$$
-and test functions satisfy
-$$v = 0 \quad \text{on } \partial\Omega.$$
-Then boundary terms vanish, and the weak form becomes purely interior.
-Dirichlet boundary conditions constrain the trial space.
-
-### 2. Neumann boundary conditions — geometry by completion
-
-We prescribe flux
-
-$$\frac{\partial u}{\partial n} = q \quad \text{on } \partial\Omega.$$
-
-Then the weak form becomes
-
-$$\int_\Omega \nabla u \cdot \nabla v \, dx= \int_\Omega f v \, dx + \int_{\partial\Omega} q v \, ds.$$
-
-Neumann conditions contribute to the load functional.
-
->Boundary conditions are not always “external loads”.  Some become loads after integration by parts, others reshape the geometry of the space.
+(You can read this as: *moving derivatives changes which “feature” of the function the geometry cares about*.)
 
 ---
 
-## 3.12 Function Space Geometry
-Up to now, functions were treated as vectors.  But vectors only become meaningful once a geometry is chosen.
-Central question:> What does it mean for two functions to be close?
+## 3.5: Operator order and function-space compatibility
 
-### 3.12.1 Induced Norms
+Let $L$ be a differential operator of order $k$.
 
-Let $V$ be a vector space with inner product $\langle\cdot,\cdot\rangle$.  The induced norm is
+- A $k$-th order operator “wants” $k$ derivatives.
+- But our FEM spaces only have certain smoothness / continuity.
 
-$$\|u\|_V = \sqrt{\langle u,u\rangle}.$$
+**Core idea:**  
+> The order of $L$ determines what geometry appears in the weak form, and that geometry dictates what function space is compatible.
 
-Distance follows as
+### Examples / intuition
 
-$$d(u,v) = \|u-v\|_V = \sqrt{\langle u-v, u-v\rangle}.$$
+- $k=1$: geometry is about **values / fluxes** (easy)
+- $k=2$: geometry becomes **gradients** (standard $H^1$ FEM)
+- $k=3$: geometry would require **fractional curvature** (often incompatible / nonlocal)
+- $k=4$: geometry is **curvature** (hard but possible; needs $H^2$)
 
-Hierarchy:- inner product → norm → distance
+### Key observation (even vs odd)
 
-Geometric quantities:- length: $\|u\| = \sqrt{\langle u,u\rangle}$- angle: $\cos\theta = \frac{\langle u,v\rangle}{\|u\|\|v\|}$- orthogonality: $\langle u,v\rangle = 0$
+- **Even-order operators** can often be integrated by parts into a “symmetric” interior form (curvature / gradient squared).
+- **Odd-order operators** tend to produce awkward boundary/nonlocal requirements and fractional smoothness.
 
 ---
 
-### 3.12.2 Value-Based Geometry (Amplitude Geometry)
+## 3.6: Why higher-order PDEs are hard in FEM
 
-On $V = L^2(\Omega)$ define
+### $H^1$ finite element spaces are
 
-$$\langle u,v\rangle_{L^2} = \int_\Omega u(x)v(x)\,dx.$$
+- continuous in value ($C^0$)
+- discontinuous in gradient across elements
+
+But **$H^2$ FEM spaces** require continuity of first derivatives:
+
+- i.e. they need $C^1$ continuity (or an equivalent workaround)
+
+So $H^2$ is **geometrically admissible** but **algebraically demanding**.
+
+### Three strategies exist
+
+#### 1. $C^1$-conforming elements
+
+Examples:
+- Hermite elements  
+- Argyris triangle  
+- Bogner–Fox–Schmit rectangle  
+
+These enforce:
+- function continuity
+- gradient continuity
+
+#### 2. Mixed formulations
+
+Rewrite a 4th order PDE as a coupled system of 2nd order PDEs.
+
+Example:
+
+$$
+\Delta^2 u = f
+\quad \Longrightarrow \quad
+\begin{cases}
+w = \Delta u \quad (1)\\
+\Delta w = f \quad (2)
+\end{cases}
+$$
+
+Now:
+
+- each equation is second order
+- standard $H^1$ FEM applies
+
+#### 3. Weakly imposed continuity
+
+Examples:
+- discontinuous Galerkin  
+- interior penalty methods  
+- $C^0$ interior penalty FEM  
+
+Idea:
+
+- allow discontinuous gradients
+- penalize jumps weakly in the variational form
+
+---
+
+## 3.7: Final geometric summary
+
+- FEM is a **projection method**
+- Projection requires a **well-defined inner product**
+- Inner products define **geometry**
+- Geometry dictates **function space compatibility**
+
+### 3.7 table: operator order vs weak-form geometry vs FEM status
+
+| Operator order | Weak-form geometry | FEM status |
+|---:|---|---|
+| 1 | value / flux | easy |
+| 2 | gradient | standard |
+| 3 | fractional curvature | incompatible |
+| 4 | curvature | hard but possible |
+
+---
+
+## 3.8: The bilinear form
+
+A form $a(u,v)$ is **bilinear** if:
+
+1. It is linear in the first argument:
+   $$
+   a(u_1 + u_2,\; v) = a(u_1,\; v) + a(u_2,\; v)
+   $$
+2. It is linear in the second argument:
+   $$
+   a(u,\; v_1 + v_2) = a(u,\; v_1) + a(u,\; v_2)
+   $$
+
+### Concept map: finite vectors vs functions/FEM
+
+| Concept | Finite vectors | Functions / FEM |
+|---|---|---|
+| vector | $\mathbf{x} \in \mathbb{R}^n$ | $u(x)$ |
+| dot product | $\mathbf{x}^T \mathbf{y}$ | $\int u\, v$ |
+| generalized dot product | $\mathbf{x}^T A \mathbf{y}$ | $a(u,v)$ |
+| matrix | $A$ | operator encoded by a form |
+
+All weak forms can be written as:
+
+$$
+a(u_h,\; v) = \ell(v)
+$$
+
+where:
+
+- $a(\cdot,\cdot)$ is a bilinear form on $U \times V$
+- $\ell(\cdot)$ is a linear functional on $V$
+
+---
+
+## 3.9: From weak forms to linear systems
+
+We start from the weak form:
+
+$$
+a(u_h,\; v) = \ell(v)
+$$
+
+Let:
+
+$$
+V_h = \text{span}\{\phi_1,\phi_2,\ldots,\phi_N\}
+$$
+
+and expand:
+
+$$
+u_h = \sum_{j=1}^{N} c_j \phi_j
+$$
+
+Since every $v$ is a linear combination of the basis functions $\phi_i$, we enforce the weak form on the basis tests:
+
+$$
+a(u_h,\; \phi_i) = \ell(\phi_i)
+$$
+
+Substitute $u_h$:
+
+$$
+a\!\left(\sum_{j=1}^{N} c_j \phi_j,\; \phi_i\right) = \ell(\phi_i)
+$$
+
+Use linearity:
+
+$$
+\sum_{j=1}^{N} c_j\, a(\phi_j,\phi_i) = \ell(\phi_i),
+\qquad i=1,2,\ldots,N
+$$
+
+This is a system of $N$ linear equations in $N$ unknowns $c_j$.
+
+---
+
+## 3.10: Stiffness matrix as operator-induced geometry
+
+Define two matrices/vectors:
+
+1. Operator matrix:
+   $$
+   K_{ij} := a(\phi_j,\phi_i)
+   $$
+2. Load vector:
+   $$
+   b_i := \ell(\phi_i)
+   $$
+
+Then the discrete system is:
+
+$$
+\sum_{j=1}^{N} K_{ij} c_j = b_i
+\quad\Longleftrightarrow\quad
+Kc = b
+$$
+
+The operator matrix $K$ is also called the **stiffness matrix**.
+
+Just as the mass matrix in Chapter 2 encoded the geometry of the subspace, the stiffness matrix encodes:
+
+- geometry induced by the operator
+- energy norms
+- stability properties
+
+**Box statement (as in notes):**
+
+> The mass matrix comes from expressing geometry in coordinates.  
+> The stiffness matrix comes from expressing the operator induced geometry of the solution space in coordinates.
+
+---
+
+## 3.11: Boundary conditions as part of geometry
+
+In Chapter 2, everything was clean because projection lived entirely inside one space:
+
+- we had space $V$
+- we had an inner product
+- we projected onto a subspace $V_h$
+
+That worked because the inner product was closed: no “leaks”.
+
+In PDEs, the moment we move derivatives around, the geometry “leaks” into the boundary.
+
+### Dirichlet boundary conditions: geometry by restriction
+
+We enforce:
+
+- $u = g$ on $\partial\Omega$
+- $v = 0$ on $\partial\Omega$
+
+So the boundary term vanishes, and the weak form becomes purely interior.
+
+### Neumann boundary conditions: geometry by completion
+
+We prescribe a flux:
+
+$$
+\frac{\partial u}{\partial n} = q \quad \text{on } \partial\Omega
+$$
+
+The boundary term becomes:
+
+$$
+-\int_{\partial\Omega} q\, v \, ds
+$$
+
+So the weak form becomes:
+
+$$
+\int_{\Omega} \nabla u \cdot \nabla v \, dx
+=
+\int_{\Omega} f\, v\, dx
++
+\int_{\partial\Omega} q\, v \, ds
+$$
+
+**Box statement (as in notes):**
+
+> Dirichlet BCs constrain the trial space.  
+> Neumann BCs contribute to the load functional.
+
+Also:
+
+> Boundary conditions are not “external loads” in general.  
+> Some boundary conditions become loads after integration by parts; others fundamentally reshape the geometry of the space.
+
+---
+
+## 3.12: Function space geometry
+
+Up to now we talked about functions as vectors.  
+But vectors only become meaningful once we choose a geometry.
+
+This section answers:
+
+> “What does it mean for two functions to be close?”
+
+### 3.12.1: Induced norms
+
+Let $V$ be a vector space of functions. From an inner product we define the induced norm:
+
+$$
+\|u\|_V := \sqrt{\langle u,\; u\rangle}
+$$
+
+This norm measures the length of a function vector.
+
+Once we have a norm, we automatically get a distance:
+
+$$
+d_V(u,v) := \|u-v\|_V
+= \sqrt{\langle u-v,\; u-v\rangle}
+$$
+
+So the hierarchy is:
+
+**inner product $\rightarrow$ norm $\rightarrow$ distance**
+
+And geometry gives:
+
+- length: $\|u\| = \sqrt{\langle u,u\rangle}$
+- angle: $\cos\theta = \dfrac{\langle u,v\rangle}{\|u\|\|v\|}$
+- distance: $d(u,v)=\sqrt{\langle u-v,u-v\rangle}$
+- orthogonality: $\langle u,v\rangle = 0$
+
+---
+
+### 3.12.2: Value based geometry (Amplitude geometry)
+
+On $V=L^2(\Omega)$ define:
+
+$$
+\langle u,\; v\rangle_{L^2}
+:= \int_{\Omega} u(x)\, v(x)\, dx
+$$
+
+The induced norm is:
+
+$$
+\|u\|_{L^2} = \sqrt{\int_{\Omega} u(x)^2\, dx}
+$$
+
+What this geometry measures:
+
+- similarity in amplitude
+- alignment of function values
+- total “energy”
+
+---
+
+### 3.12.3: Variation based geometry (Gradient geometry)
+
+Define:
+
+$$
+\langle u,\; v\rangle := \int_{\Omega} \nabla u \cdot \nabla v \, dx
+$$
+
+Then the induced norm is:
+
+$$
+\|u\| = \sqrt{\int_{\Omega} |\nabla u|^2\, dx}
+$$
+
+What this geometry measures:
+
+- similarity in variation
+- alignment of gradients
+- deformation or strain energy
+
+---
+
+### 3.12.4: Curvature based geometry (Second order geometry)
+
+Functions that only differ by a constant are identical in this geometry.
+
+Define:
+
+$$
+\langle u,\; v\rangle := \int_{\Omega} \nabla^2 u \cdot \nabla^2 v \, dx
+$$
 
 Induced norm:
 
-$$\|u\|_{L^2} = \sqrt{\int_\Omega u(x)^2 dx}.$$
+$$
+\|u\| = \sqrt{\int_{\Omega} (\nabla^2 u)^2\, dx}
+$$
 
-This geometry measures:- similarity in amplitude- alignment of function values- total energy
+What this geometry measures:
 
-Functions that differ only by a constant may appear similar in certain contexts.
+- similarity in curvature
+- bending energy
+- higher order smoothness
 
 ---
 
-### 3.12.3 Variation-Based Geometry (Gradient Geometry)
+### 3.12.5: Directional (Transport-weighted) geometry
 
-Define
+Let $\beta(x)$ be a given vector field.
 
-$$\langle u,v\rangle = \int_\Omega \nabla u \cdot \nabla v \, dx.$$
+Define:
+
+$$
+\langle u,\; v\rangle := \int_{\Omega} (\beta\cdot\nabla u)\, (\beta\cdot\nabla v)\, dx
+$$
 
 Induced norm:
 
-$$\|u\| = \sqrt{\int_\Omega |\nabla u|^2 dx}.$$
+$$
+\|u\|
+= \sqrt{\int_{\Omega} (\beta\cdot\nabla u)^2\, dx}
+$$
 
-This geometry measures:- similarity in variation- alignment of gradients- deformation or strain energy
+What this geometry measures:
 
----
-
-### 3.12.4 Curvature-Based Geometry (Second-Order Geometry)
-
-Define
-
-$$\langle u,v\rangle = \int_\Omega \nabla^2 u : \nabla^2 v \, dx.$$
-
-Induced norm:
-
-$$\|u\| = \sqrt{\int_\Omega (\nabla^2 u)^2 dx}.$$
-
-This geometry measures:- similarity in curvature- bending energy- higher-order smoothness
+- variation along flow direction
+- transport-aligned similarity
+- convection-dominated behaviour
 
 ---
 
-### 3.12.5 Directional (Transport-Weighted) Geometry
+### 3.12.6: Generalization — operator induced geometry
 
-Let $\beta(x)$ be a given vector field. Define
+Let $B$ be a linear operator.
 
-$$\langle u,v\rangle = \int_\Omega (\beta \cdot \nabla u)(\beta \cdot \nabla v)\, dx.$$
+We measure a function by applying something to it and then taking an $L^2$ norm:
 
-Induced norm:
+$$
+\langle u,\; v\rangle_{B} := \int_{\Omega} (Bu)\,(Bv)\, dx
+$$
 
-$$\|u\| = \sqrt{\int_\Omega (\beta \cdot \nabla u)^2 dx}.$$
+So:
 
-This geometry measures:- variation along flow direction- transport-aligned similarity- convection-dominated behaviour
+$$
+\|u\|_{B} = \|Bu\|_{L^2}
+= \sqrt{\int_{\Omega} (Bu)^2\, dx}
+$$
+
+This is called **operator induced geometry**.
+
+#### 3.12.6 table: geometries as special cases of $B$
+
+| Geometry | Operator |
+|---|---|
+| Value geometry | $B = I$ |
+| Variation geometry | $B = \nabla$ |
+| Curvature geometry | $B = \nabla^2$ |
+| Transport geometry | $B = \beta\cdot\nabla$ |
 
 ---
 
-### 3.12.6 Generalization: Operator-Induced Geometry
-Let $B$ be a linear operator.  We measure functions by applying the operator and then taking the $L^2$ norm:
-$$\langle u,v\rangle_B = \int_\Omega (Bu)(Bv)\, dx.$$
-Thus,
-$$\|u\|_B = \|Bu\|_{L^2} = \sqrt{\int_\Omega (Bu)^2 dx}.$$
-Hence, geometry is induced by the operator applied to the function.
-The induced norm measures the length of a vector under a chosen geometry.  The induced distance measures how far apart two vectors are by measuring the length of their difference in that geometry.
+### 3.12.7: Implication for weak forms
+
+Weak forms are not a mathematical trick.  
+They are a geometric necessity.
+
+Some operator-induced geometries:
+
+- require derivatives that FEM spaces do not have
+- cannot be evaluated pointwise
+
+Integration by parts **changes the geometry**:
+
+- from curvature-based
+- to variation-based
