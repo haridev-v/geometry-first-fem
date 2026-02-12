@@ -1,5 +1,6 @@
 logo: "/figures/logo.png"
 og_image: "/figures/logo.png"
+favicon_ico: "/figures/favicon_ico.ico"
 title: Geometric foundations of FEM
 description: Foundational notes developing an operator-theoretic, geometry-first formulation of the Finite Element Method.
 title_separator: "—"
