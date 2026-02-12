@@ -110,7 +110,7 @@ This step essentially passes the derivative from $u_h$ to $v$. Now both $u_h$ an
 Weak forms are not just “multiply and integrate”.
 For differential operators, we typically **move derivatives** off $u$ onto $v$ using integration by parts (Green’s identity).
 
-### Integration by parts always produces
+Integration by parts always produces
 
 1. An **interior term** (domain integral)
 2. A **boundary term** (integral over $\partial\Omega$)
@@ -188,20 +188,20 @@ Its weak form contains the term $\int_\Omega \nabla^2 u : \nabla^2 v dx$
 
 i.e., for fourth order derivatives the orthogonality is defined in terms of curvature. What subspace could we use for this projection?
 
-### $H^1$ finite element spaces are
+**$H^1$ finite element spaces** are
 
 - continuous in value ($C^0$)
 - discontinuous in gradient across elements
 
 So $H^1$ is usually not admissible.
 
-**$H^2$ FEM spaces** require continuity of first derivatives:
+**$H^2$ finite element spaces** require continuity of first derivatives:
 
 - i.e. they need $C^1$ continuity (or an equivalent workaround)
 
 So $H^2$ is **geometrically admissible** but **algebraically demanding**.
 
-### Three strategies exist
+### Three strategies for geometric recoverability of even order operators
 
 **1. $C^1$-conforming elements**
 
@@ -291,7 +291,7 @@ where:
 - $\ell(\cdot)$ is a linear functional on $V$
 
 
-### Concept map: finite vectors vs functions/FEM
+### Concept map: finite vectors vs continuous functions
 
 | Concept | Finite vectors | Functions / FEM |
 |---|---|---|
