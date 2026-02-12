@@ -8,6 +8,15 @@ nav_order: 2
 
 # {{ page.title }}
 
+---
+
+## Contents
+{: .no_toc .text-delta}
+1. TOC
+{:toc}
+
+---
+
 ## 2.1 Motivation — Why Approximation is Geometric
 
 From Chapter 1 we learned:
