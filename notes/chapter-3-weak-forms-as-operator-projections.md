@@ -305,7 +305,7 @@ $$
 
 | Concept | Finite vectors | Functions / FEM |
 |---|---|---|
-| vector | $\mathbf{x} \in \mathbb{R}^n$ | $u(x)$ |
+| vector | $\mathbf{x} \in \mathbb{R}^n$ | $u(x) \in \mathbb{V}$ |
 | dot product | $\mathbf{x}^T \mathbf{y}$ | $\int u\, v$ |
 | generalized dot product | $\mathbf{x}^T A \mathbf{y}$ | $a(u,v)$ |
 | matrix | $A$ | operator encoded by bilinear form |
