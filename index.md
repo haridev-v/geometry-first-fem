@@ -8,7 +8,7 @@ nav_order: 1
 
 **A conceptual reconstruction of the Finite Element Method from geometric and operator-projection principles.**
 
-The Finite Element Method is interpreted here as the projection of continuous physical operators onto finite-dimensional function spaces, revealing discretization as a geometric approximation process.
+These notes develop a functional-analytic and operator-theoretic interpretation of the finite element method, with emphasis on projection structure, induced geometries, and implications for stability of time-discrete PDE operators.
 
 ---
 
