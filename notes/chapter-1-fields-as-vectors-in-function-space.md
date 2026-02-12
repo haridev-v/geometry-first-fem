@@ -10,6 +10,13 @@ We briefly revisit vector spaces, norms, and inner products only to fix the geom
 
 ---
 
+## Contents
+{: .no_toc .text-delta}
+1. TOC
+{:toc}
+
+---
+
 ## 1.1 Vector spaces (revisited)
 
 In finite-dimensional algebra, a vector in $\mathbb{R}^n$ is written in **column form**
