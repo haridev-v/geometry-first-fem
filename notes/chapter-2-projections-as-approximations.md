@@ -281,7 +281,7 @@ Interpretation:
 - $c\in\mathbb{R}^N$ contains the coordinates of the approximation $u_h$.
 - $M$ is not arbitrary — it is built entirely from inner products.
 - $M$ encodes how the basis functions overlap geometrically.
-- 
+  
 > The matrix is the inner-product geometry of the subspace written in coordinates.
 
 ---
