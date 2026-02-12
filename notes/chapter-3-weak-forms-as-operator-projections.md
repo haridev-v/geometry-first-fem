@@ -386,7 +386,7 @@ Just as the mass matrix in Chapter 2 encoded the geometry of the subspace, the s
 
 **Key insight:**
 
-> The mass matrix comes from expressing geometry in coordinates (as we saw earlier).  
+> The mass matrix comes from expressing geometry (the projection problem) in coordinates (as we saw earlier).  
 > The stiffness matrix comes from expressing the *operator induced geometry* of the solution space in coordinates.
 
 ---
