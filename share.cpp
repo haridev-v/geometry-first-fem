@@ -1,88 +1,121 @@
-// ------------------------------------------------------------
-// Enable FPD stitching only when every HDF5 input has a sibling
-// FPD with the same base filename.
-// ------------------------------------------------------------
-
-std::vector<std::string> fpd_paths;
-fpd_paths.reserve(inputs.size());
-
-bool merge_fpd_enabled = true;
-
-std::cerr
-    << "\n========== FPD detection ==========\n";
-
-for (std::size_t i = 0;
-     i < inputs.size();
-     ++i)
+public int Register(CAEFace face)
 {
-    const std::string fpd_path =
-        sibling_with_extension(
-            inputs[i].path,
-            ".fpd");
+    if (face == null)
+        return -1;
 
-    const bool found =
-        file_exists(fpd_path);
+    Tag selectedTag = Tag.Null;
+    Tag canonicalTag = Tag.Null;
 
-    fpd_paths.push_back(fpd_path);
-
-    std::cerr
-        << "HDF5 input [" << i << "]: "
-        << inputs[i].path
-        << "\n";
-
-    std::cerr
-        << "Expected FPD [" << i << "]: "
-        << fpd_path
-        << "\n";
-
-    std::cerr
-        << "Status: "
-        << (found ? "FOUND" : "MISSING")
-        << "\n\n";
-
-    if (!found)
-        merge_fpd_enabled = false;
-}
-
-std::vector<FpdFile> fpd_inputs;
-
-if (merge_fpd_enabled)
-{
-    std::cerr
-        << "Every input FPD was found. "
-        << "FPD stitching is ENABLED.\n";
-
-    fpd_inputs.reserve(inputs.size());
-
-    for (std::size_t i = 0;
-         i < fpd_paths.size();
-         ++i)
+    try
     {
-        std::cerr
-            << "Reading FPD: "
-            << fpd_paths[i]
-            << "\n";
-
-        fpd_inputs.push_back(
-            read_fpd_file(fpd_paths[i]));
+        selectedTag = face.Tag;
+    }
+    catch
+    {
+        return -1;
     }
 
-    std::cerr
-        << "Successfully parsed "
-        << fpd_inputs.size()
-        << " FPD files.\n";
+    try
+    {
+        canonicalTag = NXProgram.GetCanonicalTag(face);
+    }
+    catch
+    {
+        canonicalTag = selectedTag;
+    }
+
+    int existingMarker;
+
+    if (canonicalTag != Tag.Null &&
+        markerByFaceTag.TryGetValue(canonicalTag, out existingMarker))
+    {
+        // Also add selected tag as alias to same marker.
+        if (selectedTag != Tag.Null &&
+            !markerByFaceTag.ContainsKey(selectedTag))
+        {
+            markerByFaceTag[selectedTag] = existingMarker;
+        }
+
+        return existingMarker;
+    }
+
+    if (selectedTag != Tag.Null &&
+        markerByFaceTag.TryGetValue(selectedTag, out existingMarker))
+    {
+        // Also add canonical tag as alias to same marker.
+        if (canonicalTag != Tag.Null &&
+            !markerByFaceTag.ContainsKey(canonicalTag))
+        {
+            markerByFaceTag[canonicalTag] = existingMarker;
+        }
+
+        return existingMarker;
+    }
+
+    int marker = faceTags.Count + 1;
+
+    // Store one representative tag in the ordered marker list.
+    // Prefer canonical if available.
+    Tag representativeTag =
+        canonicalTag != Tag.Null ? canonicalTag : selectedTag;
+
+    if (representativeTag == Tag.Null)
+        return -1;
+
+    faceTags.Add(representativeTag);
+
+    // Register both aliases to the same marker.
+    if (canonicalTag != Tag.Null &&
+        !markerByFaceTag.ContainsKey(canonicalTag))
+    {
+        markerByFaceTag[canonicalTag] = marker;
+    }
+
+    if (selectedTag != Tag.Null &&
+        !markerByFaceTag.ContainsKey(selectedTag))
+    {
+        markerByFaceTag[selectedTag] = marker;
+    }
+
+    return marker;
 }
-else
+
+public bool TryGetMarker(CAEFace face, out int marker)
 {
-    std::cerr
-        << "At least one expected FPD is missing.\n"
-        << "The entire FPD stitching process is DISABLED.\n"
-        << "Only the mesh will be stitched.\n";
+    marker = -1;
+
+    if (face == null)
+        return false;
+
+    Tag selectedTag = Tag.Null;
+    Tag canonicalTag = Tag.Null;
+
+    try
+    {
+        selectedTag = face.Tag;
+    }
+    catch
+    {
+        return false;
+    }
+
+    try
+    {
+        canonicalTag = NXProgram.GetCanonicalTag(face);
+    }
+    catch
+    {
+        canonicalTag = selectedTag;
+    }
+
+    if (canonicalTag != Tag.Null &&
+        markerByFaceTag.TryGetValue(canonicalTag, out marker))
+        return true;
+
+    if (selectedTag != Tag.Null &&
+        markerByFaceTag.TryGetValue(selectedTag, out marker))
+        return true;
+
+    return false;
 }
 
-std::cerr
-    << "===================================\n\n"
-    << std::flush;
-
-std::vector<InputMarkerMap> input_marker_maps(
-    inputs.size());
