@@ -1,94 +1,3 @@
-private BoundaryFaceExport BuildBoundaryFaceExport(
-    Dictionary<int, CAEBody> bodyNumbers,
-    BoundaryFaceRegistry registry,
-    UFSession ufSession,
-    Session session)
-{
-    BoundaryFaceExport export = new BoundaryFaceExport();
-
-    foreach (BoundaryFaceTagEntry faceEntry in registry.GetUniqueMarkerTags())
-    {
-        int faceMarker = faceEntry.Marker;
-        Tag targetLiveTag = faceEntry.LiveTag;
-        Tag targetCanonicalTag = faceEntry.CanonicalTag;
-
-        bool found = false;
-
-        foreach (KeyValuePair<int, CAEBody> bodyKvp in bodyNumbers.OrderBy(x => x.Key))
-        {
-            int domainId = bodyKvp.Key;
-            CAEBody body = bodyKvp.Value;
-
-            if (body == null)
-                continue;
-
-            int noOfFaces = 0;
-            Tag[] bodyFaceTags = null;
-
-            ufSession.Sf.BodyAskFaces(
-                body.Tag,
-                out noOfFaces,
-                out bodyFaceTags);
-
-            if (bodyFaceTags == null || bodyFaceTags.Length == 0)
-                continue;
-
-            for (int i = 0; i < bodyFaceTags.Length; i++)
-            {
-                Tag currentLiveTag = bodyFaceTags[i];
-
-                if (!TagsReferToSameFace(
-                        currentLiveTag,
-                        targetLiveTag,
-                        targetCanonicalTag,
-                        session))
-                    continue;
-
-                TaggedObject obj =
-                    session.GetObjectManager().GetTaggedObject(currentLiveTag);
-
-                CAEFace currentFace = obj as CAEFace;
-
-                string faceName = "";
-
-                if (currentFace != null)
-                {
-                    try
-                    {
-                        faceName = currentFace.Name == null
-                            ? ""
-                            : currentFace.Name.Trim();
-                    }
-                    catch
-                    {
-                        faceName = "";
-                    }
-                }
-
-                export.Faces.Add(new BoundaryFaceRef
-                {
-                    FaceMarker = faceMarker,
-                    DomainId = domainId,
-                    FaceOrdinalWithinBody = i + 1,
-                    FaceName = faceName
-                });
-
-                found = true;
-                break;
-            }
-
-            if (found)
-                break;
-        }
-
-        if (!found)
-        {
-            throw new InvalidOperationException(
-                "Could not locate registered boundary face marker " +
-                faceMarker + ".");
-        }
-    }
-
     return export;
 }
 
@@ -252,3 +161,262 @@ if (!NXProgram.BoundaryFaces.TryGetMarkerByTags(
 
 faceMarkers.Add(faceMarker);
 
+
+int faceStep = 0;
+int faceCount = boundaryFaceTags == null ? 0 : boundaryFaceTags.Count;
+
+if (faceCount > 0)
+{
+    foreach (Tag faceTag in boundaryFaceTags)
+    {
+        if (faceTag == Tag.Null)
+        {
+            logFile.WriteLine("Boundary face tag is null.");
+            logContents.Add("Boundary face tag is null.");
+            continue;
+        }
+
+        CAEFace caeFace = ResolveCaeFaceFromTag(faceTag, theSession);
+
+        if (caeFace == null)
+        {
+            logFile.WriteLine("Unable to resolve CAEFace from tag " + faceTag);
+            logContents.Add("Unable to resolve CAEFace from tag " + faceTag);
+            continue;
+        }
+
+        int faceMarker;
+
+        if (!TryGetBoundaryFaceMarker(
+                caeFace,
+                faceTag,
+                markerByFaceTags,
+                out faceMarker))
+        {
+            logFile.WriteLine(
+                "Unable to get face marker for CAEFace tag " + faceTag);
+
+            logContents.Add(
+                "Unable to get face marker for CAEFace tag " + faceTag);
+
+            continue;
+        }
+
+        faceStep++;
+
+        int pct = 75 + (int)(25.0 * faceStep / Math.Max(faceCount, 1));
+
+        progress?.Invoke(
+            pct,
+            "Pass 3/3: Start processing facets on face " +
+                faceStep + "/" + faceCount,
+            "Surface facets = " + faceMarker);
+
+        CAEFace[] oneFace = new CAEFace[] { caeFace };
+
+        RelatedElemFaceMethod relFaceMethod = null;
+
+        try
+        {
+            relFaceMethod =
+                caePart.SmartSelectionMgr.CreateRelatedElemFaceMethodFromFaces(
+                    oneFace,
+                    false,
+                    FacePreference.First2dElse3d,
+                    true);
+
+            FEElemFace[] feFaces = relFaceMethod.GetFEElemFaces();
+
+            if (feFaces == null || feFaces.Length == 0)
+            {
+                logContents.Add(
+                    "feFaces is null or empty for CAEFace tag " + faceTag);
+
+                continue;
+            }
+
+            foreach (FEElemFace feFace in feFaces)
+            {
+                FEElement[] elems = null;
+                int[] faceIds = null;
+
+                try
+                {
+                    elems = feFace.GetElementsAndFaceIds(out faceIds);
+                }
+                catch
+                {
+                    logContents.Add(
+                        "GetElementsAndFaceIds failed for CAEFace tag " +
+                        faceTag);
+
+                    continue;
+                }
+
+                if (elems == null ||
+                    elems.Length == 0 ||
+                    faceIds == null ||
+                    faceIds.Length == 0)
+                {
+                    logContents.Add(
+                        "Empty arrays for FEFace on CAEFace tag " + faceTag);
+
+                    continue;
+                }
+
+                FEElement ownerElem = null;
+                int ownerFaceId = -1;
+                int ownerDomainId = -1;
+
+                for (int k = 0; k < elems.Length; k++)
+                {
+                    FEElement elem = elems[k];
+
+                    if (elem == null)
+                        continue;
+
+                    if (!elemTagToDomainId.TryGetValue(
+                            elem.Tag,
+                            out ownerDomainId))
+                    {
+                        continue;
+                    }
+
+                    ownerElem = elem;
+                    ownerFaceId = faceIds[k];
+                    break;
+                }
+
+                if (ownerElem == null || ownerFaceId < 0)
+                {
+                    logContents.Add(
+                        "No exported owner element found for boundary face marker " +
+                        faceMarker);
+
+                    continue;
+                }
+
+                // Continue with your existing facet-node extraction logic here.
+                // Use:
+                //     ownerElem
+                //     ownerFaceId
+                //     ownerDomainId
+                //     faceMarker
+                //
+                // Do NOT use caeFace.Prototype or object equality.
+            }
+        }
+        finally
+        {
+            ReleaseNxTransient(relFaceMethod);
+        }
+    }
+}
+
+private static CAEFace ResolveCaeFaceFromTag(
+    Tag faceTag,
+    Session session)
+{
+    if (faceTag == Tag.Null || session == null)
+        return null;
+
+    try
+    {
+        TaggedObject obj =
+            session.GetObjectManager().GetTaggedObject(faceTag);
+
+        return obj as CAEFace;
+    }
+    catch
+    {
+        return null;
+    }
+}
+
+private static bool TryGetBoundaryFaceMarker(
+    CAEFace caeFace,
+    Tag liveFaceTag,
+    IReadOnlyDictionary<Tag, int> markerByFaceTags,
+    out int faceMarker)
+{
+    faceMarker = -1;
+
+    if (markerByFaceTags == null)
+        return false;
+
+    if (liveFaceTag != Tag.Null &&
+        markerByFaceTags.TryGetValue(liveFaceTag, out faceMarker))
+    {
+        return true;
+    }
+
+    if (caeFace == null)
+        return false;
+
+    Tag selectedTag = Tag.Null;
+    Tag canonicalTag = Tag.Null;
+
+    try
+    {
+        selectedTag = caeFace.Tag;
+    }
+    catch
+    {
+        selectedTag = liveFaceTag;
+    }
+
+    try
+    {
+        canonicalTag = NXProgram.GetCanonicalTag(caeFace);
+    }
+    catch
+    {
+        canonicalTag = selectedTag;
+    }
+
+    if (canonicalTag != Tag.Null &&
+        markerByFaceTags.TryGetValue(canonicalTag, out faceMarker))
+    {
+        return true;
+    }
+
+    if (selectedTag != Tag.Null &&
+        markerByFaceTags.TryGetValue(selectedTag, out faceMarker))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+private static void ReleaseNxTransient(object obj)
+{
+    if (obj == null)
+        return;
+
+    try
+    {
+        IDisposable disposable = obj as IDisposable;
+
+        if (disposable != null)
+        {
+            disposable.Dispose();
+            return;
+        }
+    }
+    catch
+    {
+    }
+
+    try
+    {
+        System.Reflection.MethodInfo destroyMethod =
+            obj.GetType().GetMethod("Destroy");
+
+        if (destroyMethod != null)
+            destroyMethod.Invoke(obj, null);
+    }
+    catch
+    {
+    }
+}
