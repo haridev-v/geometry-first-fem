@@ -1,267 +1,254 @@
-using System;
-using System.Collections.Generic;
-using NXOpen;
-using NXOpen.CAE;
-
-namespace SimDataExtractor.PhysicsDataUtils
+private BoundaryFaceExport BuildBoundaryFaceExport(
+    Dictionary<int, CAEBody> bodyNumbers,
+    BoundaryFaceRegistry registry,
+    UFSession ufSession,
+    Session session)
 {
-    public sealed class BoundaryFaceRegistry
+    BoundaryFaceExport export = new BoundaryFaceExport();
+
+    foreach (BoundaryFaceTagEntry faceEntry in registry.GetUniqueMarkerTags())
     {
-        private readonly List<Tag> faceTags =
-            new List<Tag>();
+        int faceMarker = faceEntry.Marker;
+        Tag targetLiveTag = faceEntry.LiveTag;
+        Tag targetCanonicalTag = faceEntry.CanonicalTag;
 
-        private readonly Dictionary<Tag, int> markerByFaceTag =
-            new Dictionary<Tag, int>();
+        bool found = false;
 
-        private readonly Dictionary<int, Tag> liveTagByMarker =
-            new Dictionary<int, Tag>();
-
-        private readonly Dictionary<int, Tag> canonicalTagByMarker =
-            new Dictionary<int, Tag>();
-
-        public IReadOnlyList<Tag> FaceTags
+        foreach (KeyValuePair<int, CAEBody> bodyKvp in bodyNumbers.OrderBy(x => x.Key))
         {
-            get { return faceTags; }
-        }
+            int domainId = bodyKvp.Key;
+            CAEBody body = bodyKvp.Value;
 
-        public IReadOnlyDictionary<Tag, int> MarkerByFaceTags
-        {
-            get { return markerByFaceTag; }
-        }
+            if (body == null)
+                continue;
 
-        public int Register(CAEFace face)
-        {
-            if (face == null)
-                return -1;
+            int noOfFaces = 0;
+            Tag[] bodyFaceTags = null;
 
-            Tag liveTag;
-            Tag canonicalTag;
+            ufSession.Sf.BodyAskFaces(
+                body.Tag,
+                out noOfFaces,
+                out bodyFaceTags);
 
-            if (!GetFaceTags(face, out liveTag, out canonicalTag))
-                return -1;
+            if (bodyFaceTags == null || bodyFaceTags.Length == 0)
+                continue;
 
-            return RegisterTags(liveTag, canonicalTag);
-        }
-
-        public int RegisterTags(Tag liveTag, Tag canonicalTag)
-        {
-            if (liveTag == Tag.Null && canonicalTag == Tag.Null)
-                return -1;
-
-            int existingMarker;
-
-            if (TryGetMarkerByTags(liveTag, canonicalTag, out existingMarker))
+            for (int i = 0; i < bodyFaceTags.Length; i++)
             {
-                RegisterAliases(liveTag, canonicalTag, existingMarker);
-                return existingMarker;
-            }
+                Tag currentLiveTag = bodyFaceTags[i];
 
-            int marker = faceTags.Count + 1;
-
-            RegisterWithMarker(liveTag, canonicalTag, marker);
-
-            return marker;
-        }
-
-        public bool TryGetMarker(CAEFace face, out int marker)
-        {
-            marker = -1;
-
-            if (face == null)
-                return false;
-
-            Tag liveTag;
-            Tag canonicalTag;
-
-            if (!GetFaceTags(face, out liveTag, out canonicalTag))
-                return false;
-
-            return TryGetMarkerByTags(liveTag, canonicalTag, out marker);
-        }
-
-        public bool TryGetMarkerByTags(
-            Tag liveTag,
-            Tag canonicalTag,
-            out int marker)
-        {
-            marker = -1;
-
-            if (canonicalTag != Tag.Null &&
-                markerByFaceTag.TryGetValue(canonicalTag, out marker))
-                return true;
-
-            if (liveTag != Tag.Null &&
-                markerByFaceTag.TryGetValue(liveTag, out marker))
-                return true;
-
-            return false;
-        }
-
-        public int GetMarkerByFace(CAEFace face)
-        {
-            int marker;
-
-            if (TryGetMarker(face, out marker))
-                return marker;
-
-            return Register(face);
-        }
-
-        public List<int> RegisterMany(IEnumerable<CAEFace> inputFaces)
-        {
-            List<int> markers = new List<int>();
-
-            if (inputFaces == null)
-                return markers;
-
-            foreach (CAEFace face in inputFaces)
-            {
-                int marker = Register(face);
-
-                if (marker > 0)
-                    markers.Add(marker);
-            }
-
-            return markers;
-        }
-
-        public void RegisterWithMarker(CAEFace face, int marker)
-        {
-            if (face == null || marker <= 0)
-                return;
-
-            Tag liveTag;
-            Tag canonicalTag;
-
-            if (!GetFaceTags(face, out liveTag, out canonicalTag))
-                return;
-
-            RegisterWithMarker(liveTag, canonicalTag, marker);
-        }
-
-        public void RegisterWithMarker(
-            Tag liveTag,
-            Tag canonicalTag,
-            int marker)
-        {
-            if (marker <= 0)
-                return;
-
-            if (liveTag == Tag.Null && canonicalTag == Tag.Null)
-                return;
-
-            while (faceTags.Count < marker)
-                faceTags.Add(Tag.Null);
-
-            /*
-             * IMPORTANT:
-             * faceTags is the ordered unique list used by mesh extraction.
-             * It should store the live/current-session tag when available.
-             * Canonical tag is only an alias for matching.
-             */
-            Tag representativeTag =
-                liveTag != Tag.Null ? liveTag : canonicalTag;
-
-            if (faceTags[marker - 1] == Tag.Null)
-                faceTags[marker - 1] = representativeTag;
-
-            if (liveTag != Tag.Null)
-                liveTagByMarker[marker] = liveTag;
-
-            if (canonicalTag != Tag.Null)
-                canonicalTagByMarker[marker] = canonicalTag;
-
-            RegisterAliases(liveTag, canonicalTag, marker);
-        }
-
-        private void RegisterAliases(
-            Tag liveTag,
-            Tag canonicalTag,
-            int marker)
-        {
-            if (liveTag != Tag.Null)
-                markerByFaceTag[liveTag] = marker;
-
-            if (canonicalTag != Tag.Null)
-                markerByFaceTag[canonicalTag] = marker;
-        }
-
-        public List<BoundaryFaceTagEntry> GetUniqueMarkerEntries()
-        {
-            List<BoundaryFaceTagEntry> entries =
-                new List<BoundaryFaceTagEntry>();
-
-            for (int i = 0; i < faceTags.Count; i++)
-            {
-                int marker = i + 1;
-
-                Tag liveTag = faceTags[i];
-
-                Tag canonicalTag = Tag.Null;
-                canonicalTagByMarker.TryGetValue(marker, out canonicalTag);
-
-                if (liveTag == Tag.Null && canonicalTag == Tag.Null)
+                if (!TagsReferToSameFace(
+                        currentLiveTag,
+                        targetLiveTag,
+                        targetCanonicalTag,
+                        session))
                     continue;
 
-                BoundaryFaceTagEntry entry = new BoundaryFaceTagEntry();
-                entry.Marker = marker;
-                entry.LiveTag = liveTag;
-                entry.CanonicalTag = canonicalTag;
+                TaggedObject obj =
+                    session.GetObjectManager().GetTaggedObject(currentLiveTag);
 
-                entries.Add(entry);
+                CAEFace currentFace = obj as CAEFace;
+
+                string faceName = "";
+
+                if (currentFace != null)
+                {
+                    try
+                    {
+                        faceName = currentFace.Name == null
+                            ? ""
+                            : currentFace.Name.Trim();
+                    }
+                    catch
+                    {
+                        faceName = "";
+                    }
+                }
+
+                export.Faces.Add(new BoundaryFaceRef
+                {
+                    FaceMarker = faceMarker,
+                    DomainId = domainId,
+                    FaceOrdinalWithinBody = i + 1,
+                    FaceName = faceName
+                });
+
+                found = true;
+                break;
             }
 
-            return entries;
+            if (found)
+                break;
         }
 
-        private bool GetFaceTags(
-            CAEFace face,
-            out Tag liveTag,
-            out Tag canonicalTag)
+        if (!found)
         {
-            liveTag = Tag.Null;
-            canonicalTag = Tag.Null;
-
-            if (face == null)
-                return false;
-
-            try
-            {
-                liveTag = face.Tag;
-            }
-            catch
-            {
-                return false;
-            }
-
-            try
-            {
-                canonicalTag = NXProgram.GetCanonicalTag(face);
-            }
-            catch
-            {
-                canonicalTag = liveTag;
-            }
-
-            if (canonicalTag == Tag.Null)
-                canonicalTag = liveTag;
-
-            return liveTag != Tag.Null || canonicalTag != Tag.Null;
-        }
-
-        public void Clear()
-        {
-            faceTags.Clear();
-            markerByFaceTag.Clear();
-            liveTagByMarker.Clear();
-            canonicalTagByMarker.Clear();
+            throw new InvalidOperationException(
+                "Could not locate registered boundary face marker " +
+                faceMarker + ".");
         }
     }
 
-    public class BoundaryFaceTagEntry
+    return export;
+}
+
+private static bool TagsReferToSameFace(
+    Tag currentLiveTag,
+    Tag targetLiveTag,
+    Tag targetCanonicalTag,
+    Session session)
+{
+    if (currentLiveTag == Tag.Null)
+        return false;
+
+    if (targetLiveTag != Tag.Null && currentLiveTag == targetLiveTag)
+        return true;
+
+    Tag currentCanonicalTag =
+        GetCanonicalTagFromTag(currentLiveTag, session);
+
+    if (targetCanonicalTag != Tag.Null &&
+        currentCanonicalTag == targetCanonicalTag)
+        return true;
+
+    if (targetLiveTag != Tag.Null)
     {
-        public int Marker { get; set; }
-        public Tag LiveTag { get; set; }
-        public Tag CanonicalTag { get; set; }
+        Tag targetCanonicalFromLive =
+            GetCanonicalTagFromTag(targetLiveTag, session);
+
+        if (targetCanonicalFromLive != Tag.Null &&
+            currentCanonicalTag == targetCanonicalFromLive)
+            return true;
+    }
+
+    return false;
+}
+
+private static Tag GetCanonicalTagFromTag(Tag tag, Session session)
+{
+    if (tag == Tag.Null || session == null)
+        return Tag.Null;
+
+    try
+    {
+        TaggedObject obj =
+            session.GetObjectManager().GetTaggedObject(tag);
+
+        if (obj == null)
+            return tag;
+
+        return NXProgram.GetCanonicalTag(obj);
+    }
+    catch
+    {
+        return tag;
     }
 }
+
+public static MeshData ExtractMesh(
+    FemPart workFemPart,
+    CaePart caePart,
+    UFSession theUFSession,
+    Session theSession,
+    Dictionary<int, CAEBody> bodyNumbers,
+    List<Tag> boundaryFaceTags,
+    Dictionary<Tag, int> markerByFaceTags,
+    List<ExportDomainInfo> exportDomains,
+    Action<int, string, string> progress)
+
+for (int bf = 0; bf < boundaryFaceTags.Count; bf++)
+{
+    Tag faceTag = boundaryFaceTags[bf];
+
+    if (faceTag == Tag.Null)
+        continue;
+
+    TaggedObject obj =
+        theSession.GetObjectManager().GetTaggedObject(faceTag);
+
+    CAEFace caeFace = obj as CAEFace;
+
+    if (caeFace == null)
+        continue;
+
+    int faceMarker;
+
+    if (!markerByFaceTags.TryGetValue(faceTag, out faceMarker))
+        faceMarker = bf + 1;
+
+    // Existing related-face / facet extraction logic uses caeFace here.
+}
+
+var mesh =
+    MeshDataExtractor.MeshExtractor.ExtractMesh(
+        workFemPart,
+        caePart,
+        theUFSession,
+        theSession,
+        NXProgram.bodyNumbers,
+        NXProgram.BoundaryFaces.FaceTags,
+        NXProgram.BoundaryFaces.MarkerByFaceTags,
+        exportDomains,
+        (pct, msg1, msg2) =>
+        {
+            progress.Report(
+                (int)(0.80 * pct),
+                msg1,
+                msg2);
+        });
+
+MeshData mesh =
+    MeshDataExtractor.MeshExtractor.ExtractMesh(
+        workFemPart,
+        caePart,
+        theUFSession,
+        theSession,
+        bodyNumbers,
+        workerRegistry.FaceTags,
+        workerRegistry.MarkerByFaceTags,
+        exportDomains,
+        (pct, msg1, msg2) =>
+        {
+            WriteHeartbeat(
+                job.HeartbeatPath,
+                $"[{pct}%] {msg1} | {msg2}");
+        });
+
+Tag liveTag = Tag.Null;
+Tag canonicalTag = Tag.Null;
+
+try
+{
+    liveTag = faceObj.Tag;
+}
+catch
+{
+    continue;
+}
+
+try
+{
+    canonicalTag = NXProgram.GetCanonicalTag(faceObj);
+}
+catch
+{
+    canonicalTag = liveTag;
+}
+
+int faceMarker;
+
+if (!NXProgram.BoundaryFaces.TryGetMarkerByTags(
+        liveTag,
+        canonicalTag,
+        out faceMarker))
+{
+    NXProgram.logFile.WriteLine(
+        "Add BCs: could not resolve face marker. " +
+        "liveTag=" + liveTag +
+        ", canonicalTag=" + canonicalTag);
+
+    continue;
+}
+
+faceMarkers.Add(faceMarker);
+
