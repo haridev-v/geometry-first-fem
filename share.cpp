@@ -1,178 +1,266 @@
-using System;
-using System.Collections.Generic;
-using NXOpen;
-using NXOpen.CAE;
-
-namespace SimDataExtractor
+public static Dictionary<int, CAEBody> RefreshBodyNumbersFromCurrentFem(
+    Dictionary<int, CAEBody> oldBodyNumbers,
+    FemPart workFemPart,
+    LogFile logFile)
 {
-    public sealed class CaeBodyDomainRegistry
+    Dictionary<int, CAEBody> refreshed =
+        new Dictionary<int, CAEBody>();
+
+    if (oldBodyNumbers == null || oldBodyNumbers.Count == 0)
+        return refreshed;
+
+    if (workFemPart == null)
+        return new Dictionary<int, CAEBody>(oldBodyNumbers);
+
+    CAEBodyCollection femBodies = null;
+
+    try
     {
-        private readonly Dictionary<Tag, int> domainIdByBodyTag =
-            new Dictionary<Tag, int>();
+        femBodies = workFemPart.Bodies;
+    }
+    catch
+    {
+        return new Dictionary<int, CAEBody>(oldBodyNumbers);
+    }
 
-        private readonly Dictionary<int, Tag> liveTagByDomainId =
-            new Dictionary<int, Tag>();
+    List<CAEBody> currentBodies = new List<CAEBody>();
 
-        private readonly Dictionary<int, Tag> canonicalTagByDomainId =
-            new Dictionary<int, Tag>();
-
-        public void Clear()
+    try
+    {
+        foreach (CAEBody b in femBodies)
         {
-            domainIdByBodyTag.Clear();
-            liveTagByDomainId.Clear();
-            canonicalTagByDomainId.Clear();
+            if (b != null)
+                currentBodies.Add(b);
         }
+    }
+    catch
+    {
+        return new Dictionary<int, CAEBody>(oldBodyNumbers);
+    }
 
-        public void RegisterDomainBody(int originalDomainId, CAEBody body)
+    foreach (KeyValuePair<int, CAEBody> kvp in oldBodyNumbers.OrderBy(x => x.Key))
+    {
+        int domainId = kvp.Key;
+        CAEBody oldBody = kvp.Value;
+
+        if (domainId <= 0 || oldBody == null)
+            continue;
+
+        Tag oldLiveTag = SafeTag(oldBody);
+        Tag oldCanonicalTag = SafeCanonicalTag(oldBody);
+
+        CAEBody freshBody =
+            FindMatchingCurrentBody(
+                currentBodies,
+                oldLiveTag,
+                oldCanonicalTag);
+
+        if (freshBody != null)
         {
-            if (originalDomainId <= 0 || body == null)
-                return;
+            refreshed[domainId] = freshBody;
 
-            Tag liveTag;
-            Tag canonicalTag;
-
-            if (!GetBodyTags(body, out liveTag, out canonicalTag))
-                return;
-
-            RegisterDomainBodyTags(originalDomainId, liveTag, canonicalTag);
-        }
-
-        public void RegisterDomainBodyTags(
-            int originalDomainId,
-            Tag liveTag,
-            Tag canonicalTag)
-        {
-            if (originalDomainId <= 0)
-                return;
-
-            if (liveTag == Tag.Null && canonicalTag == Tag.Null)
-                return;
-
-            if (liveTag != Tag.Null)
+            try
             {
-                domainIdByBodyTag[liveTag] = originalDomainId;
-                liveTagByDomainId[originalDomainId] = liveTag;
+                if (logFile != null)
+                {
+                    logFile.WriteLine(
+                        "Refreshed CAEBody for domain " + domainId +
+                        ". oldTag=" + oldLiveTag +
+                        ", oldCanonical=" + oldCanonicalTag +
+                        ", freshTag=" + freshBody.Tag +
+                        ", freshCanonical=" + SafeCanonicalTag(freshBody));
+                }
             }
+            catch { }
+        }
+        else
+        {
+            // Fallback: keep old body, but log it.
+            refreshed[domainId] = oldBody;
 
-            if (canonicalTag != Tag.Null)
+            try
             {
-                domainIdByBodyTag[canonicalTag] = originalDomainId;
-                canonicalTagByDomainId[originalDomainId] = canonicalTag;
+                if (logFile != null)
+                {
+                    logFile.WriteLine(
+                        "Could not refresh CAEBody for domain " + domainId +
+                        ". Keeping old body. oldTag=" + oldLiveTag +
+                        ", oldCanonical=" + oldCanonicalTag);
+                }
             }
+            catch { }
         }
+    }
 
-        public bool TryGetOriginalDomainId(
-            CAEBody body,
-            out int originalDomainId)
+    return refreshed;
+}
+
+private static CAEBody FindMatchingCurrentBody(
+    List<CAEBody> currentBodies,
+    Tag oldLiveTag,
+    Tag oldCanonicalTag)
+{
+    if (currentBodies == null)
+        return null;
+
+    foreach (CAEBody body in currentBodies)
+    {
+        if (body == null)
+            continue;
+
+        Tag liveTag = SafeTag(body);
+        Tag canonicalTag = SafeCanonicalTag(body);
+
+        if (oldLiveTag != Tag.Null && liveTag == oldLiveTag)
+            return body;
+
+        if (oldCanonicalTag != Tag.Null && canonicalTag == oldCanonicalTag)
+            return body;
+
+        if (oldCanonicalTag != Tag.Null && liveTag == oldCanonicalTag)
+            return body;
+
+        if (oldLiveTag != Tag.Null && canonicalTag == oldLiveTag)
+            return body;
+    }
+
+    return null;
+}
+
+private static Tag SafeTag(TaggedObject obj)
+{
+    if (obj == null)
+        return Tag.Null;
+
+    try
+    {
+        return obj.Tag;
+    }
+    catch
+    {
+        return Tag.Null;
+    }
+}
+
+private static Tag SafeCanonicalTag(TaggedObject obj)
+{
+    if (obj == null)
+        return Tag.Null;
+
+    try
+    {
+        Tag tag = NXProgram.GetCanonicalTag(obj);
+
+        if (tag != Tag.Null)
+            return tag;
+    }
+    catch
+    {
+    }
+
+    return SafeTag(obj);
+}
+
+public static bool IsLiveUsableCaeBody(
+    CAEBody body,
+    UFSession ufSession,
+    LogFile logFile,
+    int domainId)
+{
+    if (body == null || ufSession == null)
+        return false;
+
+    Tag bodyTag = SafeTag(body);
+
+    if (bodyTag == Tag.Null)
+        return false;
+
+    try
+    {
+        bool isSheet = body.IsSheetBody;
+    }
+    catch
+    {
+        try
         {
-            originalDomainId = -1;
-
-            if (body == null)
-                return false;
-
-            Tag liveTag;
-            Tag canonicalTag;
-
-            if (!GetBodyTags(body, out liveTag, out canonicalTag))
-                return false;
-
-            return TryGetOriginalDomainIdByTags(
-                liveTag,
-                canonicalTag,
-                out originalDomainId);
+            if (logFile != null)
+                logFile.WriteLine("Body.IsSheetBody failed for domain " + domainId);
         }
+        catch { }
 
-        public bool TryGetOriginalDomainIdByTags(
-            Tag liveTag,
-            Tag canonicalTag,
-            out int originalDomainId)
+        return false;
+    }
+
+    try
+    {
+        int noOfFaces = 0;
+        Tag[] faceTags = null;
+
+        ufSession.Sf.BodyAskFaces(
+            bodyTag,
+            out noOfFaces,
+            out faceTags);
+
+        if (faceTags == null || faceTags.Length == 0)
         {
-            originalDomainId = -1;
-
-            if (canonicalTag != Tag.Null &&
-                domainIdByBodyTag.TryGetValue(canonicalTag, out originalDomainId))
-                return true;
-
-            if (liveTag != Tag.Null &&
-                domainIdByBodyTag.TryGetValue(liveTag, out originalDomainId))
-                return true;
+            try
+            {
+                if (logFile != null)
+                    logFile.WriteLine("BodyAskFaces returned no faces for domain " + domainId);
+            }
+            catch { }
 
             return false;
         }
 
-        private bool GetBodyTags(
-            CAEBody body,
-            out Tag liveTag,
-            out Tag canonicalTag)
+        return true;
+    }
+    catch (Exception ex)
+    {
+        try
         {
-            liveTag = Tag.Null;
-            canonicalTag = Tag.Null;
-
-            if (body == null)
-                return false;
-
-            try
+            if (logFile != null)
             {
-                liveTag = body.Tag;
+                logFile.WriteLine(
+                    "BodyAskFaces failed for domain " + domainId +
+                    ", tag=" + bodyTag +
+                    ", error=" + ex.Message);
             }
-            catch
-            {
-                return false;
-            }
-
-            try
-            {
-                canonicalTag = NXProgram.GetCanonicalTag(body);
-            }
-            catch
-            {
-                canonicalTag = liveTag;
-            }
-
-            if (canonicalTag == Tag.Null)
-                canonicalTag = liveTag;
-
-            return liveTag != Tag.Null || canonicalTag != Tag.Null;
         }
+        catch { }
+
+        return false;
     }
 }
 
-public static CaeBodyDomainRegistry BodyDomains =
-    new CaeBodyDomainRegistry();
+NXRefreshUtils.ForceUpdateAndTouchSimulation(
+    NXProgram.theSession,
+    NXProgram.workSimPart,
+    NXProgram.logFile,
+    "Before FPD body refresh");
 
-NXProgram.BodyDomains.RegisterDomainBody(domainId, body);
+Dictionary<int, CAEBody> freshBodyNumbers =
+    ExportDomainInfo.RefreshBodyNumbersFromCurrentFem(
+        NXProgram.bodyNumbers,
+        NXProgram.workFemPart,
+        NXProgram.logFile);
 
-CAEBody bodyObj = setObject.Obj as CAEBody;
+// Optional but useful: replace global dictionary too.
+NXProgram.bodyNumbers = freshBodyNumbers;
 
-if (bodyObj == null)
-    continue;
-
-int originalDomainId;
-
-if (!NXProgram.BodyDomains.TryGetOriginalDomainId(
-        bodyObj,
-        out originalDomainId))
+// Rebuild body-domain tag aliases.
+try
 {
-    NXProgram.logFile.WriteLine(
-        "Add BCs: could not resolve CAEBody to domain. bodyTag=" +
-        SafeTagString(bodyObj));
+    NXProgram.BodyDomains.Clear();
 
-    continue;
-}
-
-bodyDomainIds.Add(originalDomainId);
-
-private static string SafeTagString(TaggedObject obj)
-{
-    if (obj == null)
-        return "";
-
-    try
+    foreach (KeyValuePair<int, CAEBody> kvp in NXProgram.bodyNumbers)
     {
-        return obj.Tag.ToString();
-    }
-    catch
-    {
-        return "";
+        NXProgram.BodyDomains.RegisterDomainBody(kvp.Key, kvp.Value);
     }
 }
+catch { }
+
+exportDomains = ExportDomainInfo.BuildExportDomainPlan(
+    freshBodyNumbers,
+    NXProgram.caePart,
+    NXProgram.logFile);
