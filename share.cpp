@@ -1,266 +1,150 @@
-public static Dictionary<int, CAEBody> RefreshBodyNumbersFromCurrentFem(
-    Dictionary<int, CAEBody> oldBodyNumbers,
-    FemPart workFemPart,
-    LogFile logFile)
+using System;
+using NXOpen;
+using NXOpen.CAE;
+
+namespace SimDataExtractor
 {
-    Dictionary<int, CAEBody> refreshed =
-        new Dictionary<int, CAEBody>();
-
-    if (oldBodyNumbers == null || oldBodyNumbers.Count == 0)
-        return refreshed;
-
-    if (workFemPart == null)
-        return new Dictionary<int, CAEBody>(oldBodyNumbers);
-
-    CAEBodyCollection femBodies = null;
-
-    try
+    public static class NxSolutionRefreshScope
     {
-        femBodies = workFemPart.Bodies;
-    }
-    catch
-    {
-        return new Dictionary<int, CAEBody>(oldBodyNumbers);
-    }
-
-    List<CAEBody> currentBodies = new List<CAEBody>();
-
-    try
-    {
-        foreach (CAEBody b in femBodies)
+        public static int RunWithClonedTemporarySolution(
+            SimPart simPart,
+            Session session,
+            LogFile logFile,
+            Func<int> action)
         {
-            if (b != null)
-                currentBodies.Add(b);
-        }
-    }
-    catch
-    {
-        return new Dictionary<int, CAEBody>(oldBodyNumbers);
-    }
+            if (simPart == null)
+                throw new ArgumentNullException(nameof(simPart));
 
-    foreach (KeyValuePair<int, CAEBody> kvp in oldBodyNumbers.OrderBy(x => x.Key))
-    {
-        int domainId = kvp.Key;
-        CAEBody oldBody = kvp.Value;
+            if (session == null)
+                throw new ArgumentNullException(nameof(session));
 
-        if (domainId <= 0 || oldBody == null)
-            continue;
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
 
-        Tag oldLiveTag = SafeTag(oldBody);
-        Tag oldCanonicalTag = SafeCanonicalTag(oldBody);
+            SimSimulation sim = simPart.Simulation;
 
-        CAEBody freshBody =
-            FindMatchingCurrentBody(
-                currentBodies,
-                oldLiveTag,
-                oldCanonicalTag);
+            if (sim == null)
+                throw new InvalidOperationException("SimPart.Simulation is null.");
 
-        if (freshBody != null)
-        {
-            refreshed[domainId] = freshBody;
+            SimSolution originalSolution = null;
+            SimSolution tempSolution = null;
+
+            Session.UndoMarkId markId = Session.UndoMarkId.Null;
 
             try
             {
-                if (logFile != null)
+                originalSolution = sim.ActiveSolution;
+
+                if (originalSolution == null)
                 {
-                    logFile.WriteLine(
-                        "Refreshed CAEBody for domain " + domainId +
-                        ". oldTag=" + oldLiveTag +
-                        ", oldCanonical=" + oldCanonicalTag +
-                        ", freshTag=" + freshBody.Tag +
-                        ", freshCanonical=" + SafeCanonicalTag(freshBody));
+                    // If there is no active solution, do not invent one yet.
+                    // Just run normally.
+                    SafeLog(logFile, "No active solution found. Running FPD without cloned solution refresh.");
+                    return action();
+                }
+
+                string tempName =
+                    "__VECTA_TEMP_REFRESH_" +
+                    DateTime.Now.ToString("yyyyMMdd_HHmmss");
+
+                SafeLog(logFile, "Cloning active solution for temporary refresh: " + tempName);
+
+                tempSolution = sim.CloneSolution(originalSolution, tempName);
+
+                if (tempSolution == null)
+                    throw new InvalidOperationException("CloneSolution returned null.");
+
+                sim.ActiveSolution = tempSolution;
+
+                markId = session.SetUndoMark(
+                    Session.MarkVisibility.Invisible,
+                    "VECTA temporary solution refresh");
+
+                try
+                {
+                    sim.UpdateFemodel();
+                    SafeLog(logFile, "sim.UpdateFemodel completed on temporary solution.");
+                }
+                catch (Exception ex)
+                {
+                    SafeLog(logFile, "sim.UpdateFemodel failed: " + ex.Message);
+                }
+
+                try
+                {
+                    int updateErrors = session.UpdateManager.DoUpdate(markId);
+                    SafeLog(logFile, "UpdateManager.DoUpdate completed. errors=" + updateErrors);
+                }
+                catch (Exception ex)
+                {
+                    SafeLog(logFile, "UpdateManager.DoUpdate failed: " + ex.Message);
+                }
+
+                SafeLog(logFile, "Running action with temporary active solution.");
+                return action();
+            }
+            finally
+            {
+                try
+                {
+                    if (originalSolution != null)
+                    {
+                        sim.ActiveSolution = originalSolution;
+                        SafeLog(logFile, "Restored original active solution.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SafeLog(logFile, "Failed to restore original active solution: " + ex.Message);
+                }
+
+                try
+                {
+                    if (tempSolution != null)
+                    {
+                        sim.DeleteSolution(tempSolution);
+                        SafeLog(logFile, "Deleted temporary solution.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SafeLog(logFile, "Failed to delete temporary solution: " + ex.Message);
+                }
+
+                try
+                {
+                    if (markId != Session.UndoMarkId.Null)
+                        session.DeleteUndoMark(markId, null);
+                }
+                catch
+                {
                 }
             }
-            catch { }
         }
-        else
-        {
-            // Fallback: keep old body, but log it.
-            refreshed[domainId] = oldBody;
 
-            try
-            {
-                if (logFile != null)
-                {
-                    logFile.WriteLine(
-                        "Could not refresh CAEBody for domain " + domainId +
-                        ". Keeping old body. oldTag=" + oldLiveTag +
-                        ", oldCanonical=" + oldCanonicalTag);
-                }
-            }
-            catch { }
-        }
-    }
-
-    return refreshed;
-}
-
-private static CAEBody FindMatchingCurrentBody(
-    List<CAEBody> currentBodies,
-    Tag oldLiveTag,
-    Tag oldCanonicalTag)
-{
-    if (currentBodies == null)
-        return null;
-
-    foreach (CAEBody body in currentBodies)
-    {
-        if (body == null)
-            continue;
-
-        Tag liveTag = SafeTag(body);
-        Tag canonicalTag = SafeCanonicalTag(body);
-
-        if (oldLiveTag != Tag.Null && liveTag == oldLiveTag)
-            return body;
-
-        if (oldCanonicalTag != Tag.Null && canonicalTag == oldCanonicalTag)
-            return body;
-
-        if (oldCanonicalTag != Tag.Null && liveTag == oldCanonicalTag)
-            return body;
-
-        if (oldLiveTag != Tag.Null && canonicalTag == oldLiveTag)
-            return body;
-    }
-
-    return null;
-}
-
-private static Tag SafeTag(TaggedObject obj)
-{
-    if (obj == null)
-        return Tag.Null;
-
-    try
-    {
-        return obj.Tag;
-    }
-    catch
-    {
-        return Tag.Null;
-    }
-}
-
-private static Tag SafeCanonicalTag(TaggedObject obj)
-{
-    if (obj == null)
-        return Tag.Null;
-
-    try
-    {
-        Tag tag = NXProgram.GetCanonicalTag(obj);
-
-        if (tag != Tag.Null)
-            return tag;
-    }
-    catch
-    {
-    }
-
-    return SafeTag(obj);
-}
-
-public static bool IsLiveUsableCaeBody(
-    CAEBody body,
-    UFSession ufSession,
-    LogFile logFile,
-    int domainId)
-{
-    if (body == null || ufSession == null)
-        return false;
-
-    Tag bodyTag = SafeTag(body);
-
-    if (bodyTag == Tag.Null)
-        return false;
-
-    try
-    {
-        bool isSheet = body.IsSheetBody;
-    }
-    catch
-    {
-        try
-        {
-            if (logFile != null)
-                logFile.WriteLine("Body.IsSheetBody failed for domain " + domainId);
-        }
-        catch { }
-
-        return false;
-    }
-
-    try
-    {
-        int noOfFaces = 0;
-        Tag[] faceTags = null;
-
-        ufSession.Sf.BodyAskFaces(
-            bodyTag,
-            out noOfFaces,
-            out faceTags);
-
-        if (faceTags == null || faceTags.Length == 0)
+        private static void SafeLog(LogFile logFile, string message)
         {
             try
             {
                 if (logFile != null)
-                    logFile.WriteLine("BodyAskFaces returned no faces for domain " + domainId);
+                    logFile.WriteLine("[TempSolutionRefresh] " + message);
             }
-            catch { }
-
-            return false;
-        }
-
-        return true;
-    }
-    catch (Exception ex)
-    {
-        try
-        {
-            if (logFile != null)
+            catch
             {
-                logFile.WriteLine(
-                    "BodyAskFaces failed for domain " + domainId +
-                    ", tag=" + bodyTag +
-                    ", error=" + ex.Message);
             }
         }
-        catch { }
-
-        return false;
     }
 }
 
-NXRefreshUtils.ForceUpdateAndTouchSimulation(
-    NXProgram.theSession,
-    NXProgram.workSimPart,
-    NXProgram.logFile,
-    "Before FPD body refresh");
-
-Dictionary<int, CAEBody> freshBodyNumbers =
-    ExportDomainInfo.RefreshBodyNumbersFromCurrentFem(
-        NXProgram.bodyNumbers,
-        NXProgram.workFemPart,
-        NXProgram.logFile);
-
-// Optional but useful: replace global dictionary too.
-NXProgram.bodyNumbers = freshBodyNumbers;
-
-// Rebuild body-domain tag aliases.
-try
-{
-    NXProgram.BodyDomains.Clear();
-
-    foreach (KeyValuePair<int, CAEBody> kvp in NXProgram.bodyNumbers)
-    {
-        NXProgram.BodyDomains.RegisterDomainBody(kvp.Key, kvp.Value);
-    }
-}
-catch { }
-
-exportDomains = ExportDomainInfo.BuildExportDomainPlan(
-    freshBodyNumbers,
-    NXProgram.caePart,
-    NXProgram.logFile);
+int status =
+    NxSolutionRefreshScope.RunWithClonedTemporarySolution(
+        workSimPart,
+        theSession,
+        theSession.LogFile,
+        delegate
+        {
+            return FPDWriter.WriteFpdFile(
+                fpdPath,
+                simulationObj,
+                mesh);
+        });
