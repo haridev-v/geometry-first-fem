@@ -35,9 +35,12 @@ set "_nx_test_exit=2"
 cd /d "%_nx_test_dir%" || goto :done
 
 :configure
-rem For environment-based licensing, use values from a working NX session.
-rem set "SPLM_LICENSE_SERVER=your-site-server-setting"
-rem set "UGS_LICENSE_BUNDLE=your-site-bundle-setting"
+rem Match the license settings from the working Simcenter 3D 1973 session.
+rem NX_TEST_ENV_BAT can supply different settings for another installation.
+if not defined NX_TEST_ENV_BAT (
+    set "SPLM_LICENSE_SERVER=W:\RR_CONFIG_RRUK\PLM\NX\1973\License\license.dat"
+    set "UGS_LICENSE_BUNDLE=TOTALMACH;RRNXCAE1"
+)
 
 if not defined NX_TEST_PROJECT set "NX_TEST_PROJECT=SimDataExtractor.IntegrationTests.csproj"
 if not defined NX_TEST_SETTINGS set "NX_TEST_SETTINGS=mesh-topology.runsettings"
