@@ -5,10 +5,20 @@ rem Place this file beside the NUnit project and its .runsettings file.
 rem NX_TEST_ENV_BAT can point to a site setup batch that sets variables and returns.
 rem NX_TEST_PROJECT and NX_TEST_SETTINGS can override the project and settings paths.
 
-if /i "%~1"=="--help" goto :usage
-pushd "%~dp0" || exit /b 2
-set "_nx_test_dir=%CD%"
+rem Use --pause or --no-pause as the first argument to control the wait.
+set "_nx_test_pause="
+if "%~1"=="" set "_nx_test_pause=1"
+if /i "%~1"=="--pause" (
+    set "_nx_test_pause=1"
+    shift /1
+) else if /i "%~1"=="--no-pause" (
+    shift /1
+)
+
 set "_nx_test_exit=2"
+if /i "%~1"=="--help" goto :usage
+pushd "%~dp0" || goto :finish
+set "_nx_test_dir=%CD%"
 
 if not defined NX_TEST_ENV_BAT goto :configure
 if not exist "%NX_TEST_ENV_BAT%" (
@@ -89,10 +99,19 @@ set "_nx_test_exit=%ERRORLEVEL%"
 
 :done
 popd
+
+:finish
+if defined _nx_test_pause (
+    echo Exit code %_nx_test_exit%.
+    pause
+)
 endlocal & exit /b %_nx_test_exit%
 
 :usage
-echo Run all tests with run-nx-tests.bat
+echo Run all tests and wait with run-nx-tests.bat
+echo Run all tests unattended with run-nx-tests.bat --no-pause
 echo Select tests with run-nx-tests.bat BeamMeshMatchesInfoYaml AnotherTestName
+echo Wait after a selected test with run-nx-tests.bat --pause BeamMeshMatchesInfoYaml
 echo Discover tests with run-nx-tests.bat --list-tests
-exit /b 0
+set "_nx_test_exit=0"
+goto :finish
